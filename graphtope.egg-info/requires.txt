@@ -1,0 +1,7 @@
+topologicpy>=0.9
+networkx>=3.0
+
+[dev]
+pytest>=7
+jupyter
+ipywidgets

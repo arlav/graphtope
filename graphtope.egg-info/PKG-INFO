@@ -1,3 +1,20 @@
+Metadata-Version: 2.4
+Name: graphtope
+Version: 0.1.0
+Summary: A topology-driven graph grammar for architecture (Stage 1).
+Author: T. Dounas, W. Jabi
+License: TBD
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: topologicpy>=0.9
+Requires-Dist: networkx>=3.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"
+Requires-Dist: jupyter; extra == "dev"
+Requires-Dist: ipywidgets; extra == "dev"
+Dynamic: license-file
+
 # Graphtope
 
 **A topology-driven graph grammar for architecture.**
