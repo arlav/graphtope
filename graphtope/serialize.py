@@ -12,15 +12,20 @@ from .model import StateGraph
 
 
 def to_dict(sg: StateGraph) -> dict:
-    """State graph -> the §10.1 JSON-able dict."""
-    return {
-        "directed": True,
-        "multigraph": True,
-        "nodes": [
+    """State graph -> the §10.1 JSON-able dict.
+
+    Emitted in a **canonical order** (nodes by id, edges by endpoints/type) so
+    the form is deterministic — the carrier's vertex ordering is not stable.
+    """
+    nodes = sorted(
+        (
             {"id": nid, "label": sg.node_label(nid), "attrs": sg.node_attrs(nid)}
             for nid in sg.nodes()
-        ],
-        "edges": [
+        ),
+        key=lambda n: n["id"],
+    )
+    edges = sorted(
+        (
             {
                 "src": e["src"], "tgt": e["tgt"], "type": e["type"],
                 "orientation": e["orientation"],
@@ -28,8 +33,10 @@ def to_dict(sg: StateGraph) -> dict:
                 "attrs": e["attrs"],
             }
             for e in sg.edges()
-        ],
-    }
+        ),
+        key=lambda e: (e["src"], e["tgt"], e["type"], e["orientation"]),
+    )
+    return {"directed": True, "multigraph": True, "nodes": nodes, "edges": edges}
 
 
 def from_dict(data: dict) -> StateGraph:

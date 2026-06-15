@@ -24,6 +24,7 @@ from ._topo import (
     id_of,
     py_dict,
     set_dict,
+    set_value,
     vertex_at,
 )
 
@@ -55,10 +56,13 @@ class StateGraph:
         """Create a node with ``label`` and attributes; return its id."""
         if not A.is_node_label(label):
             raise ValueError(f"unknown node label {label!r}; Σ={sorted(A.NODE_LABELS)}")
+        existing = set(self.nodes())
         if id is None:
+            while f"n{self._auto}" in existing:   # skip ids taken by explicit names
+                self._auto += 1
             id = f"n{self._auto}"
             self._auto += 1
-        if self.has_node(id):
+        if id in existing:
             raise ValueError(f"duplicate node id {id!r}")
 
         d = {"id": id, "label": label}
@@ -147,6 +151,50 @@ class StateGraph:
 
     def has_edge(self, src: str, tgt: str) -> bool:
         return self.edge(src, tgt) is not None
+
+    def incident_edges(self, id: str) -> list[dict]:
+        """All edge records touching ``id`` (as source or target)."""
+        return [e for e in self.edges() if e["src"] == id or e["tgt"] == id]
+
+    def neighbors(self, id: str) -> set[str]:
+        return {e["tgt"] if e["src"] == id else e["src"]
+                for e in self.incident_edges(id)}
+
+    # -- carrier mutators (used by the atomic basis, §4) ------------------
+    def _vertex_obj(self, id: str):
+        v = vertex_at(self._g, id)
+        if v is None:
+            raise KeyError(f"no node {id!r}")
+        return v
+
+    def _edge_obj(self, src: str, tgt: str):
+        for e in (Graph.Edges(self._g) or []):
+            if id_of(Edge.StartVertex(e)) == src and id_of(Edge.EndVertex(e)) == tgt:
+                return e
+        return None
+
+    def remove_node(self, id: str) -> None:
+        """Remove an (isolated) node. Caller guarantees no incident edges."""
+        self._g = Graph.RemoveVertex(self._g, self._vertex_obj(id), silent=True)
+
+    def remove_edge(self, src: str, tgt: str) -> None:
+        e = self._edge_obj(src, tgt)
+        if e is None:
+            raise KeyError(f"no edge {src!r}→{tgt!r}")
+        self._g = Graph.RemoveEdge(self._g, e, silent=True)
+
+    def set_node_label(self, id: str, label: str) -> None:
+        if not A.is_node_label(label):
+            raise ValueError(f"unknown node label {label!r}")
+        set_value(self._vertex_obj(id), "label", label)
+
+    def set_edge_weight(self, src: str, tgt: str, weight: float) -> None:
+        if weight < 0:
+            raise ValueError("edge weight ω must be ≥ 0 (§2.2 inv-3)")
+        e = self._edge_obj(src, tgt)
+        if e is None:
+            raise KeyError(f"no edge {src!r}→{tgt!r}")
+        set_value(e, "weight", float(weight))
 
     # -- degrees (always direction-aware; topologic defaults to undirected) -
     def out_degree(self, id: str) -> int:

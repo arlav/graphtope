@@ -45,6 +45,8 @@ briefing note. Until upstreamed:
   `VertexByKeyValue`, never by coordinates (Stage-1 coords are arbitrary layout).
 - **`AddEdge` drops edge dicts unless `transferEdgeDictionaries=True`.** Always pass it.
 - **Bools coerce to int** in dictionaries (`True`→`1`); read `bidirectional` back as `bool`.
+- **`Graph.Vertices` order is not insertion order and not stable across processes.**
+  Never rely on it; serialize in a canonical (sorted) form, compare graphs by id/iso.
 
 ## Environment
 Python 3.11, `topologicpy` 0.9.43, `networkx` 3.6, Jupyter (ipykernel/ipywidgets) —

@@ -48,6 +48,17 @@ def set_dict(topo, d: dict):
     return Topology.SetDictionary(topo, to_dictionary(d))
 
 
+def set_value(topo, key, value):
+    """Update one key on a live vertex/edge in place (preserves other keys).
+
+    Reads the *raw* dict (keeping topologic-internal keys like ``index`` that
+    ``AddEdge`` relies on), changes one key, and rebinds it.
+    """
+    raw = py_dict(topo)
+    raw[key] = value
+    return set_dict(topo, raw)
+
+
 def id_of(vertex):
     return py_dict(vertex).get("id")
 
