@@ -63,3 +63,17 @@ def to_json(sg: StateGraph, path: str, *, indent: int = 2) -> None:
 def from_json(path: str) -> StateGraph:
     with open(path) as fh:
         return from_dict(json.load(fh))
+
+
+# === derivation trace (§10.2) ============================================
+def dump_trace(trace, path: str, *, indent: int = 2) -> None:
+    """Write a derivation trace (a list of step dicts, or a Derivation) to JSON."""
+    if hasattr(trace, "trace"):
+        trace = trace.trace()
+    with open(path, "w") as fh:
+        json.dump(trace, fh, indent=indent)
+
+
+def load_trace(path: str) -> list:
+    with open(path) as fh:
+        return json.load(fh)

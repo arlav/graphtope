@@ -47,6 +47,12 @@ briefing note. Until upstreamed:
 - **Bools coerce to int** in dictionaries (`True`→`1`); read `bidirectional` back as `bool`.
 - **`Graph.Vertices` order is not insertion order and not stable across processes.**
   Never rely on it; serialize in a canonical (sorted) form, compare graphs by id/iso.
+- **Stage 2 (geometry):** `CellComplex.ByCells` returns `None` for a *disconnected*
+  cell set — build one complex per face-connected component. `Graph.ByTopology(cc,
+  direct=True)` extracts the dual adjacency (vertices at cell centroids → map back by
+  position). `Topology.IsSimilar` still prints internal chatter under `silent=True`
+  (redirect stdout). Grid massing can't embed cycles/interlocks — report coverage,
+  don't fake it.
 
 ## Environment
 Python 3.11, `topologicpy` 0.9.43, `networkx` 3.6, Jupyter (ipykernel/ipywidgets) —
