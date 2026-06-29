@@ -19,6 +19,7 @@ in ``blender/import_graphtope.py``.
 from __future__ import annotations
 
 import json
+import re
 
 from topologicpy.Dictionary import Dictionary
 from topologicpy.Topology import Topology
@@ -102,6 +103,118 @@ def roundtrip(sg: StateGraph) -> StateGraph:
     Equals ``sg`` (typed) when the realisation is complete (all adjacencies as
     shared faces); otherwise equals the *realised* subgraph."""
     return graph_from_realisation(_realise.realise(sg))
+
+
+# === B2: import a real named OBJ model with actual sizes =================
+def classify_space(name: str):
+    """Map a real Blender object name → ``(label, subtype)`` per Appendix A, or
+    ``None`` for non-space elements (slabs, columns, …) that are skipped."""
+    n = re.sub(r"\.\d+$", "", name).lower()                 # drop Blender's .001 suffix
+    if any(k in n for k in ("slab", "column", "mesh_", "wall", "beam", "roof")):
+        return None
+    if "entrance" in n or "auxiliary_ground" in n:
+        return (A.ENTRANCE, None)
+    if "corridor" in n:
+        return (A.CORRIDOR, None)
+    if "stair" in n:
+        return (A.STAIRCASE, None)
+    if "mesonete" in n or "maisonette" in n:
+        return (A.L_SECTION, None)                          # F-type maisonette = the L-section
+    if "toilet" in n:
+        return (A.GENERIC, "toilet")
+    if "lobby" in n:
+        return (A.GENERIC, "lobby")
+    if "balcony" in n:
+        return (A.GENERIC, "balcony")
+    if "condenser" in n and "main" in n:
+        return (A.GENERIC, "condenser_main")
+    if "apartment" in n:
+        return (A.GENERIC, "apartment")
+    return (A.GENERIC, None)
+
+
+def _parse_obj_objects(path: str) -> dict:
+    """Parse an OBJ into ``{object_name: bbox}`` where bbox = (x, y, z, w, d, h)
+    in the model's own units (a robust own-parser; topologic's OBJ import is lossy)."""
+    verts, objs, cur = [], {}, None
+    with open(path) as fh:
+        for line in fh:
+            if line.startswith("o "):
+                cur = line[2:].strip(); objs[cur] = set()
+            elif line.startswith("v "):
+                _, x, y, z = line.split()[:4]
+                verts.append((float(x), float(y), float(z)))
+            elif line.startswith("f ") and cur is not None:
+                for tok in line.split()[1:]:
+                    objs[cur].add(int(tok.split("/")[0]) - 1)
+    boxes = {}
+    for n, idx in objs.items():
+        if not idx:
+            continue
+        pts = [verts[i] for i in idx]
+        xs = [p[0] for p in pts]; ys = [p[1] for p in pts]; zs = [p[2] for p in pts]
+        boxes[n] = (min(xs), min(ys), min(zs),
+                    max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs))
+    return boxes
+
+
+def _real_adjacent(b1, b2, gap: float, min_overlap: float):
+    """Orientation of the shared face between two real bboxes, or None: two axes
+    overlap (a shared wall area) and the third is separated by ≤ ``gap`` (a wall)."""
+    ov = []
+    for k in range(3):
+        lo = max(b1[k], b2[k]); hi = min(b1[k] + b1[k + 3], b2[k] + b2[k + 3])
+        ov.append(hi - lo)
+    big = [k for k in range(3) if ov[k] > min_overlap]
+    if len(big) != 2:
+        return None
+    k = next(x for x in range(3) if x not in big)
+    return ("V" if k == 2 else "H") if -ov[k] <= gap else None
+
+
+def graph_from_model(path: str, *, gap: float = 0.8, min_overlap: float = 0.8) -> tuple:
+    """Import a real named OBJ building → a typed ``StateGraph`` with **actual
+    sizes**. Object names are classified to Σ (Appendix A); adjacency + orientation
+    come from real bounding-box geometry; every node carries metric attributes
+    (width/depth/height/volume/level). Returns ``(graph, boxes)`` — ``boxes`` maps
+    node id → real bbox for realising/rendering at true scale."""
+    raw = _parse_obj_objects(path)
+    spaces = {n: b for n, b in raw.items() if classify_space(n)}
+    levels = sorted({round(b[2], 1) for b in spaces.values()})   # z-mins → storey index
+
+    g = StateGraph()
+    boxes = {}
+    for name, b in spaces.items():
+        label, subtype = classify_space(name)
+        x, y, z, w, d, h = b
+        g.add_node(label, id=name, subtype=subtype, level=levels.index(round(z, 1)),
+                   width=round(w, 2), depth=round(d, 2), height=round(h, 2),
+                   volume=round(w * d * h, 1))
+        boxes[name] = b
+    ids = list(spaces)
+    for i in range(len(ids)):
+        for j in range(i + 1, len(ids)):
+            o = _real_adjacent(spaces[ids[i]], spaces[ids[j]], gap, min_overlap)
+            if o == "V":
+                a, b = ids[i], ids[j]
+                src, tgt = (a, b) if spaces[a][2] > spaces[b][2] else (b, a)
+                g.add_edge(src, tgt, A.V, bidirectional=False)
+            elif o == "H":
+                g.add_edge(ids[i], ids[j], A.H)
+    return g, boxes
+
+
+def typical_sizes(model_graph: StateGraph) -> dict:
+    """Median ``(width, depth, height)`` per τ label from an imported real model —
+    the actual proportions to realise generated variants at true scale."""
+    from statistics import median
+    by: dict = {}
+    for n in model_graph.nodes():
+        a = model_graph.node_attrs(n)
+        if {"width", "depth", "height"} <= a.keys():
+            by.setdefault(model_graph.node_label(n), []).append((a["width"], a["depth"], a["height"]))
+    return {lab: tuple(round(median(v[i] for v in dims), 2) for i in range(3))
+            for lab, dims in by.items()}
 
 
 def _bbox(cell) -> tuple:

@@ -4,7 +4,7 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-06-28 · **Suite:** 146 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-06-29 · **Suite:** 151 tests passing · **Carrier:** topologicpy 0.9.43
 
 ## Milestones
 
@@ -23,6 +23,7 @@ TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing
 | **G1** | **Generative — architectural validity (buildings, not noise)** | ✅ **done** | `validity` | `test_validity.py` (9) |
 | **G2** | **Generative — parameterised productions (macro variation)** | ✅ **done** | `grammar_params` | `test_grammar_params.py` (6) |
 | **B1** | **Blender/BIM round-trip — OBJ+sidecar export, geometry→typed graph** | ✅ **done** | `exchange`, `blender/import_graphtope.py` | `test_exchange.py` (7) |
+| **B2** | **Import the real model — actual sizes from the Narkomfin OBJ** | ✅ **done** | `exchange`, `graphtope/models/*.obj` | `test_realmodel.py` (5) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, and the **generative track has
 started** (G0). Direction set: diverse *catalogue* · Blender *round-trip* (B1) ·
@@ -81,12 +82,28 @@ assembly *macro-first* (G2→G3). Plan: `docs/Generative_Variation_Research_Plan
 - Spec defaults adopted: property model hybrid (§12.1), levels L3 (§12.2),
   weight default `1.0` / merge ξ=max (§12.4).
 
+## Real model (B2) — what we now have
+
+`exchange.graph_from_model(obj)` imports a real named OBJ → typed `StateGraph`
+with **actual sizes**: object names classified to Σ via Appendix A
+(`classify_space`), adjacency + orientation from real bbox geometry, every node
+carrying width/depth/height/volume/level. The real Dom Narkomfin imports to **57
+spaces, 127 adjacencies, 8 storeys, ~16,416 m³, one connected component** (spine
+corridor 73.2 m, degree 12). `typical_sizes(graph)` gives median dims per type.
+Finding: the real maisonettes are all `mesonete_f` → **`l_section`** (the F-type
+maisonette *is* the L-section — domain correction to Appendix A, which had grounded
+`mesonete_f` as `u_section`); there is no separately-modelled `u_section`, so the
+grammar's U/L pairing abstracts one built maisonette family. Bundled models:
+`graphtope/models/{building_only, full_grammar, U_units_realised}.obj`.
+
 ## Up next — generative track (per the research plan)
 
-- **G3 — U/L section sub-grammars** *(next)*: micro variation — give
-  `u_section`/`l_section` their own alphabets + productions (split-level configs,
-  voids, internal stair, the interlock) developed via `REFINE`.
-- Then **G4** metrics + a design-space map of the catalogue.
+- **Realise variants at real proportions (G2 × B2)** — drive `realise`/`draw_massing`
+  with `typical_sizes(REAL)` so generated catalogues render at true Narkomfin scale.
+- **G3 — U/L section sub-grammars** — give `u_section`/`l_section` their own
+  alphabets + productions (split-level, voids, internal stair, interlock) via
+  `REFINE`, using `U_units_realised.obj` as the reference.
+- Then **G4** metrics + a design-space map (now with real metric axes: area, volume).
 
 `exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
 id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).
