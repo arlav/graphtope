@@ -4,7 +4,7 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-06-26 · **Suite:** 118 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-06-28 · **Suite:** 146 tests passing · **Carrier:** topologicpy 0.9.43
 
 ## Milestones
 
@@ -19,9 +19,14 @@ TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing
 | M6 | Trace record/replay/invert; τ stub (§9, §10.2) | ✅ done | `engine`, `serialize`, `shape_iface` | `test_engine.py` (7) |
 | M7 | Hierarchy (REFINE/ABSTRACT) + BRIDGE (§7.6) | ✅ done | `hierarchy`, `compose`, `compare` | `test_hierarchy.py` (3), `test_compose.py` (5) |
 | **S2** | **Stage 2 — geometry: realise / round-trip / geometric match (§9)** | ✅ **done** | `realise`, `topoview`, `rules` | `test_realise.py` (17) |
+| **G0** | **Generative — strategy + catalogue + typed-iso dedup** | ✅ **done** | `generate` | `test_generate.py` (6) |
+| **G1** | **Generative — architectural validity (buildings, not noise)** | ✅ **done** | `validity` | `test_validity.py` (9) |
+| **G2** | **Generative — parameterised productions (macro variation)** | ✅ **done** | `grammar_params` | `test_grammar_params.py` (6) |
+| **B1** | **Blender/BIM round-trip — OBJ+sidecar export, geometry→typed graph** | ✅ **done** | `exchange`, `blender/import_graphtope.py` | `test_exchange.py` (7) |
 
-Scope: **all of Stage 1 (M1–M7) complete**, plus a **first Stage-2 cut** (geometry
-bridge). Remaining Stage-2 work listed under "Up next".
+Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, and the **generative track has
+started** (G0). Direction set: diverse *catalogue* · Blender *round-trip* (B1) ·
+assembly *macro-first* (G2→G3). Plan: `docs/Generative_Variation_Research_Plan.md`.
 
 ## What works today
 
@@ -76,10 +81,34 @@ bridge). Remaining Stage-2 work listed under "Up next".
 - Spec defaults adopted: property model hybrid (§12.1), levels L3 (§12.2),
   weight default `1.0` / merge ξ=max (§12.4).
 
-## Up next
+## Up next — generative track (per the research plan)
+
+- **G3 — U/L section sub-grammars** *(next)*: micro variation — give
+  `u_section`/`l_section` their own alphabets + productions (split-level configs,
+  voids, internal stair, the interlock) developed via `REFINE`.
+- Then **G4** metrics + a design-space map of the catalogue.
+
+`exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
+id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).
+`graph_from_realisation`/`roundtrip` rebuild a typed graph from realised geometry
+— **exact** for buildings without one-way H edges; V direction recovered from z,
+types/subtypes from cell semantics. Geometry can't encode access-direction (a
+shared wall has no direction) → the **sidecar** carries it (as IFC would).
+`graph_from_obj` reads a (Blender-edited) OBJ back via bounding-box adjacency +
+sidecar types — **best-effort** (OBJ re-import adds stray cells / no shared faces;
+IFC via `Graph.ByIFCFile` is the production upgrade). Blender importer:
+`blender/import_graphtope.py`.
+
+`validity` notes: hard rules in `DEFAULT_CHECKS` (no contradictions — circulation
+present per multi-room block, ≤1 entrance/block, entrance on circulation, L paired
+under U, no floating rooms); `STRICT_CHECKS` adds completeness (every circulated
+block is entered). Raw random generation is ~80% valid, so `keep=is_valid` is a
+cheap filter. The DNF passes all checks.
+
+## Stage 2 — remaining (lower-priority)
 
 Stage 2 is done (geometry, round-trip, geometric matching — a/b/c all landed).
-Remaining, lower-priority:
+Other lower-priority items:
 - **Global floor-planner** — a rectangular-dual / constraint solver to reach 18/18
   on the full DNF (the greedy layout boxes a staircase into the last interlock gap;
   the motif repairs already hit 100% in isolation).

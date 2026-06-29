@@ -272,11 +272,14 @@ def box_layout(sg: StateGraph) -> tuple[dict, set, set]:
 
 
 # === realisation: a Cell per node ========================================
-def _box_cell(box, nid, label):
+def _box_cell(box, nid, label, subtype=None):
     x, y, z, w, d, h = box
     c = Cell.Box(origin=Vertex.ByCoordinates(x + w / 2, y + d / 2, z + h / 2),
                  width=w, length=d, height=h, placement="center")
-    return Topology.SetDictionary(c, Dictionary.ByKeysValues(["id", "label"], [nid, label]))
+    keys, vals = ["id", "label"], [nid, label]
+    if subtype is not None:                          # carry the type semantics (BIM space-type)
+        keys.append("subtype"); vals.append(subtype)
+    return Topology.SetDictionary(c, Dictionary.ByKeysValues(keys, vals))
 
 
 def _components(nodes, adjacency: set) -> list:
@@ -310,7 +313,8 @@ def realise(sg: StateGraph, boxes: dict | None = None) -> dict:
         realised = {frozenset((e["src"], e["tgt"])) for e in sg.edges()
                     if _faces_touch(boxes[e["src"]], boxes[e["tgt"]])}
         unrealised = {frozenset((e["src"], e["tgt"])) for e in sg.edges()} - realised
-    cells = {nid: _box_cell(box, nid, sg.node_label(nid)) for nid, box in boxes.items()}
+    cells = {nid: _box_cell(box, nid, sg.node_label(nid), sg.node_attrs(nid).get("subtype"))
+             for nid, box in boxes.items()}
     complexes = []
     for comp in _components(list(boxes), realised):
         if len(comp) >= 2:

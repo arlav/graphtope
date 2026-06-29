@@ -150,14 +150,18 @@ def draw(state, ax=None, pos=None, title=None, seed: int = 7):
     return ax
 
 
-def draw_grid(frames, pos=None, ncols: int = 4, panel: float = 3.2, seed: int = 7):
-    """Draw a sequence of ``(title, state)`` snapshots on a shared layout.
+def draw_grid(frames, pos=None, ncols: int = 4, panel: float = 3.2, seed: int = 7,
+              shared: bool = True):
+    """Draw a sequence of ``(title, state)`` snapshots.
 
-    ``frames`` is a list of ``(title, StateGraph-or-dict)``. Returns the figure.
+    ``frames`` is a list of ``(title, StateGraph-or-dict)``. With ``shared=True``
+    all panels use one layout (right for steps of a *single* derivation, so nodes
+    don't jump); with ``shared=False`` each panel is laid out on its own (right
+    for a *catalogue* of distinct variants). Returns the figure.
     """
     import matplotlib.pyplot as plt
     frames = [(t, _as_data(s)) for t, s in frames]
-    if pos is None:
+    if shared and pos is None:
         pos = shared_layout(frames, seed=seed)
     n = len(frames)
     ncols = min(ncols, n) or 1
@@ -165,7 +169,8 @@ def draw_grid(frames, pos=None, ncols: int = 4, panel: float = 3.2, seed: int = 
     fig, axes = plt.subplots(nrows, ncols, figsize=(panel * ncols, panel * nrows))
     axes = [axes] if n == 1 else list(axes.flat)
     for ax, (title, data) in zip(axes, frames):
-        draw(data, ax=ax, pos=pos, title=title)
+        draw(data, ax=ax, pos=(pos if shared else shared_layout([(title, data)], seed=seed)),
+             title=title)
     for ax in axes[n:]:
         ax.axis("off")
     fig.legend(handles=legend_handles(), loc="lower center", ncol=len(COLOR),

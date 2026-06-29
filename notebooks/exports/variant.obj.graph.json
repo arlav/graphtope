@@ -1,0 +1,270 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "nodes": [
+    {
+      "id": "b",
+      "label": "generic",
+      "attrs": {
+        "block": "residential"
+      }
+    },
+    {
+      "id": "n0",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n1",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n10",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n11",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n12",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n13",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n14",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n2",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    },
+    {
+      "id": "n3",
+      "label": "generic",
+      "attrs": {}
+    },
+    {
+      "id": "n4",
+      "label": "staircase",
+      "attrs": {}
+    },
+    {
+      "id": "n5",
+      "label": "generic",
+      "attrs": {}
+    },
+    {
+      "id": "n6",
+      "label": "corridor",
+      "attrs": {}
+    },
+    {
+      "id": "n7",
+      "label": "staircase",
+      "attrs": {}
+    },
+    {
+      "id": "n8",
+      "label": "staircase",
+      "attrs": {}
+    },
+    {
+      "id": "n9",
+      "label": "generic",
+      "attrs": {
+        "subtype": "toilet"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "src": "b",
+      "tgt": "n0",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n0",
+      "tgt": "n1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n0",
+      "tgt": "n2",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n0",
+      "tgt": "n5",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n1",
+      "tgt": "n3",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n1",
+      "tgt": "n4",
+      "type": "adjacency",
+      "orientation": "V",
+      "bidirectional": false,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n10",
+      "tgt": "n11",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n12",
+      "tgt": "n13",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n12",
+      "tgt": "n14",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n13",
+      "tgt": "n14",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n2",
+      "tgt": "n6",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n3",
+      "tgt": "n7",
+      "type": "adjacency",
+      "orientation": "V",
+      "bidirectional": false,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n5",
+      "tgt": "n12",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n6",
+      "tgt": "n1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n6",
+      "tgt": "n8",
+      "type": "adjacency",
+      "orientation": "V",
+      "bidirectional": false,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n7",
+      "tgt": "n9",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n9",
+      "tgt": "n10",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n9",
+      "tgt": "n11",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    }
+  ]
+}
