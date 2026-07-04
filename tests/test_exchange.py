@@ -79,3 +79,54 @@ def test_graph_from_obj_recovers_types_and_some_adjacency(tmp_path):
     assert back.order() >= g.order()                          # OBJ re-import may add stray cells
     assert {A.CORRIDOR, A.STAIRCASE} <= {back.node_label(n) for n in back.nodes()}
     assert back.size() >= 1                                   # bounding-box adjacency recovered
+
+
+# -- export at real proportions + batch -----------------------------------
+def test_export_at_real_proportions(tmp_path):
+    g = _clean_building()
+    sizes = {A.GENERIC: (3.66, 7.01, 9.9), A.CORRIDOR: (3.66, 2.8, 4.89),
+             A.STAIRCASE: (3.66, 21.0, 5.0)}
+    out = exchange.to_obj(g, str(tmp_path / "b.obj"), sizes=sizes)
+    assert os.path.exists(out["obj"]) and os.path.exists(out["sidecar"])
+    zs = [float(l.split()[3]) for l in open(out["obj"]) if l.startswith("v ")]
+    assert max(zs) - min(zs) >= 9.0                          # a real ~9.9 m storey height
+
+
+def test_export_catalogue_writes_numbered_files(tmp_path):
+    written = exchange.export_catalogue([_clean_building(), _clean_building()],
+                                        str(tmp_path / "cat"))
+    assert len(written) == 2
+    files = set(os.listdir(str(tmp_path / "cat")))
+    assert {"variant_00.obj", "variant_01.obj"} <= files
+    assert all(os.path.exists(w["sidecar"]) for w in written)
+
+
+def test_export_catalogue_combined_one_file(tmp_path):
+    import json
+    gs = [_clean_building(), _clean_building(), _clean_building()]
+    out = exchange.export_catalogue_combined(gs, str(tmp_path / "cat.obj"), cols=2, gap=5.0)
+    assert out["variants"] == 3 and os.path.exists(out["obj"]) and os.path.exists(out["sidecar"])
+    meta = json.load(open(out["sidecar"]))
+    assert len(meta["variants"]) == 3
+    assert len({tuple(v["offset"]) for v in meta["variants"]}) == 3     # each variant offset
+    names = [l.split()[1] for l in open(out["obj"]) if l.startswith("g ")]
+    assert any(n.startswith("v0_") for n in names) and any(n.startswith("v2_") for n in names)
+
+
+def test_to_obj_with_explicit_real_boxes(tmp_path):
+    from graphtope import narkomfin as nf
+    g = nf.derive_slab(bands=1, n_bays=3, pattern="KFK")
+    out = exchange.to_obj(g, str(tmp_path / "slab.obj"), boxes=nf.boxes_of(g))
+    assert os.path.exists(out["obj"])
+    zs = [float(l.split()[3]) for l in open(out["obj"]) if l.startswith("v ")]
+    assert max(zs) - min(zs) > 5                                  # real multi-floor section
+
+
+def test_export_catalogue_combined_with_boxes_of(tmp_path):
+    from graphtope import narkomfin as nf
+    cat = nf.catalogue(3, seed=2)
+    out = exchange.export_catalogue_combined(cat, str(tmp_path / "slabs.obj"),
+                                             boxes_of=nf.boxes_of, cols=2, gap=20.0)
+    assert out["variants"] == 3 and os.path.exists(out["obj"])
+    names = [l.split()[1] for l in open(out["obj"]) if l.startswith("g ")]
+    assert any(n.startswith("v0_") for n in names) and any(n.startswith("v2_") for n in names)

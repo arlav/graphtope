@@ -209,19 +209,20 @@ def _cuboid_faces(x, y, z, sx, sy, sz):
             [p[1], p[2], p[6], p[5]], [p[0], p[3], p[7], p[4]]]
 
 
-def draw_massing(sg, ax=None, boxes=None, inset: float = 0.06,
+def draw_massing(sg, ax=None, boxes=None, sizes=None, inset: float = 0.06,
                  elev: int = 22, azim: int = -58):
     """Draw the realised cells as a 3-D massing model, coloured by node type.
 
-    Each node becomes a (variable-size) cell at its grid box (z = level);
-    adjacency edges are the shared faces between touching cells (spec §9). Cells
-    are inset slightly so individual rooms read."""
+    Each node becomes a cell at its grid box (z = level); cells are inset slightly
+    so rooms read. Pass ``sizes`` (a ``{label: (w, d, h)}`` map, e.g. from
+    ``exchange.typical_sizes(real_model)``) to render at **true proportions**;
+    otherwise the topological (shared-face) layout is used."""
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-    from .realise import box_layout
+    from .realise import box_layout, scaled_boxes
 
     if boxes is None:
-        boxes, _, _ = box_layout(sg)
+        boxes = scaled_boxes(sg, sizes) if sizes is not None else box_layout(sg)[0]
     if ax is None:
         fig = plt.figure(figsize=(8, 6))
         ax = fig.add_subplot(111, projection="3d")

@@ -1,0 +1,195 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "nodes": [
+    {
+      "id": "F_0_3",
+      "label": "l_section",
+      "attrs": {
+        "d": 8.42,
+        "h": 6.0,
+        "level": 1,
+        "w": 3.66,
+        "x": 10.98,
+        "y": -9.82,
+        "z": 3.0
+      }
+    },
+    {
+      "id": "K_0_2",
+      "label": "u_section",
+      "attrs": {
+        "d": 8.42,
+        "h": 6.0,
+        "level": 2,
+        "w": 3.66,
+        "x": 7.32,
+        "y": 1.4,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "box_0_0",
+      "label": "generic",
+      "attrs": {
+        "d": 8.42,
+        "h": 3.0,
+        "level": 2,
+        "subtype": "apartment",
+        "w": 3.66,
+        "x": 0.0,
+        "y": 1.4,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "box_0_1",
+      "label": "generic",
+      "attrs": {
+        "d": 8.42,
+        "h": 3.0,
+        "level": 2,
+        "subtype": "apartment",
+        "w": 3.66,
+        "x": 3.66,
+        "y": 1.4,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "corridor_0",
+      "label": "corridor",
+      "attrs": {
+        "d": 2.8,
+        "h": 3.0,
+        "level": 2,
+        "w": 14.64,
+        "x": 0.0,
+        "y": -1.4,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "entrance",
+      "label": "entrance",
+      "attrs": {
+        "d": 2.5,
+        "h": 3.0,
+        "level": 0,
+        "w": 3.66,
+        "x": -3.66,
+        "y": 1.4,
+        "z": 0.0
+      }
+    },
+    {
+      "id": "stair_E",
+      "label": "staircase",
+      "attrs": {
+        "d": 2.8,
+        "h": 9.0,
+        "level": 0,
+        "w": 3.66,
+        "x": 14.64,
+        "y": -1.4,
+        "z": 0.0
+      }
+    },
+    {
+      "id": "stair_W",
+      "label": "staircase",
+      "attrs": {
+        "d": 2.8,
+        "h": 9.0,
+        "level": 0,
+        "w": 3.66,
+        "x": -3.66,
+        "y": -1.4,
+        "z": 0.0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "src": "K_0_2",
+      "tgt": "box_0_1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "K_0_2",
+      "tgt": "corridor_0",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "box_0_0",
+      "tgt": "box_0_1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "F_0_3",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "box_0_0",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "box_0_1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "stair_E",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "stair_W",
+      "tgt": "corridor_0",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "stair_W",
+      "tgt": "entrance",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    }
+  ]
+}

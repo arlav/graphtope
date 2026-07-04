@@ -44,11 +44,20 @@ def test_floating_room_rejected():
     assert any("floating" in v for v in validity.violations(g))
 
 
-def test_lsection_without_usection_rejected():
+def test_lsection_not_anchored_rejected():
+    # an l_section neither under a u_section nor on circulation is invalid
+    g = StateGraph()
+    g.add_node(A.CORRIDOR, id="c"); g.add_node(A.GENERIC, id="r"); g.add_node(A.L_SECTION, id="l")
+    g.add_edge("c", "r", A.H); g.add_edge("r", "l", A.H)      # l only touches a plain room
+    assert any("neither under a u_section nor on circulation" in v for v in validity.violations(g))
+
+
+def test_lsection_on_corridor_is_valid():
+    # the Narkomfin section: an F-maisonette (l_section) docked to a corridor is fine
     g = StateGraph()
     g.add_node(A.CORRIDOR, id="c"); g.add_node(A.L_SECTION, id="l")
-    g.add_edge("c", "l", A.H)                                 # L present, no U above it
-    assert any("no u_section above" in v for v in validity.violations(g))
+    g.add_edge("c", "l", A.H)
+    assert not any("l_section" in v for v in validity.violations(g))
 
 
 def test_entrance_not_on_circulation_rejected():

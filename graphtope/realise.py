@@ -271,6 +271,27 @@ def box_layout(sg: StateGraph) -> tuple[dict, set, set]:
     return boxes, realised, unrealised
 
 
+def scaled_boxes(sg: StateGraph, sizes: dict, module=None) -> dict:
+    """Position each node on the grid but sized by its **type's real dimensions**
+    (``sizes[label] = (w, d, h)``, e.g. from ``exchange.typical_sizes(real_model)``)
+    — a *visualisation* layout that renders generated variants at true proportions.
+
+    Cells sit in per-axis "slots" sized to the largest type (so none overlap),
+    centred in plan and floor-aligned in z, so double-height maisonettes and
+    half-height corridors read correctly in section. This is **not** the
+    shared-face topological layout (real sizes don't tile) — it's for the eye."""
+    coords, _, _ = grid_layout(sg)
+    if module is None:
+        dims = list(sizes.values()) or [(1.0, 1.0, 1.0)]
+        module = (max(s[0] for s in dims), max(s[1] for s in dims), max(s[2] for s in dims))
+    mx, my, mz = module
+    out = {}
+    for n, (gx, gy, gz) in coords.items():
+        w, d, h = sizes.get(sg.node_label(n), (1.0, 1.0, 1.0))
+        out[n] = (gx * mx + (mx - w) / 2, gy * my + (my - d) / 2, gz * mz, w, d, h)
+    return out
+
+
 # === realisation: a Cell per node ========================================
 def _box_cell(box, nid, label, subtype=None):
     x, y, z, w, d, h = box

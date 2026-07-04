@@ -169,3 +169,27 @@ def test_production_applies_via_geometric_matcher():
     assert G.order() == before + 1
     inv.apply(G)                                                # rule application still reversible
     assert G.order() == before
+
+
+# -- real-proportion rendering (B2 × G2): size cells by type's real dims --
+def test_scaled_boxes_size_cells_by_type():
+    g = StateGraph()
+    g.add_node(A.CORRIDOR, id="c"); g.add_node(A.GENERIC, id="a"); g.add_edge("c", "a", A.H)
+    sizes = {A.CORRIDOR: (3.66, 2.8, 4.89), A.GENERIC: (3.66, 7.01, 9.9)}
+    boxes = realise.scaled_boxes(g, sizes)
+    assert boxes["c"][3:] == (3.66, 2.8, 4.89)            # (w, d, h) == the corridor's real size
+    assert boxes["a"][3:] == (3.66, 7.01, 9.9)
+    assert boxes["a"][5] > boxes["c"][5]                  # apartment taller than corridor (real section)
+
+
+def test_scaled_boxes_do_not_overlap():
+    g = StateGraph()
+    for i in "abcd":
+        g.add_node(A.GENERIC, id=i)
+    g.add_edge("a", "b", A.H); g.add_edge("b", "c", A.H); g.add_edge("c", "d", A.H)
+    sizes = {A.GENERIC: (3.66, 7.01, 9.9)}
+    boxes = realise.scaled_boxes(g, sizes)
+    cells = [realise._cells_of(tuple(int(round(v)) for v in b)) for b in boxes.values()]
+    # module = max real dim per axis, so each cell stays inside its own grid slot
+    for n, b in boxes.items():
+        assert b[3] <= 3.66 + 1e-9 and b[5] <= 9.9 + 1e-9

@@ -39,12 +39,22 @@ def legend_rgb(label: str) -> list:
 
 
 # === export (out) =========================================================
-def to_obj(sg: StateGraph, path: str, *, sidecar: bool = True) -> dict:
-    """Realise ``sg`` and write an OBJ (group per space, named by id, coloured by
-    type) plus a ``<path>.graph.json`` sidecar. Returns the written paths."""
-    r = _realise.realise(sg)
+def to_obj(sg: StateGraph, path: str, *, boxes: dict | None = None,
+           sizes: dict | None = None, sidecar: bool = True) -> dict:
+    """Write ``sg`` as an OBJ (object per space, named by id, coloured by type)
+    plus a ``<path>.graph.json`` sidecar. Geometry precedence: explicit ``boxes``
+    (e.g. ``narkomfin.boxes_of(g)`` — real, exact) > ``sizes`` (true proportions,
+    ``typical_sizes``) > the unit shared-face layout. Returns the written paths."""
+    if boxes is None and sizes is not None:
+        boxes = _realise.scaled_boxes(sg, sizes)
+    if boxes is not None:
+        cell_map = {nid: _realise._box_cell(box, nid, sg.node_label(nid),
+                                            sg.node_attrs(nid).get("subtype"))
+                    for nid, box in boxes.items()}
+    else:
+        cell_map = _realise.realise(sg)["cells"]
     cells = []
-    for nid, cell in r["cells"].items():
+    for nid, cell in cell_map.items():
         d = Dictionary.ByKeysValues(["id", "label", "color"],
                                     [nid, sg.node_label(nid), legend_rgb(sg.node_label(nid))])
         cells.append(Topology.SetDictionary(cell, d))
@@ -55,6 +65,71 @@ def to_obj(sg: StateGraph, path: str, *, sidecar: bool = True) -> dict:
         side = path + ".graph.json"
         with open(side, "w") as fh:
             json.dump(serialize.to_dict(sg), fh, indent=2)
+        out["sidecar"] = side
+    return out
+
+
+def export_catalogue(variants, directory: str, *, sizes: dict | None = None,
+                     boxes_of=None, prefix: str = "variant") -> list:
+    """Export variants (``Derivation``s or ``StateGraph``s) to ``directory`` as
+    ``{prefix}_NN.obj`` (+ sidecars). ``boxes_of(sg) -> {id: box}`` supplies exact
+    geometry (e.g. ``narkomfin.boxes_of``). Returns the written paths."""
+    import os
+    os.makedirs(directory, exist_ok=True)
+    written = []
+    for i, v in enumerate(variants):
+        sg = v.sg if hasattr(v, "sg") else v
+        written.append(to_obj(sg, os.path.join(directory, f"{prefix}_{i:02d}.obj"),
+                              boxes=boxes_of(sg) if boxes_of else None, sizes=sizes))
+    return written
+
+
+def export_catalogue_combined(variants, path: str, *, sizes: dict | None = None,
+                              boxes_of=None, cols: int = 4, gap: float = 12.0,
+                              prefix: str = "v", sidecar: bool = True) -> dict:
+    """Export the **whole catalogue into one OBJ**, laid out on a grid (each
+    variant spaced apart, like the reference full-grammar model) so they can be
+    browsed together in Blender. ``boxes_of(sg)`` supplies exact geometry (e.g.
+    ``narkomfin.boxes_of``). Objects are named ``v{i}_{nodeid}``; a
+    ``<path>.catalogue.json`` records each variant's graph + grid offset."""
+    graphs, boxsets = [], []
+    for v in variants:
+        sg = v.sg if hasattr(v, "sg") else v
+        graphs.append(sg)
+        boxsets.append(boxes_of(sg) if boxes_of
+                       else _realise.scaled_boxes(sg, sizes) if sizes
+                       else _realise.box_layout(sg)[0])
+
+    def footprint(boxes):
+        xs = [b[0] for b in boxes.values()] + [b[0] + b[3] for b in boxes.values()]
+        ys = [b[1] for b in boxes.values()] + [b[1] + b[4] for b in boxes.values()]
+        return max(xs) - min(xs), max(ys) - min(ys), min(xs), min(ys)
+
+    fps = [footprint(b) for b in boxsets]
+    cell_w = max(f[0] for f in fps) + gap
+    cell_h = max(f[1] for f in fps) + gap
+
+    cells, meta = [], []
+    for i, (sg, boxes, fp) in enumerate(zip(graphs, boxsets, fps)):
+        col, row = i % cols, i // cols
+        ox, oy = col * cell_w - fp[2], row * cell_h - fp[3]      # align each variant's min corner
+        for nid, (x, y, z, w, d, h) in boxes.items():
+            name = f"{prefix}{i}_{nid}"
+            cell = _realise._box_cell((x + ox, y + oy, z, w, d, h), name,
+                                      sg.node_label(nid), sg.node_attrs(nid).get("subtype"))
+            dd = Dictionary.ByKeysValues(["id", "label", "color"],
+                                         [name, sg.node_label(nid), legend_rgb(sg.node_label(nid))])
+            cells.append(Topology.SetDictionary(cell, dd))
+        meta.append({"index": i, "offset": [round(col * cell_w, 2), round(row * cell_h, 2)],
+                     "graph": serialize.to_dict(sg)})
+
+    Topology.ExportToOBJ(cells, path=path, nameKey="id", colorKey="color",
+                         transposeAxes=False, overwrite=True)
+    out = {"obj": path, "variants": len(graphs)}
+    if sidecar:
+        side = path + ".catalogue.json"
+        with open(side, "w") as fh:
+            json.dump({"variants": meta}, fh, indent=2)
         out["sidecar"] = side
     return out
 

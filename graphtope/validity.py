@@ -77,13 +77,17 @@ def check_entrance_adjacent_to_circulation(sg, comps, adj) -> list:
     return out
 
 
-def check_lsection_paired_with_usection(sg, comps, adj) -> list:
+def check_lsection_is_anchored(sg, comps, adj) -> list:
+    """An l_section (F-maisonette) must be anchored — either paired under a
+    u_section (the abstract grammar's V interlock) or docked to circulation (the
+    Narkomfin section, where the F-unit is entered off the corridor)."""
     out = []
-    for e_tgt in [n for n in sg.nodes() if sg.node_label(n) == A.L_SECTION]:
-        above_u = any(e["tgt"] == e_tgt and e["orientation"] == A.V
+    for n in [n for n in sg.nodes() if sg.node_label(n) == A.L_SECTION]:
+        under_u = any(e["tgt"] == n and e["orientation"] == A.V
                       and sg.node_label(e["src"]) == A.U_SECTION for e in sg.edges())
-        if not above_u:
-            out.append(f"l_section {e_tgt!r} has no u_section above it (V)")
+        on_circulation = any(sg.node_label(m) in CIRCULATION for m in adj[n])
+        if not (under_u or on_circulation):
+            out.append(f"l_section {n!r} is neither under a u_section nor on circulation")
     return out
 
 
@@ -110,7 +114,7 @@ DEFAULT_CHECKS = (
     check_circulation_reaches_all,
     check_at_most_one_entrance_per_block,
     check_entrance_adjacent_to_circulation,
-    check_lsection_paired_with_usection,
+    check_lsection_is_anchored,
     check_no_floating_habitable,
 )
 #: + completeness: every circulated block is entered

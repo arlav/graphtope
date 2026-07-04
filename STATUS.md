@@ -4,7 +4,38 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-06-29 · **Suite:** 151 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-07-03 · **Suite:** 173 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ Direction shift — shape grammar (the graph↔shape bridge, finally)
+
+The abstract graph grammar (P1–P8) generated correct *topology* but Stage-2 was a
+generic grid-packer → topology-valid but geometrically arbitrary ("box salad").
+The fix (user-directed): **rebuild the grammar circulation-first as a *shape*
+grammar** where productions place exact geometry, and the graph is *derived from*
+what touches — so graph and geometry are one representation and cannot diverge.
+`graphtope/narkomfin.py` does this: `add_corridor_spine` / `add_stair_cores` build
+the armature; `anchor_K` (u_section, up), `anchor_F` (l_section, down),
+`anchor_box` dock maisonettes onto the corridor with the real Narkomfin section
+(corridor every 3 floors, K-up/F-down interlock). `derive_slab(bands, n_bays,
+pattern)` assembles a valid slab; **every edge is a real shared face**; geometry
+lives in node attributes (`boxes_of`). Real module: bay 3.66 m, floor 3 m. This is
+now the primary generative direction; P1–P8 remain as an abstract-topology study.
+`narkomfin.catalogue(n, seed)` = a deduped set of real slabs (vary bands/bays/
+pattern), every one buildable. Export via `exchange.to_obj(g, path,
+boxes=nf.boxes_of(g))`, `export_catalogue(..., boxes_of=nf.boxes_of)`, or
+`export_catalogue_combined(..., boxes_of=nf.boxes_of)` (whole catalogue in one OBJ).
+Samples: `notebooks/exports/narkomfin_slabs/`, `narkomfin_catalogue_real.obj`.
+✅ **The bridge is built** (`graphtope/bridge.py`): the abstract graph grammar
+*proposes* (P1/P3/P6/P7 + parameterised unit productions, recorded/replayable
+derivations), `spec_from_graph` reads a `SlabSpec` off the proposal (corridor →
+band, served units → K/F/B bay pattern; P7's V interlock hosted by the serving
+corridor, as built), `realise_spec` → `narkomfin.derive_slab_from_patterns`
+(ragged per-band patterns) builds it, `report` gives honest coverage (docked
+units, reinterpreted interlocks, skipped rooms). `bridge.grammar_catalogue(n)` =
+grammar-driven variants end-to-end; sample:
+`notebooks/exports/narkomfin_grammar_catalogue.obj`. Thinking + state:
+`Planning&State.md`. Next: richer unit sections (double-loaded both sides,
+double-height voids); G3 U/L sub-grammars.
 
 ## Milestones
 
@@ -24,6 +55,7 @@ TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing
 | **G2** | **Generative — parameterised productions (macro variation)** | ✅ **done** | `grammar_params` | `test_grammar_params.py` (6) |
 | **B1** | **Blender/BIM round-trip — OBJ+sidecar export, geometry→typed graph** | ✅ **done** | `exchange`, `blender/import_graphtope.py` | `test_exchange.py` (7) |
 | **B2** | **Import the real model — actual sizes from the Narkomfin OBJ** | ✅ **done** | `exchange`, `graphtope/models/*.obj` | `test_realmodel.py` (5) |
+| **GS1** | **Graph→shape bridge — graph grammar drives the shape grammar** | ✅ **done** | `bridge`, `narkomfin` | `test_bridge.py` (6) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, and the **generative track has
 started** (G0). Direction set: diverse *catalogue* · Blender *round-trip* (B1) ·
@@ -98,9 +130,20 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
 
 ## Up next — generative track (per the research plan)
 
-- **Realise variants at real proportions (G2 × B2)** — drive `realise`/`draw_massing`
-  with `typical_sizes(REAL)` so generated catalogues render at true Narkomfin scale.
-- **G3 — U/L section sub-grammars** — give `u_section`/`l_section` their own
+- ✅ **Variants at real proportions (G2 × B2)** — `realise.scaled_boxes(sg, sizes)`
+  sizes each cell by its type's real dims; `topoview.draw_massing(sg, sizes=...)`
+  renders generated variants at true Narkomfin proportions (apartments double-height,
+  corridors half-height in section). Visualisation layer — the shared-face round-trip
+  still uses the tiling unit layout (real sizes don't tile). Caveat: real staircase
+  objects are full-depth circulation cores (~21 m), so generated staircases render deep.
+- ✅ **Execute & export to OBJ** — `exchange.to_obj(sg, path, sizes=...)`,
+  `export_catalogue(variants, dir, sizes=...)` (one file per variant), and
+  `export_catalogue_combined(variants, path, sizes=..., cols=, gap=)` (the **whole
+  catalogue in one OBJ**, variants on a grid, objects named `v{i}_{nodeid}`, with a
+  `.catalogue.json` sidecar). Samples: `notebooks/exports/catalogue/` and
+  `notebooks/exports/narkomfin_catalogue.obj`. Real-proportion exports use the
+  **sidecar JSON as the authoritative graph** (real-size cells don't tile).
+- **G3 — U/L section sub-grammars** *(next)* — give `u_section`/`l_section` their own
   alphabets + productions (split-level, voids, internal stair, interlock) via
   `REFINE`, using `U_units_realised.obj` as the reference.
 - Then **G4** metrics + a design-space map (now with real metric axes: area, volume).
