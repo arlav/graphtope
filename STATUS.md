@@ -6,32 +6,6 @@ TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing
 
 **Last updated:** 2026-08-11 · **Suite:** 211 tests passing · **Carrier:** topologicpy 0.9.43
 
-## ⚑ Plan §5 decisions resolved + SG0 interface routing (2026-08-09)
-
-Three of the sub-grammar plan's four §5 decisions were resolved (T. Dounas) and the
-code corrected to match; SG0 — the plan's key enabler — is done:
-
-- **§5.3 — the K section**: 8.0 m tall, sleeping gallery **over the corridor**
-  (confirmed from the section drawing; `U_units_realised.obj`'s 9.90 m "3-4-5"
-  envelopes measure three structural grid floors, not the dwelling).
-  `narkomfin.K_HEIGHT = 8.0`; `anchor_K` builds it — the level-1 box is the front
-  zone at full section height, the over-corridor wing is level-2 geometry (SG4).
-- **§5.1 — D bay**: paired refinement + explicit cross-unit constraint. `anchor_KF`
-  records the pairing as `pair` attributes on both nodes — **not** an edge:
-  measured, the pair meets only through the corridor (even at 8 m), and every graph
-  edge must remain a real shared face.
-- **§5.2 — openings**: doors/windows become first-class **nodes** (overrides the
-  plan's rooms-only recommendation). SG1's Σ_int registers `door`/`window`;
-  reachability runs through doors; SG7's daylight metric becomes real.
-- **SG0 — typed interface routing** (`hierarchy.py`): `UnitSpec.interface` routes
-  each incident edge class — `(orientation, neighbour-label)`, `(V, above/below)`,
-  `(orientation, "*")` — to a declared interior node; `anchor` is the fallback, so
-  router-less specs behave exactly as before (hierarchy tests unchanged). `G_U`
-  routes corridor→living, stacked-above→sleeping (the gallery, as built),
-  below→living; `G_L`: corridor/above→entry, below→living. Property-tested: the
-  interface-edge multiset is preserved and ABSTRACT stays exact.
-- **§5.4 (one paper or two) stays open** — gated on the SG5 source hunt (R1).
-
 ## ⚑ SG2 — the level-2 production corpus (2026-08-11)
 
 Five productions grew into **31, across five families — every bay type the
@@ -90,6 +64,32 @@ per-unit bookkeeping). Grounded dims where measured (the 1.7 × 8.4 m gallery
 strip); the rest awaits SG5. Tests: `tests/test_interior.py` (7) — each
 predicate rejects a hand-built violation and accepts every refined unit the
 current sub-grammars produce (incl. the refined DNF).
+
+## ⚑ Plan §5 decisions resolved + SG0 interface routing (2026-08-09)
+
+Three of the sub-grammar plan's four §5 decisions were resolved (T. Dounas) and the
+code corrected to match; SG0 — the plan's key enabler — is done:
+
+- **§5.3 — the K section**: 8.0 m tall, sleeping gallery **over the corridor**
+  (confirmed from the section drawing; `U_units_realised.obj`'s 9.90 m "3-4-5"
+  envelopes measure three structural grid floors, not the dwelling).
+  `narkomfin.K_HEIGHT = 8.0`; `anchor_K` builds it — the level-1 box is the front
+  zone at full section height, the over-corridor wing is level-2 geometry (SG4).
+- **§5.1 — D bay**: paired refinement + explicit cross-unit constraint. `anchor_KF`
+  records the pairing as `pair` attributes on both nodes — **not** an edge:
+  measured, the pair meets only through the corridor (even at 8 m), and every graph
+  edge must remain a real shared face.
+- **§5.2 — openings**: doors/windows become first-class **nodes** (overrides the
+  plan's rooms-only recommendation). SG1's Σ_int registers `door`/`window`;
+  reachability runs through doors; SG7's daylight metric becomes real.
+- **SG0 — typed interface routing** (`hierarchy.py`): `UnitSpec.interface` routes
+  each incident edge class — `(orientation, neighbour-label)`, `(V, above/below)`,
+  `(orientation, "*")` — to a declared interior node; `anchor` is the fallback, so
+  router-less specs behave exactly as before (hierarchy tests unchanged). `G_U`
+  routes corridor→living, stacked-above→sleeping (the gallery, as built),
+  below→living; `G_L`: corridor/above→entry, below→living. Property-tested: the
+  interface-edge multiset is preserved and ABSTRACT stays exact.
+- **§5.4 (one paper or two) stays open** — gated on the SG5 source hunt (R1).
 
 ## ⚑ G4 — metrics & the design-space map (2026-07-19)
 
@@ -200,10 +200,14 @@ double-height voids); G3 U/L sub-grammars.
 | **GS2** | **Richer section (D/R bays) — no skipped rooms in the catalogue** | ✅ **done** | `narkomfin`, `bridge` | `test_narkomfin.py` (+2), `test_bridge.py` (+1) |
 | **G3** | **U/L sub-grammars via REFINE; bridge drives two grammar levels** | ✅ **done** | `grammar_units`, `bridge` | `test_grammar_units.py` (6), `test_bridge.py` (+2) |
 | **G4** | **Metrics + design-space map (graph/geometry/interior axes, MDS)** | ✅ **done** | `metrics`, `topoview` | `test_metrics.py` (11) |
+| **SG0** | **Typed interface routing — REFINE routes each edge class to its interior node** | ✅ **done** | `hierarchy`, `grammar_units` | `test_grammar_units.py` (+2) |
+| **SG1** | **Σ_int registry + interior validity (door/window registered, §5.2)** | ✅ **done** | `interior`, `metrics` | `test_interior.py` (7) |
+| **SG2** | **Level-2 production corpus — 31 productions, every bay type develops** | ✅ **done** | `grammar_units`, `bridge` | `test_sg2_corpus.py` (6) |
 
-Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, and the **generative track has
-started** (G0). Direction set: diverse *catalogue* · Blender *round-trip* (B1) ·
-assembly *macro-first* (G2→G3). Plan: `docs/Generative_Variation_Research_Plan.md`.
+Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
+and the **sub-grammar phase is underway** (SG0–SG2 ✅; next SG3 — "one slab,
+many interiors"). Plans: `docs/Generative_Variation_Research_Plan.md`,
+`docs/Sub_Grammar_Development_Plan.md`.
 
 ## What works today
 
@@ -302,10 +306,16 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   explicit ▣ expansion slots for the sub-grammar work;
   `docs/Sub_Grammar_Development_Plan.md` is the SG0–SG8 plan that fills them (starts with
   SG0 typed interface routing — `Refine` currently lands *all* interface edges on one anchor).
-- **G5 — steering** *(next / optional)* — search or designer-in-the-loop over the
+- **SG3 — sub-derivation variability** *(next)* — one slab, many interiors: a
+  level-2 strategy/seed chooses which of the 31 corpus productions fire per
+  unit; typed-iso dedup at level 2; the interior design space measured the way
+  G4 measures the block space (paper Figure 7). With SG0–SG3 done the
+  one-paper minimum (§11.2) is met.
+- **SG5 source hunt** *(open, decides publication shape)* — a room-labelled
+  K/F interior reference, obtained or redrawn from Ginzburg's published plans.
+- **G5 — steering** *(optional)* — search or designer-in-the-loop over the
   derivation space against a metric objective (e.g. target compactness, N units at
-  min circulation depth), now that the objective functions exist. Or **notebook**
-  walkthrough cells for the bridge + design-space map.
+  min circulation depth), now that the objective functions exist.
 
 `exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
 id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).
