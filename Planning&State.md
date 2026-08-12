@@ -113,21 +113,48 @@ replayable, invertible derivation, so the abstract proposal and the built slab
 are linked end-to-end: **A₀ →(graph grammar)→ proposal →(bridge)→ spec
 →(shape grammar)→ exact geometry**, with edges that are real shared faces.
 
-## Open questions / next steps
+## Update — 2026-07-18 (richer section + G3 + two-level bridge)
 
-1. **Skipped rooms are common** (~1 per proposal): P1 grows rooms off rooms,
-   which the corridor-served slab can't host. Options: bias the pool further
-   toward P3/P6; or extend the section vocabulary (e.g. a room *behind* a `B`
-   bay, double-banked); or accept skips as the honest boundary of the slab type.
-2. **Richer unit sections** (STATUS "next"): double-loaded fronts *and* backs in
-   one bay (real Narkomfin has K and F in the same bay, front/back), double-height
-   voids — would let the bridge realise denser proposals.
-3. **G3 — U/L sub-grammars via `REFINE`**: refine each K/F unit's interior with
-   its own alphabet; the bridge then drives two grammar levels.
-4. **Round-trip check**: abstract the realised slab back (units per corridor)
-   and compare to the spec — a formal fidelity theorem for the bridge, beyond
-   the current per-edge face check.
-5. **Notebook section**: add a `bridge` walkthrough cell to
-   `notebooks/01_graphtope.ipynb` (propose → spec → slab → massing render),
-   per the notebook-drives workflow.
-6. **G4 metrics** on grammar-driven variants (area/volume axes now real).
+Items 1–3 below are now **done**; see `STATUS.md`'s 2026-07-18 note for detail.
+
+1. ✅ **Skipped rooms** — resolved by *extending the vocabulary*, not accepting
+   the boundary. New bay types (added alongside K/F/B, backwards-compatible):
+   **`D`** = K front + F back in one bay (the built double-loaded interlock, how
+   the real F-unit is entered off the same corridor as its K's — replaces the
+   "reinterpret the V edge as a separate F bay" reading); **`R`** = an apartment
+   with a room banked one deep behind it (the P1 room-off-room chain). Seed-0
+   catalogue: **0 skipped rooms** now. Deeper-than-one-room chains stay skipped
+   (honest boundary). `bridge.report` gained `rooms_banked`.
+2. ✅ **Richer unit sections** — the `D` bay is exactly "K and F in the same bay,
+   front/back". (Double-height voids now live at level 2, in the K sub-grammar.)
+3. ✅ **G3 — U/L sub-grammars via `REFINE`** — `grammar_units.py` (K/F interior
+   transformation grammars) + `bridge.refine_units` (drives both levels,
+   interface-preserving, exactly reversible). `grammar_catalogue(refine=True)`
+   carries the level-2 refined graph on each `Variant`.
+
+### Still open
+
+4. **Round-trip fidelity theorem**: abstract the realised slab back (units per
+   corridor) and compare to the spec — beyond the current per-edge face check.
+   (With D/R bays the abstraction now has to *un-pair* D→K+F and un-bank R→B+room.)
+5. ✅ **Notebook section** (done 2026-07-19): `notebooks/01_graphtope.ipynb` now
+   ends with the bridge → two-level → design-space walkthrough (propose → spec →
+   slab + massing; `refine_units` interior richness + reversibility; the G4 metric
+   table + MDS design-space map with `G_DNF` marked). Executed clean; outputs saved.
+6. ✅ **G4 metrics** (done 2026-07-19) — `metrics.py`: graph axes (units, K:F,
+   circulation depth, levels), geometry axes (GFA, volume, footprint, compactness,
+   area/unit), interior-richness axes (rooms/unit, voids), and a classical-MDS
+   `design_space` map with `G_DNF` placed via the same bridge.
+   `topoview.draw_design_space` renders it. See `STATUS.md` 2026-07-19.
+7. **Ground the interior room *names*** if a room-labelled reference model turns
+   up — `U_units_realised.obj` grounds structure/metrics but carries no
+   living/kitchen/bath vocabulary, so those subtypes are currently spec-grounded.
+
+### G5 — steering (the next open axis)
+
+With G4's metrics as objective functions, generation can now be *steered* rather
+than sampled: evolutionary/MCTS search over derivations toward a target
+(compactness, unit count at minimum circulation depth, distance-to-`G_DNF` in the
+map), or a designer-in-the-loop pick-and-extend in the notebook. The rule corpus
++ validity + metrics are the training/scoring substrate for the eventual ML
+generator (G5/§12.2).

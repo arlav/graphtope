@@ -24,14 +24,14 @@
             }
           },
           {
-            "id": "F_1_5",
+            "id": "F_1_3",
             "label": "l_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 4,
               "w": 3.66,
-              "x": 18.3,
+              "x": 10.98,
               "y": -9.82,
               "z": 12.0
             }
@@ -143,7 +143,7 @@
             }
           },
           {
-            "id": "box_1_3",
+            "id": "box_1_5",
             "label": "generic",
             "attrs": {
               "d": 8.42,
@@ -151,7 +151,7 @@
               "level": 5,
               "subtype": "apartment",
               "w": 3.66,
-              "x": 10.98,
+              "x": 18.3,
               "y": 1.4,
               "z": 15.0
             }
@@ -210,6 +210,20 @@
             }
           },
           {
+            "id": "room_1_7",
+            "label": "generic",
+            "attrs": {
+              "d": 4.21,
+              "h": 3.0,
+              "level": 5,
+              "subtype": "room",
+              "w": 3.66,
+              "x": 25.62,
+              "y": 9.82,
+              "z": 15.0
+            }
+          },
+          {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
@@ -238,25 +252,7 @@
         ],
         "edges": [
           {
-            "src": "F_1_1",
-            "tgt": "corridor_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_2",
-            "tgt": "box_1_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_2",
+            "src": "K_1_0",
             "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
@@ -266,7 +262,16 @@
           },
           {
             "src": "K_1_4",
-            "tgt": "box_1_3",
+            "tgt": "box_1_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_6",
+            "tgt": "box_1_7",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -275,7 +280,25 @@
           },
           {
             "src": "K_1_8",
-            "tgt": "K_1_9",
+            "tgt": "box_1_7",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_9",
+            "tgt": "K_1_8",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_0",
+            "tgt": "box_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -293,15 +316,6 @@
           },
           {
             "src": "box_0_1",
-            "tgt": "box_0_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_0_1",
             "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
@@ -310,7 +324,7 @@
             "attrs": {}
           },
           {
-            "src": "box_1_7",
+            "src": "box_1_5",
             "tgt": "K_1_6",
             "type": "adjacency",
             "orientation": "H",
@@ -319,17 +333,8 @@
             "attrs": {}
           },
           {
-            "src": "box_1_7",
-            "tgt": "K_1_8",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "stair_W",
+            "src": "corridor_1",
+            "tgt": "F_1_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -338,7 +343,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "F_1_5",
+            "tgt": "F_1_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -347,7 +352,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "K_1_0",
+            "tgt": "K_1_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -392,7 +397,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "box_1_3",
+            "tgt": "box_1_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -427,6 +432,24 @@
             "attrs": {}
           },
           {
+            "src": "room_1_7",
+            "tgt": "box_1_7",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "stair_W",
+            "tgt": "corridor_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
             "src": "stair_W",
             "tgt": "entrance",
             "type": "adjacency",
@@ -441,7 +464,7 @@
     {
       "index": 1,
       "offset": [
-        62.58,
+        59.58,
         0.0
       ],
       "graph": {
@@ -449,27 +472,27 @@
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_1",
+            "id": "F_0_3",
             "label": "l_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 1,
               "w": 3.66,
-              "x": 3.66,
+              "x": 10.98,
               "y": -9.82,
               "z": 3.0
             }
           },
           {
-            "id": "F_0_5",
+            "id": "F_0_7",
             "label": "l_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 1,
               "w": 3.66,
-              "x": 18.3,
+              "x": 25.62,
               "y": -9.82,
               "z": 3.0
             }
@@ -488,19 +511,6 @@
             }
           },
           {
-            "id": "K_0_10",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
-              "x": 36.6,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
             "id": "K_0_2",
             "label": "u_section",
             "attrs": {
@@ -509,6 +519,19 @@
               "level": 2,
               "w": 3.66,
               "x": 7.32,
+              "y": 1.4,
+              "z": 6.0
+            }
+          },
+          {
+            "id": "K_0_3",
+            "label": "u_section",
+            "attrs": {
+              "d": 8.42,
+              "h": 6.0,
+              "level": 2,
+              "w": 3.66,
+              "x": 10.98,
               "y": 1.4,
               "z": 6.0
             }
@@ -540,6 +563,19 @@
             }
           },
           {
+            "id": "K_0_7",
+            "label": "u_section",
+            "attrs": {
+              "d": 8.42,
+              "h": 6.0,
+              "level": 2,
+              "w": 3.66,
+              "x": 25.62,
+              "y": 1.4,
+              "z": 6.0
+            }
+          },
+          {
             "id": "K_0_8",
             "label": "u_section",
             "attrs": {
@@ -553,20 +589,7 @@
             }
           },
           {
-            "id": "K_0_9",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
-              "x": 32.94,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_3",
+            "id": "box_0_1",
             "label": "generic",
             "attrs": {
               "d": 8.42,
@@ -574,13 +597,13 @@
               "level": 2,
               "subtype": "apartment",
               "w": 3.66,
-              "x": 10.98,
+              "x": 3.66,
               "y": 1.4,
               "z": 6.0
             }
           },
           {
-            "id": "box_0_7",
+            "id": "box_0_5",
             "label": "generic",
             "attrs": {
               "d": 8.42,
@@ -588,7 +611,7 @@
               "level": 2,
               "subtype": "apartment",
               "w": 3.66,
-              "x": 25.62,
+              "x": 18.3,
               "y": 1.4,
               "z": 6.0
             }
@@ -614,7 +637,7 @@
               "d": 2.8,
               "h": 3.0,
               "level": 2,
-              "w": 40.26,
+              "w": 32.94,
               "x": 0.0,
               "y": -1.4,
               "z": 6.0
@@ -647,6 +670,20 @@
             }
           },
           {
+            "id": "room_1_0",
+            "label": "generic",
+            "attrs": {
+              "d": 4.21,
+              "h": 3.0,
+              "level": 5,
+              "subtype": "room",
+              "w": 3.66,
+              "x": 0.0,
+              "y": 9.82,
+              "z": 15.0
+            }
+          },
+          {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
@@ -654,7 +691,7 @@
               "h": 18.0,
               "level": 0,
               "w": 3.66,
-              "x": 40.26,
+              "x": 32.94,
               "y": -1.4,
               "z": 0.0
             }
@@ -675,53 +712,8 @@
         ],
         "edges": [
           {
-            "src": "F_0_1",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "F_0_5",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_0",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_10",
-            "tgt": "K_0_9",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_10",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "K_0_2",
-            "tgt": "corridor_0",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -729,8 +721,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_4",
-            "tgt": "box_0_3",
+            "src": "K_0_3",
+            "tgt": "K_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -738,26 +730,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_4",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_6",
-            "tgt": "box_0_7",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_6",
-            "tgt": "corridor_0",
+            "src": "K_0_7",
+            "tgt": "K_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -766,7 +740,7 @@
           },
           {
             "src": "K_0_8",
-            "tgt": "corridor_0",
+            "tgt": "K_0_7",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -774,8 +748,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_9",
-            "tgt": "K_0_8",
+            "src": "box_0_1",
+            "tgt": "K_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -783,16 +757,7 @@
             "attrs": {}
           },
           {
-            "src": "K_0_9",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_0_3",
+            "src": "box_0_1",
             "tgt": "K_0_2",
             "type": "adjacency",
             "orientation": "H",
@@ -801,8 +766,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_3",
-            "tgt": "corridor_0",
+            "src": "box_0_5",
+            "tgt": "K_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -810,7 +775,88 @@
             "attrs": {}
           },
           {
-            "src": "box_0_7",
+            "src": "box_0_5",
+            "tgt": "K_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_7",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_7",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
             "tgt": "K_0_8",
             "type": "adjacency",
             "orientation": "H",
@@ -819,8 +865,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_7",
-            "tgt": "corridor_0",
+            "src": "corridor_0",
+            "tgt": "box_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -828,8 +874,8 @@
             "attrs": {}
           },
           {
-            "src": "box_1_0",
-            "tgt": "corridor_1",
+            "src": "corridor_0",
+            "tgt": "box_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -837,7 +883,16 @@
             "attrs": {}
           },
           {
-            "src": "entrance",
+            "src": "corridor_0",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
             "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
@@ -846,8 +901,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "K_0_10",
+            "src": "corridor_1",
+            "tgt": "box_1_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -855,8 +910,17 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_0",
+            "src": "corridor_1",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "room_1_0",
+            "tgt": "box_1_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -865,16 +929,7 @@
           },
           {
             "src": "stair_W",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_W",
-            "tgt": "corridor_1",
+            "tgt": "entrance",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -887,7 +942,7 @@
     {
       "index": 2,
       "offset": [
-        125.16,
+        119.16,
         0.0
       ],
       "graph": {
@@ -895,14 +950,14 @@
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_3",
+            "id": "F_0_5",
             "label": "l_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 1,
               "w": 3.66,
-              "x": 10.98,
+              "x": 18.3,
               "y": -9.82,
               "z": 3.0
             }
@@ -999,14 +1054,14 @@
             }
           },
           {
-            "id": "K_0_6",
+            "id": "K_0_5",
             "label": "u_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 2,
               "w": 3.66,
-              "x": 21.96,
+              "x": 18.3,
               "y": 1.4,
               "z": 6.0
             }
@@ -1065,7 +1120,7 @@
             }
           },
           {
-            "id": "box_0_5",
+            "id": "box_0_3",
             "label": "generic",
             "attrs": {
               "d": 8.42,
@@ -1073,7 +1128,7 @@
               "level": 2,
               "subtype": "apartment",
               "w": 3.66,
-              "x": 18.3,
+              "x": 10.98,
               "y": 1.4,
               "z": 6.0
             }
@@ -1099,7 +1154,7 @@
               "d": 2.8,
               "h": 3.0,
               "level": 2,
-              "w": 25.62,
+              "w": 21.96,
               "x": 0.0,
               "y": -1.4,
               "z": 6.0
@@ -1160,7 +1215,7 @@
         ],
         "edges": [
           {
-            "src": "F_1_6",
+            "src": "F_1_0",
             "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
@@ -1169,8 +1224,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_4",
-            "tgt": "box_0_5",
+            "src": "F_1_2",
+            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1178,7 +1233,25 @@
             "attrs": {}
           },
           {
-            "src": "K_0_4",
+            "src": "F_1_4",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_0",
+            "tgt": "box_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_0",
             "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
@@ -1187,8 +1260,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_6",
-            "tgt": "box_0_5",
+            "src": "K_0_2",
+            "tgt": "box_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1196,8 +1269,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_1",
-            "tgt": "K_0_0",
+            "src": "K_0_2",
+            "tgt": "box_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1205,8 +1278,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_1",
-            "tgt": "K_0_2",
+            "src": "K_0_2",
+            "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1214,7 +1287,52 @@
             "attrs": {}
           },
           {
-            "src": "box_1_7",
+            "src": "K_0_4",
+            "tgt": "box_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_5",
+            "tgt": "K_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_5",
+            "tgt": "corridor_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_1",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_3",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_5",
             "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
@@ -1224,7 +1342,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_3",
+            "tgt": "F_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1233,25 +1351,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "K_0_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "K_0_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "K_0_6",
+            "tgt": "K_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1269,7 +1369,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_5",
+            "tgt": "box_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1287,7 +1387,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "F_1_0",
+            "tgt": "F_1_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1296,43 +1396,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "F_1_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "F_1_4",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_5",
+            "tgt": "box_1_7",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1349,8 +1413,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_1",
+            "src": "corridor_1",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1372,8 +1436,8 @@
     {
       "index": 3,
       "offset": [
-        0.0,
-        34.64
+        178.74,
+        0.0
       ],
       "graph": {
         "directed": true,
@@ -1579,6 +1643,20 @@
             }
           },
           {
+            "id": "room_0_3",
+            "label": "generic",
+            "attrs": {
+              "d": 4.21,
+              "h": 3.0,
+              "level": 2,
+              "subtype": "room",
+              "w": 3.66,
+              "x": 10.98,
+              "y": 9.82,
+              "z": 6.0
+            }
+          },
+          {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
@@ -1616,62 +1694,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_0",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_2",
-            "tgt": "box_0_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "K_0_2",
             "tgt": "box_0_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_2",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_0",
-            "tgt": "box_1_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_2",
-            "tgt": "box_1_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_2",
-            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1688,17 +1712,8 @@
             "attrs": {}
           },
           {
-            "src": "K_2_0",
-            "tgt": "corridor_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "K_2_2",
-            "tgt": "corridor_2",
+            "tgt": "box_2_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1715,8 +1730,8 @@
             "attrs": {}
           },
           {
-            "src": "K_2_3",
-            "tgt": "corridor_2",
+            "src": "box_0_1",
+            "tgt": "K_0_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1724,8 +1739,8 @@
             "attrs": {}
           },
           {
-            "src": "box_2_1",
-            "tgt": "K_2_2",
+            "src": "box_0_3",
+            "tgt": "room_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1733,8 +1748,44 @@
             "attrs": {}
           },
           {
-            "src": "box_2_1",
-            "tgt": "corridor_2",
+            "src": "box_1_1",
+            "tgt": "K_1_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_1_1",
+            "tgt": "K_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_1_1",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1753,15 +1804,6 @@
           {
             "src": "corridor_0",
             "tgt": "box_0_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "stair_E",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1779,7 +1821,7 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "box_1_1",
+            "tgt": "K_1_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1796,8 +1838,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_2",
+            "src": "corridor_2",
+            "tgt": "K_2_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1805,7 +1847,52 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
+            "src": "corridor_2",
+            "tgt": "K_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "K_2_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "box_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "stair_E",
             "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
@@ -1815,7 +1902,7 @@
           },
           {
             "src": "stair_W",
-            "tgt": "corridor_2",
+            "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1837,8 +1924,8 @@
     {
       "index": 4,
       "offset": [
-        62.58,
-        34.64
+        0.0,
+        35.85
       ],
       "graph": {
         "directed": true,
@@ -2057,6 +2144,20 @@
             }
           },
           {
+            "id": "room_1_3",
+            "label": "generic",
+            "attrs": {
+              "d": 4.21,
+              "h": 3.0,
+              "level": 5,
+              "subtype": "room",
+              "w": 3.66,
+              "x": 10.98,
+              "y": 9.82,
+              "z": 15.0
+            }
+          },
+          {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
@@ -2085,8 +2186,26 @@
         ],
         "edges": [
           {
+            "src": "F_0_2",
+            "tgt": "corridor_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_0",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
             "src": "K_1_2",
-            "tgt": "box_1_3",
+            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2103,8 +2222,8 @@
             "attrs": {}
           },
           {
-            "src": "K_2_0",
-            "tgt": "K_2_1",
+            "src": "K_1_4",
+            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2112,8 +2231,8 @@
             "attrs": {}
           },
           {
-            "src": "K_2_2",
-            "tgt": "K_2_1",
+            "src": "K_2_1",
+            "tgt": "K_2_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2121,8 +2240,26 @@
             "attrs": {}
           },
           {
-            "src": "K_2_2",
+            "src": "K_2_1",
+            "tgt": "K_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_2_1",
             "tgt": "corridor_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_1",
+            "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2157,6 +2294,33 @@
             "attrs": {}
           },
           {
+            "src": "box_1_1",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_1_3",
+            "tgt": "K_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_1_3",
+            "tgt": "corridor_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
             "src": "corridor_0",
             "tgt": "F_0_0",
             "type": "adjacency",
@@ -2167,78 +2331,6 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "box_0_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_4",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "box_1_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "box_1_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "stair_E",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
             "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
@@ -2257,7 +2349,16 @@
           },
           {
             "src": "corridor_2",
-            "tgt": "K_2_1",
+            "tgt": "K_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2274,8 +2375,17 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_0",
+            "src": "room_1_3",
+            "tgt": "box_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "stair_E",
+            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2284,7 +2394,7 @@
           },
           {
             "src": "stair_W",
-            "tgt": "corridor_2",
+            "tgt": "corridor_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2297,8 +2407,8 @@
     {
       "index": 5,
       "offset": [
-        125.16,
-        34.64
+        59.58,
+        35.85
       ],
       "graph": {
         "directed": true,
@@ -2318,14 +2428,14 @@
             }
           },
           {
-            "id": "F_0_5",
+            "id": "F_0_3",
             "label": "l_section",
             "attrs": {
               "d": 8.42,
               "h": 6.0,
               "level": 1,
               "w": 3.66,
-              "x": 18.3,
+              "x": 10.98,
               "y": -9.82,
               "z": 3.0
             }
@@ -2448,7 +2558,7 @@
             }
           },
           {
-            "id": "box_0_3",
+            "id": "box_0_5",
             "label": "generic",
             "attrs": {
               "d": 8.42,
@@ -2456,7 +2566,7 @@
               "level": 2,
               "subtype": "apartment",
               "w": 3.66,
-              "x": 10.98,
+              "x": 18.3,
               "y": 1.4,
               "z": 6.0
             }
@@ -2529,6 +2639,20 @@
             }
           },
           {
+            "id": "room_0_7",
+            "label": "generic",
+            "attrs": {
+              "d": 4.21,
+              "h": 3.0,
+              "level": 2,
+              "subtype": "room",
+              "w": 3.66,
+              "x": 25.62,
+              "y": 9.82,
+              "z": 6.0
+            }
+          },
+          {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
@@ -2557,6 +2681,15 @@
         ],
         "edges": [
           {
+            "src": "F_0_3",
+            "tgt": "corridor_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
             "src": "F_1_0",
             "tgt": "corridor_1",
             "type": "adjacency",
@@ -2575,17 +2708,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_0",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "K_0_10",
-            "tgt": "K_0_9",
+            "tgt": "stair_E",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2593,8 +2717,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_2",
-            "tgt": "box_0_3",
+            "src": "K_0_4",
+            "tgt": "box_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2603,7 +2727,7 @@
           },
           {
             "src": "K_0_6",
-            "tgt": "box_0_7",
+            "tgt": "box_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2611,8 +2735,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_8",
-            "tgt": "K_0_9",
+            "src": "K_0_9",
+            "tgt": "K_0_10",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2620,8 +2744,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_8",
-            "tgt": "box_0_7",
+            "src": "K_0_9",
+            "tgt": "K_0_8",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2629,8 +2753,26 @@
             "attrs": {}
           },
           {
-            "src": "box_0_3",
-            "tgt": "K_0_4",
+            "src": "box_0_7",
+            "tgt": "K_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_7",
+            "tgt": "K_0_8",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_7",
+            "tgt": "room_0_7",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2657,7 +2799,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_5",
+            "tgt": "K_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2720,7 +2862,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_3",
+            "tgt": "box_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2766,15 +2908,6 @@
           {
             "src": "entrance",
             "tgt": "stair_W",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_E",
-            "tgt": "K_0_10",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,

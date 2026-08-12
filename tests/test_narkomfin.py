@@ -51,6 +51,32 @@ def test_boxes_carry_real_metric_dimensions():
     assert boxes["corridor_0"][3] == 3 * nf.BAY               # corridor spans its bays
 
 
+def test_double_loaded_bay_puts_k_and_f_in_one_bay():
+    g = nf.derive_slab_from_patterns(["DKB"])
+    assert validity.is_valid(g)
+    k = g.node_attrs("K_0_0"); f = g.node_attrs("F_0_0")
+    assert k["x"] == f["x"]                                   # the same bay
+    assert k["y"] > 0 > f["y"]                                # K front, F back
+    boxes = nf.boxes_of(g)
+    # both halves of the D bay dock to the corridor — double-loaded, as built
+    assert _faces_touch(boxes["K_0_0"], boxes["corridor_0"])
+    assert _faces_touch(boxes["F_0_0"], boxes["corridor_0"])
+    assert all(_faces_touch(boxes[e["src"]], boxes[e["tgt"]]) for e in g.edges())
+
+
+def test_banked_room_is_entered_through_its_apartment():
+    g = nf.derive_slab_from_patterns(["RB"])
+    assert validity.is_valid(g)
+    boxes = nf.boxes_of(g)
+    # the room shares a face with its host apartment, not with the corridor
+    assert _faces_touch(boxes["room_0_0"], boxes["box_0_0"])
+    assert not _faces_touch(boxes["room_0_0"], boxes["corridor_0"])
+    adj = {frozenset((e["src"], e["tgt"])) for e in g.edges()}
+    assert frozenset(("room_0_0", "box_0_0")) in adj
+    assert frozenset(("room_0_0", "corridor_0")) not in adj
+    assert all(_faces_touch(boxes[e["src"]], boxes[e["tgt"]]) for e in g.edges())
+
+
 def test_catalogue_generates_distinct_valid_slabs():
     from graphtope.compare import typed_isomorphic
     cat = nf.catalogue(5, seed=1)
@@ -59,3 +85,18 @@ def test_catalogue_generates_distinct_valid_slabs():
     for i in range(len(cat)):
         for j in range(i + 1, len(cat)):
             assert not typed_isomorphic(cat[i], cat[j])           # deduped
+
+
+def test_k_section_is_8m_and_d_pair_recorded():
+    """Plan §5 resolutions (2026-08-09): the K maisonette is 8.0 m (sleeping
+    gallery over the corridor), and a D bay records its K/F pairing as node
+    attributes — not as an edge, since the pair meets only through the
+    corridor and every edge must remain a real shared face."""
+    g = nf.derive_slab_from_patterns(["D"])
+    k, f = g.node_attrs("K_0_0"), g.node_attrs("F_0_0")
+    assert k["h"] == nf.K_HEIGHT == 8.0
+    assert k["pair"] == "F_0_0" and f["pair"] == "K_0_0"
+    adj = {frozenset((e["src"], e["tgt"])) for e in g.edges()}
+    assert frozenset(("K_0_0", "F_0_0")) not in adj
+    boxes = nf.boxes_of(g)
+    assert all(_faces_touch(boxes[e["src"]], boxes[e["tgt"]]) for e in g.edges())

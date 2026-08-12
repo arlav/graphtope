@@ -243,6 +243,49 @@ def draw_massing(sg, ax=None, boxes=None, sizes=None, inset: float = 0.06,
     return ax
 
 
+# --- the design-space map (G4) -------------------------------------------
+def draw_design_space(space, *, labels=None, values=None, value_name=None,
+                      clusters=None, ax=None, title="Design space"):
+    """Scatter a ``metrics.design_space`` result: one dot per variant on the 2-D
+    map, the reference (``G_DNF``) marked with a star. Colour by ``values`` (e.g.
+    a metric column) or by ``clusters`` (from ``metrics.cluster``); ``labels``
+    annotates points. Returns the figure."""
+    import matplotlib.pyplot as plt
+    coords = space["coords"]
+    ref = space.get("reference_index")
+    xs, ys = coords[:, 0], coords[:, 1]
+    is_ref = [i == ref for i in range(len(coords))]
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(6.5, 5.5))
+    else:
+        fig = ax.figure
+    colour = values if values is not None else clusters
+    pts = [i for i in range(len(coords)) if not is_ref[i]]
+    sc = ax.scatter([xs[i] for i in pts], [ys[i] for i in pts],
+                    c=([colour[i] for i in pts] if colour is not None else "#4C78A8"),
+                    s=90, edgecolor="black", linewidths=0.5, zorder=3,
+                    cmap="viridis" if colour is not None else None)
+    if ref is not None:
+        ax.scatter([xs[ref]], [ys[ref]], marker="*", s=420, c="#E4572E",
+                   edgecolor="black", linewidths=0.7, zorder=4)
+        ax.annotate("G_DNF", (xs[ref], ys[ref]), fontsize=9, fontweight="bold",
+                    color="#E4572E", xytext=(7, 3), textcoords="offset points",
+                    zorder=5)
+    if labels is not None:
+        for i, lab in enumerate(labels):
+            if i == ref:
+                continue                         # the star already names the reference
+            ax.annotate(str(lab), (xs[i], ys[i]), fontsize=8,
+                        xytext=(4, 4), textcoords="offset points")
+    if colour is not None and values is not None:
+        cb = fig.colorbar(sc, ax=ax, shrink=0.8)
+        cb.set_label(value_name or "value")
+    ax.set_title(title); ax.set_xlabel("MDS 1"); ax.set_ylabel("MDS 2")
+    ax.set_aspect("equal", adjustable="datalim")
+    fig.tight_layout()
+    return fig
+
+
 # --- 3-D Topologic carrier render (unchanged) ----------------------------
 def show(sg, *, vertex_label_key: str = "label", **kwargs):
     """Render the underlying Topologic graph with the Plotly viewer."""

@@ -5,12 +5,14 @@ from graphtope import bridge, narkomfin as nf, validity
 from graphtope.compare import typed_isomorphic
 from graphtope.model import StateGraph
 from graphtope.realise import _faces_touch
+from graphtope.serialize import from_dict, to_dict
 
 
 def _abstract_proposal() -> StateGraph:
     """A hand-built abstract proposal: two corridors; c2 serves two U's with an
-    L interlocked below (P6+P7 shape), c1 serves two plain rooms; one room off
-    in a P1 chain that no corridor reaches (must be *skipped*, not faked)."""
+    L interlocked below (P6+P7 shape), c1 serves two plain rooms; a P1 chain off
+    r1 — one room deep (bankable behind r1's bay) then one deeper (must be
+    *skipped*, not faked: the slab section is one room deep behind the front)."""
     g = StateGraph()
     g.add_node(A.CORRIDOR, id="c1"); g.add_node(A.CORRIDOR, id="c2")
     g.add_node(A.GENERIC, id="r1"); g.add_node(A.GENERIC, id="r2")
@@ -21,17 +23,30 @@ def _abstract_proposal() -> StateGraph:
     g.add_edge("u1", "l1", A.V, bidirectional=False)
     g.add_edge("u2", "l1", A.V, bidirectional=False)
     g.add_node(A.GENERIC, id="far")
-    g.add_edge("r1", "far", A.H)          # reachable room, but not on a corridor
+    g.add_edge("r1", "far", A.H)          # one room deep — banked behind r1
+    g.add_node(A.GENERIC, id="far2")
+    g.add_edge("far", "far2", A.H)        # two rooms deep — beyond the section
     return g
 
 
-def test_spec_reads_bands_units_and_interlock():
+def test_spec_reads_bands_units_interlock_and_banking():
     spec = bridge.spec_from_graph(_abstract_proposal())
     assert len(spec.band_patterns) == 2                       # corridor per band
-    assert sorted(spec.band_patterns[0]) == ["B", "B"]        # c1: two rooms
-    assert sorted(spec.band_patterns[1]) == ["F", "K", "K"]   # c2: 2 U + L via P7
-    assert spec.band_patterns[1][0] == "K"                    # canonical interleave
-    assert spec.skipped == ("far",)                           # reported, not faked
+    assert sorted(spec.band_patterns[0]) == ["B", "R"]        # r1 banks `far` behind it
+    assert sorted(spec.band_patterns[1]) == ["D", "K"]        # P7 L pairs into a D bay
+    assert spec.skipped == ("far2",)                          # reported, not faked
+
+
+def test_one_banked_room_per_host_extras_skipped():
+    g = StateGraph()
+    g.add_node(A.CORRIDOR, id="c1")
+    g.add_node(A.GENERIC, id="r1")
+    g.add_edge("c1", "r1", A.H)
+    g.add_node(A.GENERIC, id="pa"); g.add_node(A.GENERIC, id="pb")
+    g.add_edge("r1", "pa", A.H); g.add_edge("r1", "pb", A.H)   # two P1 rooms, one host
+    spec = bridge.spec_from_graph(g)
+    assert spec.band_patterns == ("R",)                        # r1 banks exactly one
+    assert spec.skipped == ("pb",)                             # the other: honest skip
 
 
 def test_no_corridor_means_no_slab():
@@ -48,8 +63,10 @@ def test_realised_spec_is_a_real_building():
     # every edge is a real shared face — graph and geometry are one
     assert all(_faces_touch(boxes[e["src"]], boxes[e["tgt"]]) for e in slab.edges())
     rep = bridge.report(_abstract_proposal(), spec, slab)
-    assert rep["units_realised"] == rep["units_proposed"] == 5
-    assert rep["units_docked"] == 5                           # all entered off a corridor
+    assert rep["units_realised"] == rep["units_proposed"] == 6
+    assert rep["units_docked"] == 5                           # entered off a corridor
+    assert rep["rooms_banked"] == 1                           # `far`, behind r1's bay
+    assert rep["units_docked"] + rep["rooms_banked"] == rep["units_realised"]
     assert rep["interlocks_reinterpreted"] == 2               # the two u→l V edges
 
 
@@ -70,13 +87,47 @@ def test_derive_slab_delegates_unchanged():
     assert typed_isomorphic(a, b)
 
 
+def test_refine_units_drives_the_second_level_reversibly():
+    slab = nf.derive_slab_from_patterns(["KFK"])
+    n_units = sum(1 for n in slab.nodes()
+                  if slab.node_label(n) in (A.U_SECTION, A.L_SECTION))
+    assert n_units == 3
+    refined, inverse = bridge.refine_units(slab)
+    # level 2: every non-terminal interior expanded, graph still a building
+    assert refined.is_well_formed() and refined.is_fully_refined()
+    assert validity.is_valid(refined)
+    assert refined.order() > slab.order()                    # interiors added rooms
+    # the slab was not mutated (refine works on a copy)
+    assert any(slab.node_label(n) in (A.U_SECTION, A.L_SECTION) for n in slab.nodes())
+    # the interface survives: every corridor↔unit face is still present as a face
+    # onto some interior anchor (connectivity preserved through refinement)
+    assert validity.is_valid(refined)
+    # reversible: applying the inverse collapses every interior back to the slab
+    back = from_dict(to_dict(refined))
+    inverse.apply(back)
+    assert typed_isomorphic(back, slab)
+    assert to_dict(back) == to_dict(slab)                    # exact, not just iso
+
+
+def test_catalogue_refine_flag_carries_two_levels():
+    cat = bridge.grammar_catalogue(2, seed=0, max_steps=8, refine=True)
+    assert len(cat) == 2
+    for v in cat:
+        assert v.refined is not None and v.refined.is_fully_refined()
+        assert validity.is_valid(v.refined)
+        back = from_dict(to_dict(v.refined))
+        v.refined_inverse.apply(back)
+        assert typed_isomorphic(back, v.slab)                # level 2 → level 1 exactly
+
+
 def test_grammar_catalogue_end_to_end():
     cat = bridge.grammar_catalogue(3, seed=0, max_steps=8)
     assert len(cat) == 3
     for v in cat:
         assert validity.is_valid(v.slab)
         assert v.spec.units > 0
-        assert v.coverage["units_docked"] == v.coverage["units_proposed"]
+        assert (v.coverage["units_docked"] + v.coverage["rooms_banked"]
+                == v.coverage["units_realised"] == v.coverage["units_proposed"])
         assert len(v.derivation.steps) > 0                    # a real proposal, replayable
         boxes = nf.boxes_of(v.slab)
         assert all(_faces_touch(boxes[e["src"]], boxes[e["tgt"]]) for e in v.slab.edges())

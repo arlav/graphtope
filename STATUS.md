@@ -4,7 +4,148 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-07-03 · **Suite:** 173 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-11 · **Suite:** 211 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ Plan §5 decisions resolved + SG0 interface routing (2026-08-09)
+
+Three of the sub-grammar plan's four §5 decisions were resolved (T. Dounas) and the
+code corrected to match; SG0 — the plan's key enabler — is done:
+
+- **§5.3 — the K section**: 8.0 m tall, sleeping gallery **over the corridor**
+  (confirmed from the section drawing; `U_units_realised.obj`'s 9.90 m "3-4-5"
+  envelopes measure three structural grid floors, not the dwelling).
+  `narkomfin.K_HEIGHT = 8.0`; `anchor_K` builds it — the level-1 box is the front
+  zone at full section height, the over-corridor wing is level-2 geometry (SG4).
+- **§5.1 — D bay**: paired refinement + explicit cross-unit constraint. `anchor_KF`
+  records the pairing as `pair` attributes on both nodes — **not** an edge:
+  measured, the pair meets only through the corridor (even at 8 m), and every graph
+  edge must remain a real shared face.
+- **§5.2 — openings**: doors/windows become first-class **nodes** (overrides the
+  plan's rooms-only recommendation). SG1's Σ_int registers `door`/`window`;
+  reachability runs through doors; SG7's daylight metric becomes real.
+- **SG0 — typed interface routing** (`hierarchy.py`): `UnitSpec.interface` routes
+  each incident edge class — `(orientation, neighbour-label)`, `(V, above/below)`,
+  `(orientation, "*")` — to a declared interior node; `anchor` is the fallback, so
+  router-less specs behave exactly as before (hierarchy tests unchanged). `G_U`
+  routes corridor→living, stacked-above→sleeping (the gallery, as built),
+  below→living; `G_L`: corridor/above→entry, below→living. Property-tested: the
+  interface-edge multiset is preserved and ABSTRACT stays exact.
+- **§5.4 (one paper or two) stays open** — gated on the SG5 source hunt (R1).
+
+## ⚑ SG2 — the level-2 production corpus (2026-08-11)
+
+Five productions grew into **31, across five families — every bay type the
+bridge realises now develops** (`grammar_units.CORPUS`, frozen at this scope
+per plan risk R2):
+
+- **G_U (K, 10)** — void in two extents (partial = the built gallery strip /
+  full-width, NAC-exclusive per living volume), kitchen as niche or separate
+  room (NAC-exclusive per host, incl. behind a door), bath at gallery or
+  entry level, wc, loggia on the outer face, storage under the gallery, and
+  a subdivided gallery (a second sleeping room over living).
+- **G_L (F, 6)** — the mirror set + `GL-sleeping`, a bedroom beside the
+  dropped living (the SG1 gallery predicate was relaxed accordingly: sleeping
+  must be V-above *or* H-beside a living volume).
+- **G_B (2, new)** — entry + living start graph, kitchen niche, bath.
+- **G_R (1 + start graph, new)** — the banked room entered through its host,
+  optional storage; its host door matches while the host is still an
+  ``apartment`` (refine R before B).
+- **G_D — `refine_pair`** (§5.1 resolution): paired refinement of a D bay's
+  K and F with the explicit cross-unit constraint enforced — *a paired K may
+  only take the partial void; the F behind claims the back of the bay volume*
+  (`ValueError` on `void_extent="full"`, checked before any mutation).
+- **Openings (12)** per §5.2 — doors interposed in existing adjacencies (a
+  genuine edge-deleting DPO: the direct edge is removed, the door node joins
+  the two spaces; 9 instances incl. the corridor front doors and the banked
+  room's host door) and windows (3) with a one-per-room NAC. SG1's daylight
+  check is now **armed** in windowed derivations.
+
+Drivers: `refine_k`/`refine_f` grew the SG2 options (defaults reproduce the
+G3 interiors *exactly* — full backwards compatibility), `refine_b`/`refine_r`
+/`refine_pair` are new, and `bridge.refine_units(all_bays=True, k_opts=…)`
+drives every bay type in a slab, reversibly (R → B → D pairs → unpaired K/F).
+Tests: `tests/test_sg2_corpus.py` (6) — collectively every production in the
+corpus fires; every derivable interior passes SG1's predicates; every
+refinement inverts to the exact starting graph, incl. a full `KFDBR` slab
+end-to-end.
+
+## ⚑ SG1 — Σ_int registry + interior validity (2026-08-09)
+
+`graphtope/interior.py` (new) — the interior sub-alphabet as a frozen registry
+(`SIGMA_INT`): every interior kind with its architectural description and
+habitable / wet / opening / circulation flags; per §5.2 **`door` and `window`
+are registered as first-class node kinds** alongside the rooms. Derived views
+(`ROOM_SUBTYPES`, `HABITABLE_SUBTYPES`, `WET_SUBTYPES`, `OPENING_SUBTYPES`)
+replace hand-written lists: `metrics.INTERIOR_SUBTYPES` and `grammar_units`'s
+constants now import from the registry (single source). Interior validity
+mirrors `validity.py`'s shape — `interior.violations`/`is_valid` over:
+- rooms reach circulation (the internal stair counts);
+- a sleeping gallery sits V-above a living volume (§5.3 section);
+- a void opens *over* living and *onto* a room;
+- openings have fixed valence (door joins exactly two spaces, window belongs
+  to exactly one room, H only) — vacuous until SG2 places them;
+- habitable rooms are lit — **arms itself the moment a graph carries windows**.
+Deferred honestly: wet-room stacking → SG6; one-entry-per-unit → SG3 (needs
+per-unit bookkeeping). Grounded dims where measured (the 1.7 × 8.4 m gallery
+strip); the rest awaits SG5. Tests: `tests/test_interior.py` (7) — each
+predicate rejects a hand-built violation and accepts every refined unit the
+current sub-grammars produce (incl. the refined DNF).
+
+## ⚑ G4 — metrics & the design-space map (2026-07-19)
+
+`graphtope/metrics.py` (new) measures a population along three axes and lays it
+out as a 2-D map with the reference marked:
+- **graph metrics** (any `StateGraph`): `unit_count`, `type_mix`, `kf_ratio`,
+  `circulation_depth` (adjacencies from nearest circulation — 1 = docked, 2 =
+  banked room), `level_count`, `component_count`.
+- **geometry metrics** (from a slab's placed boxes): `gross_floor_area`, `volume`,
+  `footprint`, `compactness` (built ÷ envelope volume), `area_per_unit`.
+- **interior richness** (level-2 refined graph): `interior_rooms`, `void_count`,
+  `rooms_per_unit` — the second grammar level made measurable.
+- **the map**: `feature_vector` (the ordered `FEATURES` signature) →
+  `design_space(slabs, reference=…)` standardises and embeds via **classical MDS
+  (numpy only, no sklearn)**, returning coords + the reference's index; `cluster`
+  is a deterministic k-means. `topoview.draw_design_space` scatters it — each
+  variant a dot (colour by any metric or cluster), `G_DNF` a star. The DNF is
+  placed by realising *its* proposal through the same bridge, so it sits in the
+  same metric space as the variants. Sample render:
+  `notebooks/exports/design_space_map.png`.
+
+**Carrier flakiness note:** `Topology.ExportToOBJ` (topologicpy 0.9.43) sporadically
+raises `TypeError` in the full-suite run (unstable internal vertex ordering — the
+gotcha CLAUDE.md flags). Seen once in 3 full runs; `test_exchange` passes in
+isolation and the other two runs were clean at 195. Not a graphtope regression;
+the OBJ exporter is on the contribution-briefing list.
+
+## ⚑ Two-level bridge + richer section (2026-07-18)
+
+Three tranches landed on top of GS1:
+
+1. **Richer section vocabulary** (`narkomfin.py`) — two new bay types, added
+   *alongside* K/F/B (backwards-compatible): **`D`** = the built double-loaded
+   interlock, K front + F back **in one bay**; **`R`** = a front apartment with a
+   room banked **behind** it (entered through the apartment, one room deep). The
+   bridge now realises a P7 V-interlock as a same-bay `D` pair, and a P1
+   room-off-room chain as an `R` bay (chains deeper than one room stay honestly
+   *skipped*). Result: the seed-0 grammar catalogue now has **zero skipped rooms**
+   (was ~1/proposal) — every proposed unit docks to a corridor or banks behind its
+   host. `report()` gained `rooms_banked`; `SlabSpec.units` counts D/R as two.
+2. **G3 — U/L sub-grammars** (`grammar_units.py`, new) — the `u_section`/`l_section`
+   non-terminals get interior transformation grammars: K = split-level living/
+   sleeping + internal stair + optional double-height void, kitchen, bath; F =
+   corridor-level entry + living below + stair, kitchen, bath. Σ stays open
+   (interior kinds are `generic` subtypes). `refine_k`/`refine_f` run
+   `hierarchy.Refine` then the sub-grammar's DPO productions; each returns the
+   composed `ABSTRACT(S→n)` inverse, so refinement is exactly reversible. Vocabulary
+   spec-grounded (§7.6.2), structure/metrics grounded on `U_units_realised.obj`.
+3. **The two-level bridge** (`bridge.refine_units`) — drives *both* grammar levels
+   end-to-end: propose → realise slab (level 1) → refine every K/F interior (level 2),
+   preserving each unit's exterior interface and staying reversible back to the slab
+   (exact, `to_dict` equality). `grammar_catalogue(..., refine=True)` carries the
+   refined graph + inverse on each `Variant`. Pipeline:
+   **A₀ →(graph grammar)→ proposal →(bridge)→ slab →(sub-grammar)→ unit interiors**,
+   every step invertible. Interiors are graph-level topology (no boxes) — `boxes_of`
+   applies to the slab, not the refined graph.
 
 ## ⚑ Direction shift — shape grammar (the graph↔shape bridge, finally)
 
@@ -55,7 +196,10 @@ double-height voids); G3 U/L sub-grammars.
 | **G2** | **Generative — parameterised productions (macro variation)** | ✅ **done** | `grammar_params` | `test_grammar_params.py` (6) |
 | **B1** | **Blender/BIM round-trip — OBJ+sidecar export, geometry→typed graph** | ✅ **done** | `exchange`, `blender/import_graphtope.py` | `test_exchange.py` (7) |
 | **B2** | **Import the real model — actual sizes from the Narkomfin OBJ** | ✅ **done** | `exchange`, `graphtope/models/*.obj` | `test_realmodel.py` (5) |
-| **GS1** | **Graph→shape bridge — graph grammar drives the shape grammar** | ✅ **done** | `bridge`, `narkomfin` | `test_bridge.py` (6) |
+| **GS1** | **Graph→shape bridge — graph grammar drives the shape grammar** | ✅ **done** | `bridge`, `narkomfin` | `test_bridge.py` (9) |
+| **GS2** | **Richer section (D/R bays) — no skipped rooms in the catalogue** | ✅ **done** | `narkomfin`, `bridge` | `test_narkomfin.py` (+2), `test_bridge.py` (+1) |
+| **G3** | **U/L sub-grammars via REFINE; bridge drives two grammar levels** | ✅ **done** | `grammar_units`, `bridge` | `test_grammar_units.py` (6), `test_bridge.py` (+2) |
+| **G4** | **Metrics + design-space map (graph/geometry/interior axes, MDS)** | ✅ **done** | `metrics`, `topoview` | `test_metrics.py` (11) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, and the **generative track has
 started** (G0). Direction set: diverse *catalogue* · Blender *round-trip* (B1) ·
@@ -105,7 +249,10 @@ assembly *macro-first* (G2→G3). Plan: `docs/Generative_Variation_Research_Plan
   3-D massing renderer: `topoview.draw_massing`.
 - **`notebooks/01_graphtope.ipynb`** — the iterative dev surface; executes clean
   end-to-end with M0–M7 **and Stage 2**, with inline step-by-step graph renders,
-  a sub-grammar refinement, and the 3-D massing model.
+  a sub-grammar refinement, and the 3-D massing model. Now closes with the
+  **bridge → two-level → design-space walkthrough** (GS1–GS2 propose→spec→realise
+  with the 3-D massing, G3 `refine_units` with interior richness + reversibility,
+  and the G4 metric table + MDS design-space map with `G_DNF` marked).
 
 ## Decisions in force
 
@@ -143,10 +290,22 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   `.catalogue.json` sidecar). Samples: `notebooks/exports/catalogue/` and
   `notebooks/exports/narkomfin_catalogue.obj`. Real-proportion exports use the
   **sidecar JSON as the authoritative graph** (real-size cells don't tile).
-- **G3 — U/L section sub-grammars** *(next)* — give `u_section`/`l_section` their own
-  alphabets + productions (split-level, voids, internal stair, interlock) via
-  `REFINE`, using `U_units_realised.obj` as the reference.
-- Then **G4** metrics + a design-space map (now with real metric axes: area, volume).
+- ✅ **G3 — U/L section sub-grammars** (done 2026-07-18) — `grammar_units.py` gives
+  `u_section`/`l_section` their own alphabets + productions (split-level, void,
+  internal stair, kitchen/bath) via `REFINE`; `bridge.refine_units` drives both
+  grammar levels end-to-end, reversibly. See the 2026-07-18 note above.
+- ✅ **G4 metrics + design-space map** (done 2026-07-19) — `metrics.py` +
+  `topoview.draw_design_space`; graph/geometry/interior axes, classical-MDS map
+  with `G_DNF` marked. See the 2026-07-19 note above.
+- **Write-up (2026-07-30)** — `docs/paper/Graphtope_Journal_Paper.md` is the journal-paper
+  scaffold (IJAC primary target) with the measured results tables already filled in and
+  explicit ▣ expansion slots for the sub-grammar work;
+  `docs/Sub_Grammar_Development_Plan.md` is the SG0–SG8 plan that fills them (starts with
+  SG0 typed interface routing — `Refine` currently lands *all* interface edges on one anchor).
+- **G5 — steering** *(next / optional)* — search or designer-in-the-loop over the
+  derivation space against a metric objective (e.g. target compactness, N units at
+  min circulation depth), now that the objective functions exist. Or **notebook**
+  walkthrough cells for the bridge + design-space map.
 
 `exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
 id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).

@@ -2,10 +2,14 @@
 
 ``Refine(n, unit)`` is a REPLACE whose left side is the single non-terminal node
 ``n`` and whose right side is the start graph of its section sub-grammar; ``n``'s
-incident edges are the interface ``K`` and are re-attached to the unit's
-``anchor`` node, so they are preserved. Its inverse — returned as an
-``OpSequence`` — is ``ABSTRACT(S → n)``, collapsing the refined unit back to the
-non-terminal (exact when the derivation trace is kept, §5.1).
+incident edges are the interface ``K`` and are **routed** to the unit's interior
+nodes (SG0): ``UnitSpec.interface`` maps an edge class — ``(orientation,
+neighbour-label)``, ``(V, "above"/"below")``, or ``(orientation, "*")`` — to the
+local node that receives it, falling back to the ``anchor`` (so a spec with no
+router behaves exactly as before). The edge multiset is preserved either way.
+Its inverse — returned as an ``OpSequence`` — is ``ABSTRACT(S → n)``, collapsing
+the refined unit back to the non-terminal (exact when the derivation trace is
+kept, §5.1).
 """
 
 from __future__ import annotations
@@ -24,12 +28,35 @@ class UnitSpec:
 
     ``nodes``: list of ``(localname, label, attrs)``;
     ``edges``: list of ``(src, tgt, orientation, bidirectional)``;
-    ``anchor``: the local node that inherits the non-terminal's incident edges.
+    ``anchor``: the local node that inherits any interface edge the router
+    does not claim (a spec with no ``interface`` behaves as before: every
+    incident edge lands on the anchor);
+    ``interface``: the SG0 router — ``{(orientation, selector): localname}``
+    where ``selector`` is a neighbour label (e.g. ``"corridor"``), ``"above"``
+    / ``"below"`` for V edges, or ``"*"``. Most-specific key wins:
+    neighbour label, then above/below, then ``"*"``, then ``anchor``.
     """
 
     nodes: list
     edges: list
     anchor: str
+    interface: dict | None = None
+
+
+def _route(unit: UnitSpec, sg: StateGraph, node: str, e: dict) -> str:
+    """The local node that receives interface edge ``e`` (SG0 routing)."""
+    if not unit.interface:
+        return unit.anchor
+    other = e["tgt"] if e["src"] == node else e["src"]
+    o = e["orientation"]
+    keys = [(o, sg.node_label(other))]
+    if o == V:                       # V is directed: src is the upper space
+        keys.append((o, "above" if e["tgt"] == node else "below"))
+    keys.append((o, "*"))
+    for k in keys:
+        if k in unit.interface:
+            return unit.interface[k]
+    return unit.anchor
 
 
 def u_section_unit() -> UnitSpec:
@@ -75,14 +102,15 @@ class Refine(AtomicOp):
             rec.do(AddEdge(idmap[s], idmap[t], o, bidirectional=b))
 
         anchor = idmap[self.unit.anchor]
-        for e in incident:                          # re-attach the interface K to anchor
+        for e in incident:                # route each interface edge (SG0)
+            target = idmap[_route(self.unit, sg, self.node, e)]
             rec.do(DelEdge(e["src"], e["tgt"]))
             if e["src"] == self.node:
-                rec.do(AddEdge(anchor, e["tgt"], e["orientation"],
+                rec.do(AddEdge(target, e["tgt"], e["orientation"],
                                bidirectional=e["bidirectional"], weight=e["weight"],
                                type=e["type"], attrs=dict(e["attrs"])))
             else:
-                rec.do(AddEdge(e["src"], anchor, e["orientation"],
+                rec.do(AddEdge(e["src"], target, e["orientation"],
                                bidirectional=e["bidirectional"], weight=e["weight"],
                                type=e["type"], attrs=dict(e["attrs"])))
 
