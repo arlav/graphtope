@@ -170,7 +170,7 @@ F (a stricter carrier test — expect new rows in Table 3).
 **Effort:** medium–large. **Depends on:** SG2. **Note:** this is the milestone that makes
 the sub-grammar work *architecturally* rather than only formally convincing.
 
-### SG5 · Grounding against the built unit *(the reproduction result)*
+### SG5 · Grounding against the built unit *(the reproduction result)* — ✅ done 2026-08-15 (reconstructed per R1: `graphtope/reference.py`, `models/KF_unit_interiors_reference.obj`; G_U and G_L derive it, typed-isomorphic, reversibly — the §11.2 gate answers **one paper**)
 Obtain or reconstruct a **room-labelled** reference for the K and F unit interiors —
 Ginzburg's published unit plans redrawn as a named OBJ in the same convention as
 `graphtope/models/*.obj` — import it via `exchange.graph_from_model`, and show the
@@ -293,7 +293,9 @@ SG4–SG6 can follow as the companion paper.
    `narkomfin.anchor_K` (was 2×FLOOR = 6 m standing beside the corridor) and `G_U`'s
    gallery-above-living assumption: the corridor interface routes to the entry level and
    the stacked-above interface to the gallery — exactly SG0's router.
-4. **Publication shape:** **OPEN** — gated on R1 (the SG5 source hunt). See
+4. **Publication shape:** **RESOLVED 2026-08-15 — one paper** — SG5's
+   reconstruction satisfies the reproduction claim (weaker-but-honest, per
+   R1's mitigation). See
    `docs/paper/Graphtope_Journal_Paper.md` §11.2.
 
 ---

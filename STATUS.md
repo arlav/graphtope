@@ -4,7 +4,40 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 227 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 233 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG5 — the reproduction result: deriving the reference unit interiors (2026-08-15)
+
+The level-2 analogue of §8.1's fig-5 reproduction — the strongest claim the
+sub-grammar phase can make (paper slot G), and the §11.2 one-paper gate:
+
+- **The reference** `models/KF_unit_interiors_reference.obj` — the K and F
+  unit interiors, room-labelled (`o K_unit_living`, …). Provenance stated in
+  the model header and `reference.py`: **reconstructed, not measured** (risk
+  R1) — dimensions from the imported model/module (bay 3.66, depth 8.42,
+  K section 8.0 = 5.0 + 3.0, the 1.7 gallery strip), arrangement from the
+  published section (Ginzburg's 2F units) as documented in the repo. The
+  boxes are **authored so the face-adjacency read by `graph_from_model` is
+  exactly the default G_U/G_L adjacency** — every shared face a grammar edge
+  and vice versa — so the reproduction is a typed-isomorphism claim over
+  graphs read from geometry, not a tautology.
+- **`graphtope/reference.py`** (new): `reference_graph(unit)` imports one
+  unit's interior; `subgraph_on` extracts node-induced subgraphs;
+  `reproduce(unit)` refines the non-terminal **at the sub-grammar defaults**
+  (the built condition) and compares typed-isomorphic. **Result: G_U derives
+  the K reference (6 rooms / 7 adjacencies) and G_L the F reference (5 rooms
+  / 5 adjacencies) — both True — and the reverse sub-derivation returns the
+  non-terminal exactly.**
+- Enabler: `exchange.classify_space` now recognises the Σ_int vocabulary
+  (living/sleeping/kitchen/bath/wc/entry/void/loggia/storage/room, fixed
+  match order) and `stair_*_internal` → (staircase, internal) — after the
+  block-level names, so existing model classifications are unchanged.
+
+Tests: `tests/test_sg5_reference.py` (6) — the reference imports with room
+labels and the section reads from geometry (gallery + void V-above living);
+both reproductions; the reverse sub-derivation; the provenance statement;
+the classifier. Notebook: SG5 walkthrough (reproduction table, the
+reference's real room sizes, the reverse derivation).
 
 ## ⚑ SG4 — level-2 geometry: interiors that are built, not just drawn (2026-08-15)
 
@@ -289,10 +322,12 @@ double-height voids); G3 U/L sub-grammars.
 | **SG2** | **Level-2 production corpus — 31 productions, every bay type develops** | ✅ **done** | `grammar_units`, `bridge` | `test_sg2_corpus.py` (6) |
 | **SG3** | **Sub-derivation variability — one slab, many interiors** | ✅ **done** | `bridge`, `grammar_units`, `metrics` | `test_sg3_variability.py` (4) |
 | **SG4** | **Level-2 geometry — interiors tile the envelope, edges are faces** | ✅ **done** | `interior_geom`, `grammar_units` | `test_sg4_geometry.py` (12) |
+| **SG5** | **Grounding — G_U/G_L derive the reference interiors (reconstructed)** | ✅ **done** | `reference`, `exchange`, `models/KF_unit_interiors_reference.obj` | `test_sg5_reference.py` (6) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
-and the **sub-grammar phase's one-paper minimum is met** (SG0–SG4 ✅; next
-SG5 the reference hunt, SG6 cross-level constraints, SG7 the two-level map).
+and the **sub-grammar phase's one-paper minimum is met, incl. the §11.2 gate
+via SG5's reconstruction** (SG0–SG5 ✅; next SG6 cross-level constraints —
+Q3 — and SG7 the two-level map).
 
 ## What works today
 
@@ -399,11 +434,18 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   every interior node in its envelope; verified tiling, edge→face, openings
   in walls; reversible; honest chain-miss reporting. See the 2026-08-15
   note above.
-- **SG5 source hunt** *(open, decides publication shape)* — a room-labelled
-  K/F interior reference, obtained or redrawn from Ginzburg's published plans.
-- **G5 — steering** *(optional)* — search or designer-in-the-loop over the
-  derivation space against a metric objective (e.g. target compactness, N units at
-  min circulation depth), now that the objective functions exist.
+- ✅ **SG5 — grounding** (done 2026-08-15) — the room-labelled reference
+  *reconstructed* per R1 (provenance stated); **G_U and G_L derive it**,
+  typed-isomorphic, reversibly. §11.2's gate answered → the one-paper
+  strategy holds. See the 2026-08-15 note above.
+- **SG6 — cross-level constraints** *(next)* — wet stacking, bay alignment,
+  void coherence in D pairs, level monotonicity; measure how often
+  independent two-level variation violates each (Q3, the headline finding).
+- **SG7 — level-2 metrics + the two-level map** — privacy gradient, real
+  daylight via windows, wet-core compactness; block × interior coordinates
+  (paper Figure 8).
+- **G5 / SG8 — steering** *(optional)* — search or designer-in-the-loop over
+  both levels against metric objectives, now that they exist.
 
 `exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
 id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).

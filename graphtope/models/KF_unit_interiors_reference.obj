@@ -1,0 +1,191 @@
+# graphtope SG5 reference - the K and F unit interiors, room-labelled
+# Provenance (plan risk R1 mitigation): RECONSTRUCTED, not measured.
+#   * dimensions from the imported model / module: bay 3.66 m, unit depth
+#     8.42 m, K section 8.0 m (5.0 living + 3.0 gallery), gallery strip 1.7 m
+#     (U_units_realised.obj's mezzanine strips), stair 1.0 m;
+#   * room arrangement from the published Dom Narkomfin section (Ginzburg,
+#     type 2F units) as documented in the repo (spec 7.6.2, plan 5.3):
+#     K rises off the corridor - double-height living, sleeping gallery over
+#     the corridor end, internal stair at the bay end; F enters at corridor
+#     level and drops a floor (the l_section) - kitchen/bath in the interlock
+#     band beside the entry (the volume below that band belongs to the
+#     interlocked neighbour, hence the L-shaped section).
+# Conventions: o <K_unit|F_unit>_<room>; y+ is away from the corridor plane.
+# The face-adjacency of these boxes is exactly the default G_U / G_L
+# adjacency (audited - no touches without grammar edges).
+
+o K_unit_living
+v 1.400 0.000 0.000
+v 3.660 0.000 0.000
+v 3.660 7.420 0.000
+v 1.400 7.420 0.000
+v 1.400 0.000 5.000
+v 3.660 0.000 5.000
+v 3.660 7.420 5.000
+v 1.400 7.420 5.000
+f 1 2 3 4
+f 5 6 7 8
+f 1 2 6 5
+f 2 3 7 6
+f 3 4 8 7
+f 4 1 5 8
+
+o K_unit_kitchen
+v 0.000 0.000 0.000
+v 1.400 0.000 0.000
+v 1.400 4.800 0.000
+v 0.000 4.800 0.000
+v 0.000 0.000 5.000
+v 1.400 0.000 5.000
+v 1.400 4.800 5.000
+v 0.000 4.800 5.000
+f 9 10 11 12
+f 13 14 15 16
+f 9 10 14 13
+f 10 11 15 14
+f 11 12 16 15
+f 12 9 13 16
+
+o K_unit_stair_internal
+v 1.830 7.420 0.000
+v 3.660 7.420 0.000
+v 3.660 8.420 0.000
+v 1.830 8.420 0.000
+v 1.830 7.420 8.000
+v 3.660 7.420 8.000
+v 3.660 8.420 8.000
+v 1.830 8.420 8.000
+f 17 18 19 20
+f 21 22 23 24
+f 17 18 22 21
+f 18 19 23 22
+f 19 20 24 23
+f 20 17 21 24
+
+o K_unit_sleeping
+v 1.400 5.720 5.000
+v 3.660 5.720 5.000
+v 3.660 7.420 5.000
+v 1.400 7.420 5.000
+v 1.400 5.720 8.000
+v 3.660 5.720 8.000
+v 3.660 7.420 8.000
+v 1.400 7.420 8.000
+f 25 26 27 28
+f 29 30 31 32
+f 25 26 30 29
+f 26 27 31 30
+f 27 28 32 31
+f 28 25 29 32
+
+o K_unit_bath
+v 0.000 5.720 5.000
+v 1.400 5.720 5.000
+v 1.400 7.420 5.000
+v 0.000 7.420 5.000
+v 0.000 5.720 8.000
+v 1.400 5.720 8.000
+v 1.400 7.420 8.000
+v 0.000 7.420 8.000
+f 33 34 35 36
+f 37 38 39 40
+f 33 34 38 37
+f 34 35 39 38
+f 35 36 40 39
+f 36 33 37 40
+
+o K_unit_void
+v 1.400 0.000 5.000
+v 3.660 0.000 5.000
+v 3.660 5.720 5.000
+v 1.400 5.720 5.000
+v 1.400 0.000 8.000
+v 3.660 0.000 8.000
+v 3.660 5.720 8.000
+v 1.400 5.720 8.000
+f 41 42 43 44
+f 45 46 47 48
+f 41 42 46 45
+f 42 43 47 46
+f 43 44 48 47
+f 44 41 45 48
+
+o F_unit_living
+v 10.000 3.600 0.000
+v 13.660 3.600 0.000
+v 13.660 7.420 0.000
+v 10.000 7.420 0.000
+v 10.000 3.600 3.000
+v 13.660 3.600 3.000
+v 13.660 7.420 3.000
+v 10.000 7.420 3.000
+f 49 50 51 52
+f 53 54 55 56
+f 49 50 54 53
+f 50 51 55 54
+f 51 52 56 55
+f 52 49 53 56
+
+o F_unit_entry
+v 10.000 3.600 3.000
+v 13.660 3.600 3.000
+v 13.660 7.420 3.000
+v 10.000 7.420 3.000
+v 10.000 3.600 6.000
+v 13.660 3.600 6.000
+v 13.660 7.420 6.000
+v 10.000 7.420 6.000
+f 57 58 59 60
+f 61 62 63 64
+f 57 58 62 61
+f 58 59 63 62
+f 59 60 64 63
+f 60 57 61 64
+
+o F_unit_stair_internal
+v 10.000 7.420 0.000
+v 13.660 7.420 0.000
+v 13.660 8.420 0.000
+v 10.000 8.420 0.000
+v 10.000 7.420 6.000
+v 13.660 7.420 6.000
+v 13.660 8.420 6.000
+v 10.000 8.420 6.000
+f 65 66 67 68
+f 69 70 71 72
+f 65 66 70 69
+f 66 67 71 70
+f 67 68 72 71
+f 68 65 69 72
+
+o F_unit_kitchen
+v 10.000 0.000 3.000
+v 11.300 0.000 3.000
+v 11.300 3.600 3.000
+v 10.000 3.600 3.000
+v 10.000 0.000 6.000
+v 11.300 0.000 6.000
+v 11.300 3.600 6.000
+v 10.000 3.600 6.000
+f 73 74 75 76
+f 77 78 79 80
+f 73 74 78 77
+f 74 75 79 78
+f 75 76 80 79
+f 76 73 77 80
+
+o F_unit_bath
+v 12.360 0.000 3.000
+v 13.660 0.000 3.000
+v 13.660 3.600 3.000
+v 12.360 3.600 3.000
+v 12.360 0.000 6.000
+v 13.660 0.000 6.000
+v 13.660 3.600 6.000
+v 12.360 3.600 6.000
+f 81 82 83 84
+f 85 86 87 88
+f 81 82 86 85
+f 82 83 87 86
+f 83 84 88 87
+f 84 81 85 88

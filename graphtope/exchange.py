@@ -183,7 +183,11 @@ def roundtrip(sg: StateGraph) -> StateGraph:
 # === B2: import a real named OBJ model with actual sizes =================
 def classify_space(name: str):
     """Map a real Blender object name → ``(label, subtype)`` per Appendix A, or
-    ``None`` for non-space elements (slabs, columns, …) that are skipped."""
+    ``None`` for non-space elements (slabs, columns, …) that are skipped.
+
+    The Σ_int vocabulary (SG1) is recognised after the block-level names, so
+    room-labelled models (the SG5 reference) import with their room kinds."""
+    from . import interior as I
     n = re.sub(r"\.\d+$", "", name).lower()                 # drop Blender's .001 suffix
     if any(k in n for k in ("slab", "column", "mesh_", "wall", "beam", "roof")):
         return None
@@ -192,7 +196,7 @@ def classify_space(name: str):
     if "corridor" in n:
         return (A.CORRIDOR, None)
     if "stair" in n:
-        return (A.STAIRCASE, None)
+        return (A.STAIRCASE, I.INTERNAL if "internal" in n else None)
     if "mesonete" in n or "maisonette" in n:
         return (A.L_SECTION, None)                          # F-type maisonette = the L-section
     if "toilet" in n:
@@ -205,7 +209,15 @@ def classify_space(name: str):
         return (A.GENERIC, "condenser_main")
     if "apartment" in n:
         return (A.GENERIC, "apartment")
+    for sub in _INTERIOR_NAME_ORDER:                       # Σ_int (SG1 registry)
+        if sub in n:
+            return (A.GENERIC, sub)
     return (A.GENERIC, None)
+
+
+#: fixed match order (a frozenset iterates unpredictably across processes)
+_INTERIOR_NAME_ORDER = ("sleeping", "living", "dining", "kitchen", "bath",
+                        "entry", "void", "loggia", "storage", "wc", "room")
 
 
 def _parse_obj_objects(path: str) -> dict:
