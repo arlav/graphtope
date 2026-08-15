@@ -38,9 +38,8 @@ def disjoint_union(ga: StateGraph, gb: StateGraph,
 
 def mark_interface(sg: StateGraph, *ids: str) -> None:
     """Tag nodes as block interface points (αN["interface"] = True, §7.6.3)."""
-    from ._topo import set_value
     for i in ids:
-        set_value(sg._vertex_obj(i), "interface", True)
+        sg.set_node_attr(i, "interface", True)
 
 
 def interface_nodes(sg: StateGraph) -> list[str]:

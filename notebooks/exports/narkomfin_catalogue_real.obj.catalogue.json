@@ -11,107 +11,138 @@
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_0",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 1,
-              "w": 3.66,
-              "x": 0.0,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
             "id": "F_0_2",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_2",
               "x": 7.32,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_0_3",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_3",
               "x": 10.98,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "K_0_1",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
               "x": 3.66,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_2",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_3",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_3",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "box_0_0",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 14.64,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": 14.64,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           }
         ],
@@ -126,8 +157,26 @@
             "attrs": {}
           },
           {
-            "src": "corridor_0",
-            "tgt": "F_0_0",
+            "src": "K_0_1",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_2",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_0",
+            "tgt": "K_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -155,6 +204,33 @@
           {
             "src": "corridor_0",
             "tgt": "K_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -202,252 +278,370 @@
         "multigraph": true,
         "nodes": [
           {
+            "id": "F_0_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "x": 0.0,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
             "id": "F_0_2",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_2",
               "x": 7.32,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_0_4",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_4",
               "x": 14.64,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_0_5",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_5",
               "x": 18.3,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "x": 0.0,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_2",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_2",
               "x": 7.32,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_4",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_4",
               "x": 14.64,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_5",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_5",
               "x": 18.3,
               "y": -9.82,
-              "z": 12.0
-            }
-          },
-          {
-            "id": "K_0_0",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
+              "z": 12.0,
               "w": 3.66,
-              "x": 0.0,
-              "y": 1.4,
-              "z": 6.0
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "K_0_1",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
               "x": 3.66,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_2",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "K_0_3",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
               "x": 10.98,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "K_1_0",
+            "id": "K_0_4",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 5,
-              "w": 3.66,
-              "x": 0.0,
+              "level": 2,
+              "pair": "F_0_4",
+              "x": 14.64,
               "y": 1.4,
-              "z": 15.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_5",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_5",
+              "x": 18.3,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "K_1_1",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 5,
-              "w": 3.66,
               "x": 3.66,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_2",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "K_1_3",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 5,
-              "w": 3.66,
               "x": 10.98,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_4",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_4",
+              "x": 14.64,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_5",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_5",
+              "x": 18.3,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "box_0_6",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 21.96,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "box_1_6",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 21.96,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 25.62,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_1",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 5,
-              "w": 25.62,
               "x": 0.0,
               "y": -1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_6",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 21.96,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_1_6",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "room",
+              "x": 21.96,
+              "y": 9.82,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
               "x": 25.62,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 18.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 18.0
             }
           }
         ],
@@ -472,7 +666,16 @@
           },
           {
             "src": "K_0_1",
-            "tgt": "K_0_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_2",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -481,7 +684,7 @@
           },
           {
             "src": "K_0_3",
-            "tgt": "corridor_0",
+            "tgt": "K_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -489,8 +692,62 @@
             "attrs": {}
           },
           {
-            "src": "K_1_0",
-            "tgt": "K_1_1",
+            "src": "K_0_4",
+            "tgt": "K_0_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_5",
+            "tgt": "box_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_1",
+            "tgt": "K_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_2",
+            "tgt": "K_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_3",
+            "tgt": "K_1_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_4",
+            "tgt": "K_1_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_5",
+            "tgt": "box_1_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -499,7 +756,7 @@
           },
           {
             "src": "box_0_6",
-            "tgt": "corridor_0",
+            "tgt": "room_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -508,7 +765,16 @@
           },
           {
             "src": "box_1_6",
-            "tgt": "corridor_1",
+            "tgt": "room_1_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -544,7 +810,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "K_0_0",
+            "tgt": "K_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -553,7 +819,70 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "K_0_1",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "F_1_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -589,15 +918,6 @@
           },
           {
             "src": "corridor_1",
-            "tgt": "K_1_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
             "tgt": "K_1_1",
             "type": "adjacency",
             "orientation": "H",
@@ -607,7 +927,43 @@
           },
           {
             "src": "corridor_1",
+            "tgt": "K_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
             "tgt": "K_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "K_1_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "K_1_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -626,24 +982,6 @@
           {
             "src": "corridor_1",
             "tgt": "stair_W",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_E",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_W",
-            "tgt": "corridor_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -673,155 +1011,170 @@
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_0",
+            "id": "F_0_1",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
-              "x": 0.0,
+              "x": 3.66,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
-            "id": "F_0_5",
-            "label": "l_section",
+            "id": "K_0_3",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 1,
+              "level": 2,
+              "x": 10.98,
+              "y": 1.4,
+              "z": 6.0,
               "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_5",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
               "x": 18.3,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
-            "id": "K_0_2",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
-              "x": 7.32,
               "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "K_0_4",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
+              "z": 6.0,
               "w": 3.66,
-              "x": 14.64,
-              "y": 1.4,
-              "z": 6.0
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "K_0_6",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
               "x": 21.96,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_0_1",
+            "id": "box_0_0",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
+              "x": 0.0,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
-            "id": "box_0_3",
+            "id": "box_0_2",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 10.98,
+              "x": 7.32,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_4",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 14.64,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 25.62,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_2",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 7.32,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": 25.62,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           }
         ],
         "edges": [
           {
-            "src": "F_0_5",
-            "tgt": "corridor_0",
+            "src": "K_0_3",
+            "tgt": "box_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -829,8 +1182,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_2",
-            "tgt": "box_0_1",
+            "src": "K_0_5",
+            "tgt": "K_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -838,8 +1191,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_2",
-            "tgt": "corridor_0",
+            "src": "box_0_2",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -847,8 +1200,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_6",
-            "tgt": "corridor_0",
+            "src": "box_0_2",
+            "tgt": "room_0_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -856,26 +1209,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_3",
-            "tgt": "K_0_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_0_3",
-            "tgt": "K_0_4",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_0_3",
-            "tgt": "corridor_0",
+            "src": "box_0_4",
+            "tgt": "K_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -884,7 +1219,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_0",
+            "tgt": "F_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -893,7 +1228,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "K_0_4",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -902,7 +1237,43 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_1",
+            "tgt": "K_0_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -919,8 +1290,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_0",
+            "src": "corridor_0",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -943,123 +1314,160 @@
       "index": 3,
       "offset": [
         0.0,
-        39.64
+        43.85
       ],
       "graph": {
         "directed": true,
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_3",
+            "id": "F_0_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
-              "x": 10.98,
+              "pair": "K_0_0",
+              "x": 0.0,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "x": 3.66,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_2",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "pair": "K_0_2",
+              "x": 7.32,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "K_0_0",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "K_0_2",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
+              "pair": "F_0_2",
               "x": 7.32,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_0_0",
-            "label": "generic",
+            "id": "K_0_3",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 0.0,
+              "x": 10.98,
               "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_1",
-            "label": "generic",
-            "attrs": {
+              "z": 6.0,
+              "w": 3.66,
               "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
-              "y": 1.4,
-              "z": 6.0
+              "h": 8.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 14.64,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": 14.64,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 9.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
             }
           }
         ],
         "edges": [
           {
-            "src": "K_0_2",
-            "tgt": "box_0_1",
+            "src": "F_0_0",
+            "tgt": "F_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "F_0_1",
+            "tgt": "F_0_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1068,16 +1476,7 @@
           },
           {
             "src": "K_0_2",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_0_0",
-            "tgt": "box_0_1",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1086,7 +1485,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_3",
+            "tgt": "F_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1095,7 +1494,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_0",
+            "tgt": "F_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1104,7 +1503,34 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_1",
+            "tgt": "F_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1121,8 +1547,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_0",
+            "src": "corridor_0",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1145,7 +1571,7 @@
       "index": 4,
       "offset": [
         52.94,
-        39.64
+        43.85
       ],
       "graph": {
         "directed": true,
@@ -1155,286 +1581,418 @@
             "id": "F_0_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_0",
               "x": 0.0,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "pair": "K_0_1",
+              "x": 3.66,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_3",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "x": 10.98,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_0",
               "x": 0.0,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "pair": "K_1_1",
+              "x": 3.66,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_3",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "x": 10.98,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_2_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 7,
-              "w": 3.66,
+              "pair": "K_2_0",
               "x": 0.0,
               "y": -9.82,
-              "z": 21.0
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
-            "id": "K_0_2",
+            "id": "F_2_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 7,
+              "pair": "K_2_1",
+              "x": 3.66,
+              "y": -9.82,
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_2_3",
+            "label": "l_section",
+            "attrs": {
+              "level": 7,
+              "x": 10.98,
+              "y": -9.82,
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "K_0_0",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
-              "x": 7.32,
+              "pair": "F_0_0",
+              "x": 0.0,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "K_0_4",
+            "id": "K_0_1",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
-              "x": 14.64,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "K_1_2",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 5,
-              "w": 3.66,
-              "x": 7.32,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "K_1_4",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 5,
-              "w": 3.66,
-              "x": 14.64,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "K_2_2",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 8,
-              "w": 3.66,
-              "x": 7.32,
-              "y": 1.4,
-              "z": 24.0
-            }
-          },
-          {
-            "id": "K_2_4",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 8,
-              "w": 3.66,
-              "x": 14.64,
-              "y": 1.4,
-              "z": 24.0
-            }
-          },
-          {
-            "id": "box_0_1",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
+              "pair": "F_0_1",
               "x": 3.66,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_0_3",
+            "id": "K_1_0",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_1",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_1",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_2_0",
+            "label": "u_section",
+            "attrs": {
+              "level": 8,
+              "pair": "F_2_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_2_1",
+            "label": "u_section",
+            "attrs": {
+              "level": 8,
+              "pair": "F_2_1",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "box_0_2",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 10.98,
+              "x": 7.32,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
-            "id": "box_1_1",
+            "id": "box_0_4",
             "label": "generic",
             "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 14.64,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
               "d": 8.42,
-              "h": 3.0,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_2",
+            "label": "generic",
+            "attrs": {
               "level": 5,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
+              "x": 7.32,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
-            "id": "box_1_3",
+            "id": "box_1_4",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 10.98,
+              "x": 14.64,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
-            "id": "box_2_1",
+            "id": "box_2_2",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 8,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
+              "x": 7.32,
               "y": 1.4,
-              "z": 24.0
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
-            "id": "box_2_3",
+            "id": "box_2_4",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 8,
               "subtype": "apartment",
-              "w": 3.66,
-              "x": 10.98,
+              "x": 14.64,
               "y": 1.4,
-              "z": 24.0
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 18.3,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 18.3,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_1",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 5,
-              "w": 18.3,
               "x": 0.0,
               "y": -1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 18.3,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_2",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 8,
-              "w": 18.3,
               "x": 0.0,
               "y": -1.4,
-              "z": 24.0
+              "z": 24.0,
+              "w": 18.3,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_2",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 7.32,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_1_2",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "room",
+              "x": 7.32,
+              "y": 9.82,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_2_2",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "room",
+              "x": 7.32,
+              "y": 9.82,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 27.0,
               "level": 0,
-              "w": 3.66,
               "x": 18.3,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 27.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
             }
           }
         ],
         "edges": [
           {
-            "src": "K_0_2",
-            "tgt": "box_0_3",
+            "src": "F_0_0",
+            "tgt": "F_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1442,7 +2000,926 @@
             "attrs": {}
           },
           {
-            "src": "K_0_4",
+            "src": "F_1_0",
+            "tgt": "F_1_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "F_2_0",
+            "tgt": "F_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_0",
+            "tgt": "K_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_1",
+            "tgt": "box_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_0",
+            "tgt": "K_1_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_1",
+            "tgt": "box_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_2_0",
+            "tgt": "K_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_2_1",
+            "tgt": "box_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_2",
+            "tgt": "room_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_1_2",
+            "tgt": "room_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_2_2",
+            "tgt": "room_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "F_1_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "F_1_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "F_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "K_1_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "K_1_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "F_2_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "F_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "F_2_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "K_2_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "K_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "box_2_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "box_2_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "stair_W",
+            "tgt": "entrance",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          }
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "offset": [
+        105.88,
+        43.85
+      ],
+      "graph": {
+        "directed": true,
+        "multigraph": true,
+        "nodes": [
+          {
+            "id": "F_0_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "pair": "K_0_0",
+              "x": 0.0,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_3",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "pair": "K_0_3",
+              "x": 10.98,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "K_0_0",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "x": 7.32,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_3",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_3",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "box_0_1",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_4",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 14.64,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "corridor_0",
+            "label": "corridor",
+            "attrs": {
+              "level": 2,
+              "x": 0.0,
+              "y": -1.4,
+              "z": 6.0,
+              "w": 18.3,
+              "d": 2.8,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "entrance",
+            "label": "entrance",
+            "attrs": {
+              "level": 0,
+              "x": -3.66,
+              "y": 1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_4",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 14.64,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "stair_E",
+            "label": "staircase",
+            "attrs": {
+              "level": 0,
+              "x": 18.3,
+              "y": -1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
+            }
+          },
+          {
+            "id": "stair_W",
+            "label": "staircase",
+            "attrs": {
+              "level": 0,
+              "x": -3.66,
+              "y": -1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 9.0
+            }
+          }
+        ],
+        "edges": [
+          {
+            "src": "K_0_0",
+            "tgt": "box_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_2",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_0_3",
+            "tgt": "box_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_1",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_4",
+            "tgt": "room_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_W",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "stair_W",
+            "tgt": "entrance",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          }
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "offset": [
+        0.0,
+        87.7
+      ],
+      "graph": {
+        "directed": true,
+        "multigraph": true,
+        "nodes": [
+          {
+            "id": "F_0_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "x": 0.0,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "x": 0.0,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_2_0",
+            "label": "l_section",
+            "attrs": {
+              "level": 7,
+              "x": 0.0,
+              "y": -9.82,
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "K_0_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "x": 7.32,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "x": 7.32,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_2_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 8,
+              "x": 7.32,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "box_0_1",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_3",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_1",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "apartment",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_3",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_1",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 3.66,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_3",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "corridor_0",
+            "label": "corridor",
+            "attrs": {
+              "level": 2,
+              "x": 0.0,
+              "y": -1.4,
+              "z": 6.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "corridor_1",
+            "label": "corridor",
+            "attrs": {
+              "level": 5,
+              "x": 0.0,
+              "y": -1.4,
+              "z": 15.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "corridor_2",
+            "label": "corridor",
+            "attrs": {
+              "level": 8,
+              "x": 0.0,
+              "y": -1.4,
+              "z": 24.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "entrance",
+            "label": "entrance",
+            "attrs": {
+              "level": 0,
+              "x": -3.66,
+              "y": 1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "stair_E",
+            "label": "staircase",
+            "attrs": {
+              "level": 0,
+              "x": 14.64,
+              "y": -1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
+            }
+          },
+          {
+            "id": "stair_W",
+            "label": "staircase",
+            "attrs": {
+              "level": 0,
+              "x": -3.66,
+              "y": -1.4,
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
+            }
+          }
+        ],
+        "edges": [
+          {
+            "src": "K_0_2",
             "tgt": "box_0_3",
             "type": "adjacency",
             "orientation": "H",
@@ -1461,25 +2938,7 @@
           },
           {
             "src": "K_2_2",
-            "tgt": "corridor_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_2_4",
             "tgt": "box_2_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_2_4",
-            "tgt": "corridor_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1505,44 +2964,8 @@
             "attrs": {}
           },
           {
-            "src": "box_1_3",
-            "tgt": "K_1_4",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "box_2_1",
             "tgt": "K_2_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_2_1",
-            "tgt": "corridor_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_2_3",
-            "tgt": "K_2_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_2_3",
-            "tgt": "corridor_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1561,15 +2984,6 @@
           {
             "src": "corridor_0",
             "tgt": "K_0_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_0",
-            "tgt": "K_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1624,15 +3038,6 @@
           {
             "src": "corridor_1",
             "tgt": "K_1_2",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
-            "tgt": "K_1_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1685,8 +3090,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_2",
+            "src": "corridor_2",
+            "tgt": "K_2_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1694,8 +3099,35 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_2",
+            "src": "corridor_2",
+            "tgt": "box_2_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "box_2_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_2",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -1715,352 +3147,557 @@
       }
     },
     {
-      "index": 5,
+      "index": 7,
       "offset": [
-        105.88,
-        39.64
+        52.94,
+        87.7
       ],
       "graph": {
         "directed": true,
         "multigraph": true,
         "nodes": [
           {
-            "id": "F_0_2",
+            "id": "F_0_1",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
-              "x": 7.32,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
-            "id": "F_0_6",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 1,
-              "w": 3.66,
-              "x": 21.96,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
-            "id": "F_1_2",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 4,
-              "w": 3.66,
-              "x": 7.32,
-              "y": -9.82,
-              "z": 12.0
-            }
-          },
-          {
-            "id": "F_1_6",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 4,
-              "w": 3.66,
-              "x": 21.96,
-              "y": -9.82,
-              "z": 12.0
-            }
-          },
-          {
-            "id": "K_0_1",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
               "x": 3.66,
-              "y": 1.4,
-              "z": 6.0
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
-            "id": "K_0_3",
-            "label": "u_section",
+            "id": "F_0_5",
+            "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
+              "level": 1,
+              "pair": "K_0_5",
+              "x": 18.3,
+              "y": -9.82,
+              "z": 3.0,
               "w": 3.66,
-              "x": 10.98,
-              "y": 1.4,
-              "z": 6.0
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "x": 3.66,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_5",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "pair": "K_1_5",
+              "x": 18.3,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_2_1",
+            "label": "l_section",
+            "attrs": {
+              "level": 7,
+              "x": 3.66,
+              "y": -9.82,
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_2_5",
+            "label": "l_section",
+            "attrs": {
+              "level": 7,
+              "pair": "K_2_5",
+              "x": 18.3,
+              "y": -9.82,
+              "z": 21.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "K_0_5",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 2,
-              "w": 3.66,
+              "pair": "F_0_5",
               "x": 18.3,
               "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "K_1_1",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 5,
+              "z": 6.0,
               "w": 3.66,
-              "x": 3.66,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "K_1_3",
-            "label": "u_section",
-            "attrs": {
               "d": 8.42,
-              "h": 6.0,
-              "level": 5,
-              "w": 3.66,
-              "x": 10.98,
-              "y": 1.4,
-              "z": 15.0
+              "h": 8.0
             }
           },
           {
             "id": "K_1_5",
             "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 5,
-              "w": 3.66,
+              "pair": "F_1_5",
               "x": 18.3,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_2_5",
+            "label": "u_section",
+            "attrs": {
+              "level": 8,
+              "pair": "F_2_5",
+              "x": 18.3,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "box_0_0",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 0.0,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_2",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_3",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "box_0_4",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 14.64,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_0_6",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "apartment",
+              "x": 21.96,
+              "y": 1.4,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "box_1_0",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 0.0,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_2",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "apartment",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_3",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "box_1_4",
             "label": "generic",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
               "subtype": "apartment",
-              "w": 3.66,
               "x": 14.64,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_1_6",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "apartment",
+              "x": 21.96,
+              "y": 1.4,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_0",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_2",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 7.32,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_3",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 10.98,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_4",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 14.64,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "box_2_6",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "apartment",
+              "x": 21.96,
+              "y": 1.4,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 25.62,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_1",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 5,
-              "w": 25.62,
               "x": 0.0,
               "y": -1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "corridor_2",
+            "label": "corridor",
+            "attrs": {
+              "level": 8,
+              "x": 0.0,
+              "y": -1.4,
+              "z": 24.0,
+              "w": 25.62,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_0",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 0.0,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_4",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 14.64,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_0_6",
+            "label": "generic",
+            "attrs": {
+              "level": 2,
+              "subtype": "room",
+              "x": 21.96,
+              "y": 9.82,
+              "z": 6.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_1_0",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "room",
+              "x": 0.0,
+              "y": 9.82,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_1_4",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "room",
+              "x": 14.64,
+              "y": 9.82,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_1_6",
+            "label": "generic",
+            "attrs": {
+              "level": 5,
+              "subtype": "room",
+              "x": 21.96,
+              "y": 9.82,
+              "z": 15.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_2_0",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "room",
+              "x": 0.0,
+              "y": 9.82,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_2_4",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "room",
+              "x": 14.64,
+              "y": 9.82,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
+            }
+          },
+          {
+            "id": "room_2_6",
+            "label": "generic",
+            "attrs": {
+              "level": 8,
+              "subtype": "room",
+              "x": 21.96,
+              "y": 9.82,
+              "z": 24.0,
+              "w": 3.66,
+              "d": 4.21,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
               "x": 25.62,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 27.0
             }
           }
         ],
         "edges": [
           {
-            "src": "F_0_2",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "F_0_6",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "F_1_6",
-            "tgt": "corridor_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_1",
-            "tgt": "box_0_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_1",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_0_3",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
             "src": "K_0_5",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_1",
-            "tgt": "box_1_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_1",
-            "tgt": "corridor_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "K_1_3",
-            "tgt": "box_1_4",
+            "tgt": "box_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2069,7 +3706,7 @@
           },
           {
             "src": "K_1_5",
-            "tgt": "box_1_4",
+            "tgt": "box_1_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2077,8 +3714,8 @@
             "attrs": {}
           },
           {
-            "src": "K_1_5",
-            "tgt": "corridor_1",
+            "src": "K_2_5",
+            "tgt": "box_2_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2087,7 +3724,7 @@
           },
           {
             "src": "box_0_0",
-            "tgt": "corridor_0",
+            "tgt": "room_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2095,8 +3732,17 @@
             "attrs": {}
           },
           {
-            "src": "box_0_4",
-            "tgt": "K_0_3",
+            "src": "box_0_2",
+            "tgt": "box_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_3",
+            "tgt": "box_0_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2114,7 +3760,16 @@
           },
           {
             "src": "box_0_4",
-            "tgt": "corridor_0",
+            "tgt": "room_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "box_0_6",
+            "tgt": "room_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2123,7 +3778,7 @@
           },
           {
             "src": "box_1_0",
-            "tgt": "corridor_1",
+            "tgt": "room_1_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2131,8 +3786,8 @@
             "attrs": {}
           },
           {
-            "src": "corridor_1",
-            "tgt": "F_1_2",
+            "src": "box_1_2",
+            "tgt": "box_1_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2140,16 +3795,7 @@
             "attrs": {}
           },
           {
-            "src": "corridor_1",
-            "tgt": "K_1_3",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "corridor_1",
+            "src": "box_1_3",
             "tgt": "box_1_4",
             "type": "adjacency",
             "orientation": "H",
@@ -2158,8 +3804,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_0",
+            "src": "box_1_4",
+            "tgt": "K_1_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2167,8 +3813,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_1",
+            "src": "box_1_4",
+            "tgt": "room_1_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2176,8 +3822,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_0",
+            "src": "box_1_6",
+            "tgt": "room_1_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2185,8 +3831,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_1",
+            "src": "box_2_0",
+            "tgt": "room_2_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2194,205 +3840,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "entrance",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          }
-        ]
-      }
-    },
-    {
-      "index": 6,
-      "offset": [
-        0.0,
-        79.28
-      ],
-      "graph": {
-        "directed": true,
-        "multigraph": true,
-        "nodes": [
-          {
-            "id": "F_0_0",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 1,
-              "w": 3.66,
-              "x": 0.0,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
-            "id": "F_1_0",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 4,
-              "w": 3.66,
-              "x": 0.0,
-              "y": -9.82,
-              "z": 12.0
-            }
-          },
-          {
-            "id": "K_0_3",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
-              "x": 10.98,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "K_1_3",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 5,
-              "w": 3.66,
-              "x": 10.98,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "box_0_1",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_2",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 7.32,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_1_1",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 5,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "box_1_2",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 5,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 7.32,
-              "y": 1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "corridor_0",
-            "label": "corridor",
-            "attrs": {
-              "d": 2.8,
-              "h": 3.0,
-              "level": 2,
-              "w": 14.64,
-              "x": 0.0,
-              "y": -1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "corridor_1",
-            "label": "corridor",
-            "attrs": {
-              "d": 2.8,
-              "h": 3.0,
-              "level": 5,
-              "w": 14.64,
-              "x": 0.0,
-              "y": -1.4,
-              "z": 15.0
-            }
-          },
-          {
-            "id": "entrance",
-            "label": "entrance",
-            "attrs": {
-              "d": 2.5,
-              "h": 3.0,
-              "level": 0,
-              "w": 3.66,
-              "x": -3.66,
-              "y": 1.4,
-              "z": 0.0
-            }
-          },
-          {
-            "id": "stair_E",
-            "label": "staircase",
-            "attrs": {
-              "d": 2.8,
-              "h": 18.0,
-              "level": 0,
-              "w": 3.66,
-              "x": 14.64,
-              "y": -1.4,
-              "z": 0.0
-            }
-          },
-          {
-            "id": "stair_W",
-            "label": "staircase",
-            "attrs": {
-              "d": 2.8,
-              "h": 18.0,
-              "level": 0,
-              "w": 3.66,
-              "x": -3.66,
-              "y": -1.4,
-              "z": 0.0
-            }
-          }
-        ],
-        "edges": [
-          {
-            "src": "F_1_0",
-            "tgt": "corridor_1",
+            "src": "box_2_2",
+            "tgt": "box_2_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2400,8 +3849,8 @@
             "attrs": {}
           },
           {
-            "src": "K_1_3",
-            "tgt": "box_1_2",
+            "src": "box_2_3",
+            "tgt": "box_2_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2409,8 +3858,8 @@
             "attrs": {}
           },
           {
-            "src": "K_1_3",
-            "tgt": "corridor_1",
+            "src": "box_2_4",
+            "tgt": "K_2_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2418,8 +3867,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_2",
-            "tgt": "K_0_3",
+            "src": "box_2_4",
+            "tgt": "room_2_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2427,35 +3876,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_2",
-            "tgt": "box_0_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_1_1",
-            "tgt": "corridor_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_1_2",
-            "tgt": "box_1_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "box_1_2",
-            "tgt": "corridor_1",
+            "src": "box_2_6",
+            "tgt": "room_2_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2464,7 +3886,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "F_0_0",
+            "tgt": "F_0_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2473,7 +3895,7 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "K_0_3",
+            "tgt": "F_0_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2482,7 +3904,16 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_1",
+            "tgt": "K_0_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2492,6 +3923,33 @@
           {
             "src": "corridor_0",
             "tgt": "box_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "box_0_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2517,7 +3975,88 @@
             "attrs": {}
           },
           {
-            "src": "entrance",
+            "src": "corridor_1",
+            "tgt": "F_1_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "F_1_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "K_1_5",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_4",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "box_1_6",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
             "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
@@ -2526,8 +4065,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_1",
+            "src": "corridor_2",
+            "tgt": "F_2_1",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2535,166 +4074,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_1",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          }
-        ]
-      }
-    },
-    {
-      "index": 7,
-      "offset": [
-        52.94,
-        79.28
-      ],
-      "graph": {
-        "directed": true,
-        "multigraph": true,
-        "nodes": [
-          {
-            "id": "F_0_2",
-            "label": "l_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 1,
-              "w": 3.66,
-              "x": 7.32,
-              "y": -9.82,
-              "z": 3.0
-            }
-          },
-          {
-            "id": "K_0_0",
-            "label": "u_section",
-            "attrs": {
-              "d": 8.42,
-              "h": 6.0,
-              "level": 2,
-              "w": 3.66,
-              "x": 0.0,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_1",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 3.66,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_3",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 10.98,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_4",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 14.64,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "box_0_5",
-            "label": "generic",
-            "attrs": {
-              "d": 8.42,
-              "h": 3.0,
-              "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 18.3,
-              "y": 1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "corridor_0",
-            "label": "corridor",
-            "attrs": {
-              "d": 2.8,
-              "h": 3.0,
-              "level": 2,
-              "w": 21.96,
-              "x": 0.0,
-              "y": -1.4,
-              "z": 6.0
-            }
-          },
-          {
-            "id": "entrance",
-            "label": "entrance",
-            "attrs": {
-              "d": 2.5,
-              "h": 3.0,
-              "level": 0,
-              "w": 3.66,
-              "x": -3.66,
-              "y": 1.4,
-              "z": 0.0
-            }
-          },
-          {
-            "id": "stair_E",
-            "label": "staircase",
-            "attrs": {
-              "d": 2.8,
-              "h": 9.0,
-              "level": 0,
-              "w": 3.66,
-              "x": 21.96,
-              "y": -1.4,
-              "z": 0.0
-            }
-          },
-          {
-            "id": "stair_W",
-            "label": "staircase",
-            "attrs": {
-              "d": 2.8,
-              "h": 9.0,
-              "level": 0,
-              "w": 3.66,
-              "x": -3.66,
-              "y": -1.4,
-              "z": 0.0
-            }
-          }
-        ],
-        "edges": [
-          {
-            "src": "F_0_2",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "F_2_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2702,8 +4083,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_0",
-            "tgt": "box_0_1",
+            "src": "corridor_2",
+            "tgt": "K_2_5",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2711,8 +4092,8 @@
             "attrs": {}
           },
           {
-            "src": "K_0_0",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "box_2_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2720,8 +4101,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_1",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "box_2_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2729,8 +4110,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_3",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "box_2_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2738,8 +4119,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_4",
-            "tgt": "box_0_3",
+            "src": "corridor_2",
+            "tgt": "box_2_4",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2747,8 +4128,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_4",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "box_2_6",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2756,8 +4137,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_5",
-            "tgt": "box_0_4",
+            "src": "corridor_2",
+            "tgt": "stair_E",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2765,26 +4146,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_5",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_E",
-            "tgt": "corridor_0",
-            "type": "adjacency",
-            "orientation": "H",
-            "bidirectional": true,
-            "weight": 1.0,
-            "attrs": {}
-          },
-          {
-            "src": "stair_W",
-            "tgt": "corridor_0",
+            "src": "corridor_2",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -2807,7 +4170,7 @@
       "index": 8,
       "offset": [
         105.88,
-        79.28
+        87.7
       ],
       "graph": {
         "directed": true,
@@ -2817,199 +4180,259 @@
             "id": "F_0_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_0",
               "x": 0.0,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_0_1",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
               "x": 3.66,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_0_2",
+            "label": "l_section",
+            "attrs": {
+              "level": 1,
+              "pair": "K_0_2",
+              "x": 7.32,
+              "y": -9.82,
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_0_3",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 1,
-              "w": 3.66,
+              "pair": "K_0_3",
               "x": 10.98,
               "y": -9.82,
-              "z": 3.0
+              "z": 3.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_0",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_0",
               "x": 0.0,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_1",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
               "x": 3.66,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
+            }
+          },
+          {
+            "id": "F_1_2",
+            "label": "l_section",
+            "attrs": {
+              "level": 4,
+              "pair": "K_1_2",
+              "x": 7.32,
+              "y": -9.82,
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
             "id": "F_1_3",
             "label": "l_section",
             "attrs": {
-              "d": 8.42,
-              "h": 6.0,
               "level": 4,
-              "w": 3.66,
+              "pair": "K_1_3",
               "x": 10.98,
               "y": -9.82,
-              "z": 12.0
+              "z": 12.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 6.0
             }
           },
           {
-            "id": "box_0_2",
-            "label": "generic",
+            "id": "K_0_0",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
-              "subtype": "apartment",
+              "pair": "F_0_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 6.0,
               "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_0_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 2,
+              "pair": "F_0_2",
               "x": 7.32,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_0_4",
-            "label": "generic",
+            "id": "K_0_3",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 2,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 14.64,
+              "pair": "F_0_3",
+              "x": 10.98,
               "y": 1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_1_2",
-            "label": "generic",
+            "id": "K_1_0",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
-              "subtype": "apartment",
+              "pair": "F_1_0",
+              "x": 0.0,
+              "y": 1.4,
+              "z": 15.0,
               "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
+            }
+          },
+          {
+            "id": "K_1_2",
+            "label": "u_section",
+            "attrs": {
+              "level": 5,
+              "pair": "F_1_2",
               "x": 7.32,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
-            "id": "box_1_4",
-            "label": "generic",
+            "id": "K_1_3",
+            "label": "u_section",
             "attrs": {
-              "d": 8.42,
-              "h": 3.0,
               "level": 5,
-              "subtype": "apartment",
-              "w": 3.66,
-              "x": 14.64,
+              "pair": "F_1_3",
+              "x": 10.98,
               "y": 1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 3.66,
+              "d": 8.42,
+              "h": 8.0
             }
           },
           {
             "id": "corridor_0",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 2,
-              "w": 18.3,
               "x": 0.0,
               "y": -1.4,
-              "z": 6.0
+              "z": 6.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "corridor_1",
             "label": "corridor",
             "attrs": {
-              "d": 2.8,
-              "h": 3.0,
               "level": 5,
-              "w": 18.3,
               "x": 0.0,
               "y": -1.4,
-              "z": 15.0
+              "z": 15.0,
+              "w": 14.64,
+              "d": 2.8,
+              "h": 3.0
             }
           },
           {
             "id": "entrance",
             "label": "entrance",
             "attrs": {
-              "d": 2.5,
-              "h": 3.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": 1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.5,
+              "h": 3.0
             }
           },
           {
             "id": "stair_E",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
-              "x": 18.3,
+              "x": 14.64,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 18.0
             }
           },
           {
             "id": "stair_W",
             "label": "staircase",
             "attrs": {
-              "d": 2.8,
-              "h": 18.0,
               "level": 0,
-              "w": 3.66,
               "x": -3.66,
               "y": -1.4,
-              "z": 0.0
+              "z": 0.0,
+              "w": 3.66,
+              "d": 2.8,
+              "h": 18.0
             }
           }
         ],
@@ -3024,8 +4447,17 @@
             "attrs": {}
           },
           {
-            "src": "F_0_0",
-            "tgt": "corridor_0",
+            "src": "F_0_1",
+            "tgt": "F_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "F_0_2",
+            "tgt": "F_0_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3042,8 +4474,8 @@
             "attrs": {}
           },
           {
-            "src": "box_0_4",
-            "tgt": "corridor_0",
+            "src": "F_1_1",
+            "tgt": "F_1_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3051,8 +4483,8 @@
             "attrs": {}
           },
           {
-            "src": "box_1_2",
-            "tgt": "corridor_1",
+            "src": "F_1_2",
+            "tgt": "F_1_3",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3060,8 +4492,26 @@
             "attrs": {}
           },
           {
-            "src": "box_1_4",
-            "tgt": "corridor_1",
+            "src": "K_0_2",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "K_1_2",
+            "tgt": "K_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3071,6 +4521,15 @@
           {
             "src": "corridor_0",
             "tgt": "F_0_1",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "F_0_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3088,7 +4547,34 @@
           },
           {
             "src": "corridor_0",
-            "tgt": "box_0_2",
+            "tgt": "K_0_0",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "K_0_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_0",
+            "tgt": "stair_E",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3124,6 +4610,15 @@
           },
           {
             "src": "corridor_1",
+            "tgt": "F_1_2",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
             "tgt": "F_1_3",
             "type": "adjacency",
             "orientation": "H",
@@ -3132,8 +4627,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_0",
+            "src": "corridor_1",
+            "tgt": "K_1_0",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3141,8 +4636,8 @@
             "attrs": {}
           },
           {
-            "src": "stair_E",
-            "tgt": "corridor_1",
+            "src": "corridor_1",
+            "tgt": "K_1_2",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,
@@ -3150,8 +4645,26 @@
             "attrs": {}
           },
           {
-            "src": "stair_W",
-            "tgt": "corridor_1",
+            "src": "corridor_1",
+            "tgt": "K_1_3",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "stair_E",
+            "type": "adjacency",
+            "orientation": "H",
+            "bidirectional": true,
+            "weight": 1.0,
+            "attrs": {}
+          },
+          {
+            "src": "corridor_1",
+            "tgt": "stair_W",
             "type": "adjacency",
             "orientation": "H",
             "bidirectional": true,

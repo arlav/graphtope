@@ -25,7 +25,6 @@ from ._topo import (
     py_dict,
     set_dict,
     set_value,
-    vertex_at,
 )
 
 #: structural keys that are not free attributes αN / αE
@@ -40,6 +39,46 @@ class StateGraph:
         self._g = empty_graph()
         self._auto = 0          # auto node-id counter
         self._x = 0.0           # monotonic layout x (keeps coordinates unique)
+        # read snapshots over the carrier, built lazily and then maintained
+        # *incrementally* on every mutation — reading the carrier per call is
+        # O(V) per lookup and the DPO matcher does millions of them, while
+        # full invalidation rebuilds O(V+E) after each of ~1000 mutations in
+        # one refine (SG3 profiling, 2026-08-15). Vertex objects are matched
+        # by value (unique layout coordinates), so caching them is safe.
+        self._ndict: dict | None = None      # id -> cleaned node dict
+        self._nvert: dict | None = None      # id -> live vertex object
+        self._erecs: list | None = None      # ordered edge records
+        self._emap: dict | None = None       # (src, tgt) -> edge record
+        self._eobj: dict | None = None       # (src, tgt) -> live edge object
+
+    def _snapshot_nodes(self) -> None:
+        if self._ndict is None:
+            nd, nv = {}, {}
+            for v in (Graph.Vertices(self._g) or []):
+                d = clean(py_dict(v))
+                nd[d.get("id")] = d
+                nv[d.get("id")] = v
+            self._ndict, self._nvert = nd, nv
+
+    def _snapshot_edges(self) -> None:
+        if self._erecs is None:
+            out, em, eo = [], {}, {}
+            for e in (Graph.Edges(self._g) or []):
+                d = clean(py_dict(e))
+                rec = {
+                    "src": id_of(Edge.StartVertex(e)),
+                    "tgt": id_of(Edge.EndVertex(e)),
+                    "type": d.get("type", A.DEFAULT_EDGE_TYPE),
+                    "orientation": d.get("orientation"),
+                    "bidirectional": bool(d.get("bidirectional", False)),
+                    "weight": float(d.get("weight", A.DEFAULT_WEIGHT)),
+                    "attrs": {k: v for k, v in d.items()
+                              if k not in _EDGE_STRUCTURAL},
+                }
+                out.append(rec)
+                em[(rec["src"], rec["tgt"])] = rec
+                eo[(rec["src"], rec["tgt"])] = e
+            self._erecs, self._emap, self._eobj = out, em, eo
 
     # -- construction ------------------------------------------------------
     @classmethod
@@ -76,6 +115,9 @@ class StateGraph:
         v = set_dict(Vertex.ByCoordinates(self._x, y, 0.0), d)
         self._x += 1.0
         self._g = Graph.AddVertex(self._g, v, silent=True)
+        if self._ndict is not None:            # maintain the snapshot
+            self._ndict[id] = d
+            self._nvert[id] = v
         return id
 
     def add_edge(self, src: str, tgt: str, orientation: str, *,
@@ -99,23 +141,33 @@ class StateGraph:
         d = {"type": type, "orientation": orientation,
              "bidirectional": bool(bidirectional), "weight": float(weight)}
         d.update(attrs)
-        e = set_dict(Edge.ByStartVertexEndVertex(vertex_at(self._g, src),
-                                                 vertex_at(self._g, tgt)), d)
+        e = set_dict(Edge.ByStartVertexEndVertex(self._vertex_obj(src),
+                                                 self._vertex_obj(tgt)), d)
         # transferEdgeDictionaries=True is mandatory or the dict is dropped (0.9.43)
         self._g = Graph.AddEdge(self._g, e, transferEdgeDictionaries=True, silent=True)
+        if self._erecs is not None:            # maintain the snapshot
+            rec = {"src": src, "tgt": tgt, "type": type, "orientation": orientation,
+                   "bidirectional": bool(bidirectional), "weight": float(weight),
+                   "attrs": {k: v for k, v in d.items()
+                             if k not in _EDGE_STRUCTURAL}}
+            self._erecs.append(rec)
+            self._emap[(src, tgt)] = rec
+            self._eobj[(src, tgt)] = e
 
     # -- inspection: nodes -------------------------------------------------
     def nodes(self) -> list[str]:
-        return [id_of(v) for v in (Graph.Vertices(self._g) or [])]
+        self._snapshot_nodes()
+        return list(self._ndict)
 
     def has_node(self, id: str) -> bool:
-        return id in set(self.nodes())
+        self._snapshot_nodes()
+        return id in self._ndict
 
     def node_dict(self, id: str) -> dict:
-        v = vertex_at(self._g, id)
-        if v is None:
+        self._snapshot_nodes()
+        if id not in self._ndict:
             raise KeyError(f"no node {id!r}")
-        return clean(py_dict(v))
+        return dict(self._ndict[id])          # copy — callers may mutate
 
     def node_label(self, id: str) -> str:
         return self.node_dict(id).get("label", A.DEFAULT_NODE_LABEL)
@@ -128,26 +180,13 @@ class StateGraph:
     def edges(self) -> list[dict]:
         """List edges as records ``{src, tgt, type, orientation,
         bidirectional, weight, attrs}``."""
-        out = []
-        for e in (Graph.Edges(self._g) or []):
-            d = clean(py_dict(e))
-            rec = {
-                "src": id_of(Edge.StartVertex(e)),
-                "tgt": id_of(Edge.EndVertex(e)),
-                "type": d.get("type", A.DEFAULT_EDGE_TYPE),
-                "orientation": d.get("orientation"),
-                "bidirectional": bool(d.get("bidirectional", False)),
-                "weight": float(d.get("weight", A.DEFAULT_WEIGHT)),
-                "attrs": {k: v for k, v in d.items() if k not in _EDGE_STRUCTURAL},
-            }
-            out.append(rec)
-        return out
+        self._snapshot_edges()
+        return [{**e, "attrs": dict(e["attrs"])} for e in self._erecs]
 
     def edge(self, src: str, tgt: str) -> dict | None:
-        for e in self.edges():
-            if e["src"] == src and e["tgt"] == tgt:
-                return e
-        return None
+        self._snapshot_edges()
+        e = self._emap.get((src, tgt))
+        return {**e, "attrs": dict(e["attrs"])} if e else None
 
     def has_edge(self, src: str, tgt: str) -> bool:
         return self.edge(src, tgt) is not None
@@ -162,31 +201,45 @@ class StateGraph:
 
     # -- carrier mutators (used by the atomic basis, §4) ------------------
     def _vertex_obj(self, id: str):
-        v = vertex_at(self._g, id)
-        if v is None:
+        self._snapshot_nodes()
+        if id not in self._nvert:
             raise KeyError(f"no node {id!r}")
-        return v
+        return self._nvert[id]
 
     def _edge_obj(self, src: str, tgt: str):
-        for e in (Graph.Edges(self._g) or []):
-            if id_of(Edge.StartVertex(e)) == src and id_of(Edge.EndVertex(e)) == tgt:
-                return e
-        return None
+        self._snapshot_edges()
+        return self._eobj.get((src, tgt))
 
     def remove_node(self, id: str) -> None:
         """Remove an (isolated) node. Caller guarantees no incident edges."""
         self._g = Graph.RemoveVertex(self._g, self._vertex_obj(id), silent=True)
+        if self._ndict is not None:            # maintain the snapshot
+            self._ndict.pop(id, None)
+            self._nvert.pop(id, None)
 
     def remove_edge(self, src: str, tgt: str) -> None:
         e = self._edge_obj(src, tgt)
         if e is None:
             raise KeyError(f"no edge {src!r}→{tgt!r}")
         self._g = Graph.RemoveEdge(self._g, e, silent=True)
+        if self._erecs is not None:            # maintain the snapshot
+            rec = self._emap.pop((src, tgt), None)
+            self._eobj.pop((src, tgt), None)
+            if rec is not None:
+                self._erecs = [r for r in self._erecs if r is not rec]
 
     def set_node_label(self, id: str, label: str) -> None:
         if not A.is_node_label(label):
             raise ValueError(f"unknown node label {label!r}")
         set_value(self._vertex_obj(id), "label", label)
+        if self._ndict is not None:            # maintain the snapshot
+            self._ndict[id]["label"] = label
+
+    def set_node_attr(self, id: str, key: str, value) -> None:
+        """Set one free attribute αN (maintains the read snapshot)."""
+        set_value(self._vertex_obj(id), key, value)
+        if self._ndict is not None:
+            self._ndict[id][key] = value
 
     def set_edge_weight(self, src: str, tgt: str, weight: float) -> None:
         if weight < 0:
@@ -195,14 +248,18 @@ class StateGraph:
         if e is None:
             raise KeyError(f"no edge {src!r}→{tgt!r}")
         set_value(e, "weight", float(weight))
+        if self._erecs is not None:            # maintain the snapshot
+            rec = self._emap.get((src, tgt))
+            if rec is not None:
+                rec["weight"] = float(weight)
 
     # -- degrees (always direction-aware; topologic defaults to undirected) -
     def out_degree(self, id: str) -> int:
-        return len(Graph.OutgoingEdges(self._g, vertex_at(self._g, id),
+        return len(Graph.OutgoingEdges(self._g, self._vertex_obj(id),
                                        directed=True) or [])
 
     def in_degree(self, id: str) -> int:
-        return len(Graph.IncomingEdges(self._g, vertex_at(self._g, id),
+        return len(Graph.IncomingEdges(self._g, self._vertex_obj(id),
                                        directed=True) or [])
 
     def degree(self, id: str) -> int:

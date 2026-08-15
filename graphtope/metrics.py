@@ -261,6 +261,47 @@ def design_space(slabs: list, *, reference: StateGraph | None = None) -> dict:
             "features": [feature_vector(s) for s in items]}
 
 
+# === SG3 — the interior design space (level 2) ===========================
+#: ordered numeric features of one refined interior (the level-2 signature)
+INTERIOR_FEATURES = ("interior_rooms", "void_count", "wet_rooms",
+                     "habitable_rooms", "door_count", "window_count",
+                     "storage_count")
+
+
+def interior_feature_vector(refined: StateGraph) -> dict:
+    """The ordered numeric signature of a refined (level-2) graph — counts
+    derived from the Σ_int registry's flags (SG1), never hand-listed."""
+    from . import interior as I
+    subs = [refined.node_attrs(n).get("subtype") for n in refined.nodes()]
+    return {
+        "interior_rooms": float(interior_rooms(refined)),
+        "void_count": float(void_count(refined)),
+        "wet_rooms": float(sum(1 for s in subs if s in I.WET_SUBTYPES)),
+        "habitable_rooms": float(sum(1 for s in subs
+                                     if s in I.HABITABLE_SUBTYPES)),
+        "door_count": float(subs.count(I.DOOR)),
+        "window_count": float(subs.count(I.WINDOW)),
+        "storage_count": float(subs.count(I.STORAGE)),
+    }
+
+
+def interior_design_space(refined_graphs: list, *,
+                          reference: StateGraph | None = None) -> dict:
+    """SG3 — the level-2 analogue of ``design_space``: embed one slab's
+    interior variants (optionally with a reference interior, marked last) in
+    2-D by the same deterministic classical MDS."""
+    import numpy as np
+    items = list(refined_graphs) + ([reference] if reference is not None else [])
+    vecs = [interior_feature_vector(g) for g in items]
+    z = _standardise(np.array([[v[f] for f in INTERIOR_FEATURES] for v in vecs],
+                              dtype=float))
+    diff = z[:, None, :] - z[None, :, :]
+    coords = _classical_mds(np.sqrt((diff ** 2).sum(axis=-1)))
+    return {"coords": coords,
+            "reference_index": (len(items) - 1) if reference is not None else None,
+            "features": vecs}
+
+
 def cluster(coords, k: int, *, seed: int = 0):
     """Deterministic k-means over the 2-D map — a coarse grouping of the design
     space. Returns an integer label per point (0…k-1). ``k`` is clamped to the

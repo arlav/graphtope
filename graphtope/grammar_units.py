@@ -470,3 +470,40 @@ def refine_pair(sg: StateGraph, k_node: str, f_node: str, *,
                             **(k_opts or {}))
     inv_f, ids_f = refine_f(sg, f_node, **(f_opts or {}))
     return OpSequence([inv_f, inv_k]), {"K": ids_k, "F": ids_f}
+
+
+# === SG3 · the sampled option space (one slab, many interiors) ============
+def sample_k_options(rng) -> dict:
+    """Draw one K interior from G_U's option space. A paired K's void is
+    forced to 'partial' downstream by ``refine_pair`` (§5.1) regardless of
+    the draw. Probabilities lean toward the built condition."""
+    return {
+        "void": rng.random() < 0.85,
+        "void_extent": "full" if rng.random() < 0.3 else "partial",
+        "kitchen_form": "room" if rng.random() < 0.4 else "niche",
+        "bath_level": "entry" if rng.random() < 0.35 else "gallery",
+        "wc": rng.random() < 0.4,
+        "loggia": rng.random() < 0.5,
+        "storage": rng.random() < 0.4,
+        "split_gallery": rng.random() < 0.35,
+    }
+
+
+def sample_f_options(rng) -> dict:
+    """Draw one F interior from G_L's option space."""
+    return {
+        "sleeping": rng.random() < 0.75,
+        "wc": rng.random() < 0.35,
+        "loggia": rng.random() < 0.5,
+        "storage": rng.random() < 0.45,
+    }
+
+
+def sample_b_options(rng) -> dict:
+    """G_B has no per-unit alternates yet — variation comes from openings."""
+    return {}
+
+
+def sample_r_options(rng) -> dict:
+    """Draw one banked-room interior from G_R's option space."""
+    return {"storage": rng.random() < 0.5}

@@ -168,8 +168,9 @@ def realise_spec(spec: SlabSpec) -> StateGraph:
 def refine_units(slab: StateGraph, *, void: bool = True, kitchen: bool = True,
                  bath: bool = True, all_bays: bool = False,
                  k_opts: dict | None = None, f_opts: dict | None = None,
-                 b_opts: dict | None = None,
-                 r_opts: dict | None = None) -> tuple[StateGraph, "OpSequence"]:
+                 b_opts: dict | None = None, r_opts: dict | None = None,
+                 plan: dict | None = None,
+                 seed: int | None = None) -> tuple[StateGraph, "OpSequence"]:
     """Drive the **second** grammar level: refine every unit in a realised
     slab into its interior sub-grammar (``grammar_units``). Each unit's
     exterior adjacencies (the corridor face, any interlock) are routed to the
@@ -186,6 +187,12 @@ def refine_units(slab: StateGraph, *, void: bool = True, kitchen: bool = True,
     ``r_opts`` pass the SG2 options through (wc, loggia, storage,
     split_gallery, doors, windows, front_door, …).
 
+    SG3: a ``plan`` (from ``interior_plan``) gives each unit its *own*
+    options — the replayable sub-derivation record — plus the building-level
+    opening choices under ``"_openings"``; ``seed`` samples such a plan.
+    Per-unit plan entries override the ``*_opts`` bases; the same plan always
+    reproduces the same refined graph exactly.
+
     The refined interiors are graph-level topology (§7.6.2), not placed
     geometry — unlike the slab, they carry no boxes, so ``boxes_of`` applies
     to the slab, not to the refined graph."""
@@ -193,21 +200,33 @@ def refine_units(slab: StateGraph, *, void: bool = True, kitchen: bool = True,
     from .composite import OpSequence
     from .serialize import from_dict, to_dict
     g = from_dict(to_dict(slab))                 # refine a copy — leave the slab intact
-    k_opts = dict(k_opts or {})
-    f_opts = dict(f_opts or {})
+    if seed is not None and plan is None:
+        import random
+        plan = interior_plan(slab, random.Random(seed))
+    openings = dict(plan.get("_openings", {})) if plan else {}
+    r_openings = {k: v for k, v in openings.items()
+                  if k in ("doors", "windows")}  # G_R has no front door
+
+    def _po(n, base):                # per-unit options: the plan overrides
+        o = dict(base or {})
+        if plan is not None:
+            o.update(plan.get(n, {}))
+        return o
+
     inverses = []
     if all_bays:
         rooms = [n for n in sorted(g.nodes())
                  if g.node_label(n) == A.GENERIC
                  and g.node_attrs(n).get("subtype") == "room"]
         for n in rooms:                          # R before B: host door
-            inverses.append(gu.refine_r(g, n, **(r_opts or {}))[0])
+            inverses.append(gu.refine_r(g, n, **{**_po(n, r_opts),
+                                                 **r_openings})[0])
         boxes = [n for n in sorted(g.nodes())
                  if g.node_label(n) == A.GENERIC
                  and g.node_attrs(n).get("subtype") == "apartment"]
         for n in boxes:
             inverses.append(gu.refine_b(g, n, kitchen=kitchen, bath=bath,
-                                        **(b_opts or {}))[0])
+                                        **{**_po(n, b_opts), **openings})[0])
     units = [n for n in sorted(g.nodes())
              if g.node_label(n) in (A.U_SECTION, A.L_SECTION)]
     paired = set()
@@ -217,22 +236,89 @@ def refine_units(slab: StateGraph, *, void: bool = True, kitchen: bool = True,
             if not mate or n in paired or g.node_label(n) != A.U_SECTION:
                 continue
             if mate in units:
+                ko = _po(n, k_opts)
+                ko.pop("void_extent", None)      # a paired K is always partial
+                fo = _po(mate, f_opts)
                 inv, _ = gu.refine_pair(
-                    g, n, mate, void=void,
-                    k_opts={"kitchen": kitchen, "bath": bath, **k_opts},
-                    f_opts={"kitchen": kitchen, "bath": bath, **f_opts})
+                    g, n, mate, void=ko.pop("void", void),
+                    k_opts={"kitchen": kitchen, "bath": bath, **ko, **openings},
+                    f_opts={"kitchen": kitchen, "bath": bath, **fo, **openings})
                 inverses.append(inv)
                 paired.update((n, mate))
     for n in units:
         if n in paired:
             continue
         if g.node_label(n) == A.U_SECTION:
-            inv, _ = gu.refine_k(g, n, void=void, kitchen=kitchen, bath=bath,
-                                 **k_opts)
+            ko = _po(n, k_opts)
+            inv, _ = gu.refine_k(g, n, void=ko.pop("void", void),
+                                 kitchen=kitchen, bath=bath,
+                                 **{**ko, **openings})
         else:
-            inv, _ = gu.refine_f(g, n, kitchen=kitchen, bath=bath, **f_opts)
+            inv, _ = gu.refine_f(g, n, kitchen=kitchen, bath=bath,
+                                 **{**_po(n, f_opts), **openings})
         inverses.append(inv)
     return g, OpSequence(list(reversed(inverses)))
+
+
+# === SG3 — one slab, many interiors =======================================
+def interior_plan(slab: StateGraph, rng, *, doors: bool = True,
+                  windows: bool = True, front_doors: bool = True) -> dict:
+    """Sample one replayable interior plan for ``slab``: each unit draws its
+    own sub-grammar options (``grammar_units.sample_*_options``); the opening
+    choices live under ``"_openings"`` and are building-level — doors and
+    windows are all-or-nothing per building, because SG1's daylight check
+    arms on the first window (see STATUS 2026-08-11)."""
+    from . import grammar_units as gu
+    plan: dict = {"_openings": {"doors": doors, "windows": windows,
+                                "front_door": front_doors}}
+    for n in sorted(slab.nodes()):
+        lab = slab.node_label(n)
+        sub = slab.node_attrs(n).get("subtype")
+        if lab == A.U_SECTION:
+            plan[n] = gu.sample_k_options(rng)
+        elif lab == A.L_SECTION:
+            plan[n] = gu.sample_f_options(rng)
+        elif lab == A.GENERIC and sub == "apartment":
+            plan[n] = gu.sample_b_options(rng)
+        elif lab == A.GENERIC and sub == "room":
+            plan[n] = gu.sample_r_options(rng)
+    return plan
+
+
+@dataclass
+class InteriorVariant:
+    """One interior of a slab (SG3): the refined level-2 graph, the exact
+    inverse back to the slab, and the replayable plan that derives it."""
+
+    graph: StateGraph
+    inverse: object                  # OpSequence — ABSTRACT back to the slab
+    plan: dict
+
+
+def interior_variants(slab: StateGraph, n: int = 8, *, seed: int = 0,
+                      doors: bool = True, windows: bool = True,
+                      front_doors: bool = True) -> list:
+    """SG3 — one block-level slab → ``n`` distinct, valid interior variants.
+    Sample per-unit sub-derivations (``interior_plan``), refine every bay
+    type, filter on SG1's interior predicates (honesty — violations are not
+    expected from the drivers), and de-duplicate by typed isomorphism at
+    level 2. Each variant carries its replayable plan and exact inverse."""
+    import random
+    from . import interior
+    rng = random.Random(seed)
+    out: list = []
+    attempts = 0
+    while len(out) < n and attempts < n * 15:
+        attempts += 1
+        plan = interior_plan(slab, rng, doors=doors, windows=windows,
+                             front_doors=front_doors)
+        refined, inv = refine_units(slab, all_bays=True, plan=plan)
+        if interior.violations(refined):
+            continue
+        if any(typed_isomorphic(refined, v.graph) for v in out):
+            continue
+        out.append(InteriorVariant(refined, inv, plan))
+    return out
 
 
 # === the proposal pool (abstract side) ====================================

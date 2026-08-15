@@ -4,7 +4,43 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-11 · **Suite:** 211 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 215 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG3 — sub-derivation variability: one slab, many interiors (2026-08-15)
+
+Refinement is now a *choice*, not a flag set. `grammar_units.sample_*_options`
+define each unit type's option space (K: void extent/kitchen form/bath level/
+wc/loggia/storage/gallery split — probabilities leaning toward the built
+condition; F: sleeping/wc/loggia/storage; R: storage); `bridge.interior_plan`
+samples one **replayable plan** per slab (per-unit options + building-level
+opening choices under `_openings` — doors/windows are all-or-nothing per
+building because SG1's daylight check arms on the first window);
+`bridge.refine_units(..., plan=…, seed=…)` refines from a plan (the same plan
+reproduces the same interior exactly; a paired K's void is forced to `partial`
+per §5.1 regardless of the draw); `bridge.interior_variants(slab, n, seed=…)`
+yields **N distinct, SG1-valid interiors from one slab**, de-duplicated by
+typed isomorphism at level 2, each as an `InteriorVariant` carrying its graph,
+exact inverse to the slab, and plan. The level-2 analogue of G4's map:
+`metrics.interior_feature_vector` / `interior_design_space` (INTERIOR_FEATURES
+signature: interior/habitable/wet/storage rooms, voids, doors, windows —
+counts derived from the Σ_int registry, never hand-listed) embed one slab's
+interior population by the same deterministic classical MDS; the default
+interior is the reference point. Measured: a KFDB slab (9 nodes) → 57-node
+interiors; 6 sampled variants span 24–33 rooms, 0–2 voids, 1–3 storages —
+§8.5 becomes a *distribution*, not a count (paper Figure 7). **With SG0–SG3
+done the one-paper minimum (§11.2) is met.**
+
+**Performance fix (carrier read snapshots).** The SG3 sampler exposed that the
+DPO matcher re-read every node dict from the carrier via O(V)
+`VertexByKeyValue` scans — one 4-unit refine took ~59 s (millions of carrier
+dict conversions). `StateGraph` now keeps lazily-built read snapshots (node
+dicts, vertex/edge objects, edge records) **maintained incrementally** on
+every mutation (vertices are matched by value — unique layout coordinates —
+so caching the objects is safe; `compose.mark_interface` goes through the new
+`sg.set_node_attr` so no mutation bypasses maintenance). Verified against a
+fresh carrier read after 30 × 40 random atomic mutation sequences. Refine:
+59 s → 2 s; `interior_variants(6)`: ~20 s → 11 s; full suite 105 s (was
+>5 min timeout). No behavioural change — all 215 tests pass unchanged.
 
 ## ⚑ SG2 — the level-2 production corpus (2026-08-11)
 
@@ -203,11 +239,11 @@ double-height voids); G3 U/L sub-grammars.
 | **SG0** | **Typed interface routing — REFINE routes each edge class to its interior node** | ✅ **done** | `hierarchy`, `grammar_units` | `test_grammar_units.py` (+2) |
 | **SG1** | **Σ_int registry + interior validity (door/window registered, §5.2)** | ✅ **done** | `interior`, `metrics` | `test_interior.py` (7) |
 | **SG2** | **Level-2 production corpus — 31 productions, every bay type develops** | ✅ **done** | `grammar_units`, `bridge` | `test_sg2_corpus.py` (6) |
+| **SG3** | **Sub-derivation variability — one slab, many interiors** | ✅ **done** | `bridge`, `grammar_units`, `metrics` | `test_sg3_variability.py` (4) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
-and the **sub-grammar phase is underway** (SG0–SG2 ✅; next SG3 — "one slab,
-many interiors"). Plans: `docs/Generative_Variation_Research_Plan.md`,
-`docs/Sub_Grammar_Development_Plan.md`.
+and the **sub-grammar phase's one-paper minimum is met** (SG0–SG3 ✅; next
+SG4 level-2 geometry, SG5 the reference hunt, SG6 cross-level constraints).
 
 ## What works today
 
@@ -306,11 +342,13 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   explicit ▣ expansion slots for the sub-grammar work;
   `docs/Sub_Grammar_Development_Plan.md` is the SG0–SG8 plan that fills them (starts with
   SG0 typed interface routing — `Refine` currently lands *all* interface edges on one anchor).
-- **SG3 — sub-derivation variability** *(next)* — one slab, many interiors: a
-  level-2 strategy/seed chooses which of the 31 corpus productions fire per
-  unit; typed-iso dedup at level 2; the interior design space measured the way
-  G4 measures the block space (paper Figure 7). With SG0–SG3 done the
-  one-paper minimum (§11.2) is met.
+- ✅ **SG3 — sub-derivation variability** (done 2026-08-15) — sampled,
+  replayable interior plans; N distinct valid interiors per slab; level-2
+  design-space map. See the 2026-08-15 note above. **The one-paper minimum
+  (SG0–SG3) is met.**
+- **SG4 — level-2 geometry** *(next)* — interior productions place sub-boxes
+  inside the unit envelope; `boxes_of` at level 2; verified tiling per unit
+  (report coverage, don't fake it — R3).
 - **SG5 source hunt** *(open, decides publication shape)* — a room-labelled
   K/F interior reference, obtained or redrawn from Ginzburg's published plans.
 - **G5 — steering** *(optional)* — search or designer-in-the-loop over the

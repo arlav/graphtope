@@ -142,7 +142,7 @@ SG1's predicates; `REFINE`/`ABSTRACT` exact for each.
 **Paper slot:** D (the full §5.3 subsection), Table 7.
 **Effort:** the largest single item in the plan. **Depends on:** SG0, SG1.
 
-### SG3 · Sub-derivation variability — "one slab, many interiors"
+### SG3 · Sub-derivation variability — "one slab, many interiors" — ✅ done 2026-08-15
 Make refinement a *choice*: a level-2 `Strategy` (reuse `generate.RandomStrategy`, which is
 already pluggable) selects which interior productions fire and at which matches; `refine_units`
 gains a strategy/seed argument and refines each unit independently. De-duplicate refined
