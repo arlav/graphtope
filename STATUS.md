@@ -4,7 +4,55 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 215 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 227 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG4 — level-2 geometry: interiors that are built, not just drawn (2026-08-15)
+
+`graphtope/interior_geom.py` (new) gives every interior node its exact box
+inside its unit envelope — the block level's "one representation" claim now
+reaches the room scale (paper slot E; a stricter carrier test, slot F):
+
+- **`place(refined, slab)`** — deterministic recursive-split placement driven
+  by the refined graph alone (subtypes, extents, adjacency — never the plan).
+  Per family: K's internal stair is a full-height strip on the outer end, the
+  living keeps the corridor face and its routed side face while its served
+  rooms (bath@entry/wc/kitchen/loggia) stack as strips sharing its face; the
+  gallery's sleeping sits V-above the living's footprint (1.7 m partial /
+  0.9 m balcony for a full void) with the void claiming the rest and the
+  gallery's own rooms stacked off the sleeping. F's entry hugs the corridor
+  plane with served rooms as x-slices of the band behind; its dropped living
+  reaches back under the entry so `entry -V-> living` is a real z-face. B and
+  R are strip carves. **Side occupancy is graph-aware**: strips take the
+  x-side opposite the anchor's routed external contacts (detected from the
+  routed edges + envelopes), so side-neighbour and host-door edges land on
+  real faces. Openings are **wall-plane geometry** — a door is a leaf
+  centred in the plane its two spaces share (with a unit-envelope fallback
+  for the R host door); a window a panel on its room's outermost envelope
+  face (roof/party placements flagged in attrs, counted in the report).
+- **`tile_report`** verifies: volume sums to the envelope, no overlaps,
+  every graph edge a real shared face with the right axis for its
+  orientation, openings in their walls, plus a carrier `CellComplex`
+  partition check per unit (all True on every tested pattern).
+- **`boxes_of` works at level 2**; `exchange.to_obj(refined, boxes=…)`
+  exports rooms + openings with the sidecar graph; `topoview.draw_massing`
+  renders the placed interior.
+- **Reversibility preserved**: placement touches only interior nodes, so
+  `REFINE → place → ABSTRACT` is still exact to the slab (`to_dict`).
+- **Honesty (plan R3)**: a unit squeezed between two same-side neighbours
+  (e.g. middle K's in `KKKK`) cannot keep both routed side contacts on its
+  anchor's box — one box, two party walls. The miss is **reported**
+  (`edge_face_misses`), never faked; 9–10 of the tested patterns realise
+  every edge. A formal finding for the paper: the SG0 routing contract
+  constrains realisable interior layouts (Q2-adjacent).
+- Enablers: `grammar_units._refine` tags every produced node `unit=<id>`
+  (per-unit bookkeeping — also the SG6/SG7 substrate); `b_unit`'s router
+  gains `(H, "*") → living` (a host/side contact meets the living, the box
+  at the envelope's non-corridor faces).
+
+Tests: `tests/test_sg4_geometry.py` (12) — tiling + edge→face + openings on
+7 patterns, the section honoured, determinism + exact inverse after
+placement, the honest chain miss, OBJ export with rooms, CellComplex
+partitions. Notebook: SG4 walkthrough (report table, massing render, OBJ).
 
 ## ⚑ SG3 — sub-derivation variability: one slab, many interiors (2026-08-15)
 
@@ -240,10 +288,11 @@ double-height voids); G3 U/L sub-grammars.
 | **SG1** | **Σ_int registry + interior validity (door/window registered, §5.2)** | ✅ **done** | `interior`, `metrics` | `test_interior.py` (7) |
 | **SG2** | **Level-2 production corpus — 31 productions, every bay type develops** | ✅ **done** | `grammar_units`, `bridge` | `test_sg2_corpus.py` (6) |
 | **SG3** | **Sub-derivation variability — one slab, many interiors** | ✅ **done** | `bridge`, `grammar_units`, `metrics` | `test_sg3_variability.py` (4) |
+| **SG4** | **Level-2 geometry — interiors tile the envelope, edges are faces** | ✅ **done** | `interior_geom`, `grammar_units` | `test_sg4_geometry.py` (12) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
-and the **sub-grammar phase's one-paper minimum is met** (SG0–SG3 ✅; next
-SG4 level-2 geometry, SG5 the reference hunt, SG6 cross-level constraints).
+and the **sub-grammar phase's one-paper minimum is met** (SG0–SG4 ✅; next
+SG5 the reference hunt, SG6 cross-level constraints, SG7 the two-level map).
 
 ## What works today
 
@@ -346,9 +395,10 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   replayable interior plans; N distinct valid interiors per slab; level-2
   design-space map. See the 2026-08-15 note above. **The one-paper minimum
   (SG0–SG3) is met.**
-- **SG4 — level-2 geometry** *(next)* — interior productions place sub-boxes
-  inside the unit envelope; `boxes_of` at level 2; verified tiling per unit
-  (report coverage, don't fake it — R3).
+- ✅ **SG4 — level-2 geometry** (done 2026-08-15) — `interior_geom` places
+  every interior node in its envelope; verified tiling, edge→face, openings
+  in walls; reversible; honest chain-miss reporting. See the 2026-08-15
+  note above.
 - **SG5 source hunt** *(open, decides publication shape)* — a room-labelled
   K/F interior reference, obtained or redrawn from Ginzburg's published plans.
 - **G5 — steering** *(optional)* — search or designer-in-the-loop over the

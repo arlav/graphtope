@@ -106,8 +106,10 @@ def b_unit() -> UnitSpec:
         anchor="entry",
         interface={(H, CORRIDOR): "entry",
                    (V, "above"): "living",
-                   (V, "below"): "living"},
-    )
+                   (V, "below"): "living",
+                   (H, "*"): "living"},        # a side/host contact meets the
+    )                                          # living (SG4: the box at the
+                                               # envelope's non-corridor faces)
 
 
 def r_unit() -> UnitSpec:
@@ -307,15 +309,20 @@ def _apply_in_unit(sg: StateGraph, prod: Production, pin: dict):
 def _refine(sg: StateGraph, node: str, unit: UnitSpec, steps: list) -> tuple:
     """REFINE ``node`` to ``unit``, then run ``steps`` = [(production,
     {pattern_name: local_name}, produced_local)]. Returns ``(inverse,
-    produced)`` — the inverse is the composed ABSTRACT(S → n)."""
+    produced)`` — the inverse is the composed ABSTRACT(S → n). Every produced
+    node is tagged ``unit = node`` (SG4: per-unit bookkeeping + the envelope
+    its geometry develops)."""
     r = Refine(node, unit)
     inverses = [r.apply(sg)]
     ids = dict(r.produced)
+    for i in ids.values():
+        sg.set_node_attr(i, "unit", node)
     for prod, pin_names, out_local in steps:
         app = _apply_in_unit(sg, prod, {p: ids[l] for p, l in pin_names.items()})
         inverses.append(app.inverse)
         (out_name,) = app.produced          # each step glues exactly one room
         ids[out_local] = app.produced[out_name]
+        sg.set_node_attr(ids[out_local], "unit", node)
     return OpSequence(list(reversed(inverses))), ids
 
 

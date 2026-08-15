@@ -156,7 +156,7 @@ slab exactly; each passes SG1's predicates.
 **Paper slot:** G (§8.5 becomes a distribution, not a count) and **Figure 7**.
 **Effort:** small–medium once SG2 exists. **Depends on:** SG0, SG2.
 
-### SG4 · Level-2 geometry — interiors that are built, not just drawn
+### SG4 · Level-2 geometry — interiors that are built, not just drawn — ✅ done 2026-08-15
 Give interior productions **boxes inside the unit envelope**, exactly as `narkomfin.py`'s
 shape productions do at block level: the unit's box is a container; each interior production
 places a sub-box within it; interior adjacency is derived from what touches. Verify with
