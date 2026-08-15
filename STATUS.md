@@ -4,7 +4,34 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 233 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 240 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG6 — cross-level constraints: Q3 answered with numbers (2026-08-15)
+
+`graphtope/crosslevel.py` (new) formalises the plan's four constraints as
+post-checks over **placed** interiors (SG4 geometry) and runs the Q3
+experiment (`measure`): sample buildings with *independent* two-level
+variation — differing band patterns per slab (level 1) × SG3 interior plans
+(level 2), no cross-level awareness — place, and count violations. Measured
+(20 interiors, 5 two-band slabs, seed 42):
+
+| constraint | violations | rate/interior | reading |
+|---|---|---|---|
+| wet stacking | 5 | 0.25 | **filtered or steered** — an objective, not a rule |
+| bay alignment | 8 | 0.40 | **soft** — a rate to steer against |
+| void coherence (§5.1) | 0 | 0.00 | **modelled in the productions** — `refine_pair` refuses a paired K's full void before any mutation; the independent-draw control shows why (10–35% of unconstrained paired-K draws conflict) |
+| level monotonicity (§12.2) | 0 | 0.00 | **guaranteed by the grammar** — the post-check exists for bad compositions |
+
+Mechanics: wet kinds come from Σ_int's `wet` flag (never hand-listed);
+`stacked_pairs` finds vertical unit stacks geometrically (same corridor
+side, plan overlap, no third unit between — a B's riser may run the 6 m
+through the interlock zone); the same-family stack keeps its risers aligned
+by construction (the family recipes are stack-symmetric — wet stacking is
+broken only by cross-family stacking or variation, which is exactly the Q3
+finding). Tests: `tests/test_sg6_crosslevel.py` (7) — each constraint
+rejects a constructed violation (a slid bath, a shifted partition, a
+hand-set full void, an inverted V edge); same-family defaults pass; the
+`measure` pattern holds. Notebook: the SG6 table + reading.
 
 ## ⚑ SG5 — the reproduction result: deriving the reference unit interiors (2026-08-15)
 
@@ -323,11 +350,12 @@ double-height voids); G3 U/L sub-grammars.
 | **SG3** | **Sub-derivation variability — one slab, many interiors** | ✅ **done** | `bridge`, `grammar_units`, `metrics` | `test_sg3_variability.py` (4) |
 | **SG4** | **Level-2 geometry — interiors tile the envelope, edges are faces** | ✅ **done** | `interior_geom`, `grammar_units` | `test_sg4_geometry.py` (12) |
 | **SG5** | **Grounding — G_U/G_L derive the reference interiors (reconstructed)** | ✅ **done** | `reference`, `exchange`, `models/KF_unit_interiors_reference.obj` | `test_sg5_reference.py` (6) |
+| **SG6** | **Cross-level constraints — Q3 measured (modelled/guaranteed/steered)** | ✅ **done** | `crosslevel` | `test_sg6_crosslevel.py` (7) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
 and the **sub-grammar phase's one-paper minimum is met, incl. the §11.2 gate
-via SG5's reconstruction** (SG0–SG5 ✅; next SG6 cross-level constraints —
-Q3 — and SG7 the two-level map).
+via SG5's reconstruction** (SG0–SG6 ✅ — Q1/Q2/Q3 all answered; next SG7 the
+two-level map, SG8 steering optional).
 
 ## What works today
 
@@ -438,12 +466,13 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   *reconstructed* per R1 (provenance stated); **G_U and G_L derive it**,
   typed-isomorphic, reversibly. §11.2's gate answered → the one-paper
   strategy holds. See the 2026-08-15 note above.
-- **SG6 — cross-level constraints** *(next)* — wet stacking, bay alignment,
-  void coherence in D pairs, level monotonicity; measure how often
-  independent two-level variation violates each (Q3, the headline finding).
-- **SG7 — level-2 metrics + the two-level map** — privacy gradient, real
-  daylight via windows, wet-core compactness; block × interior coordinates
-  (paper Figure 8).
+- ✅ **SG6 — cross-level constraints** (done 2026-08-15) — Q3 measured: wet
+  stacking 0.25/interior (steer), bay alignment 0.40 (soft), void coherence
+  modelled (control 10–35%), level monotonicity guaranteed (0). See the
+  2026-08-15 note above.
+- **SG7 — level-2 metrics + the two-level map** *(next)* — privacy gradient,
+  real daylight via windows, wet-core compactness; block × interior
+  coordinates (paper Figure 8).
 - **G5 / SG8 — steering** *(optional)* — search or designer-in-the-loop over
   both levels against metric objectives, now that they exist.
 

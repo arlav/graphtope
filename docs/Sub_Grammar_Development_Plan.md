@@ -184,7 +184,7 @@ non-terminal.
 one-paper vs two-paper (paper §11.2).
 **Effort:** small in code, **entirely dependent on source material** (Risk R1).
 
-### SG6 · Cross-level constraints *(the research finding — Q3)*
+### SG6 · Cross-level constraints *(the research finding — Q3)* — ✅ done 2026-08-15 (`graphtope/crosslevel.py`; measured: wet 0.25/interior steered, bays 0.40 soft, void coherence modelled with a 10–35% unconstrained control, levels guaranteed 0)
 Once both levels vary independently, test whether they compose. Model the cross-level
 conditions explicitly:
 - **wet-room stacking** — baths/kitchens aligned vertically across stacked units;
