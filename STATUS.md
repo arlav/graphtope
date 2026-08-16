@@ -4,7 +4,39 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 240 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 245 tests passing · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG7 — interior quality metrics & the two-level design space (2026-08-15)
+
+`metrics` gains the interior-quality family (paper Figure 8's micro axes) —
+all isomorphism-invariant (the SG5 reference reads the same as its
+derivation), all derived from Σ_int's flags (never hand-listed):
+
+- **`privacy_gradient`** — mean depth of habitable rooms from their unit's
+  entry (BFS through doors, §5.2); deeper = more withdrawn.
+- **`daylight_ratio`** — habitable rooms with a window ÷ habitable rooms —
+  *real* daylight via window nodes, not a façade proxy.
+- **`circ_area_ratio`** — internal-circulation ÷ habitable footprint
+  (placed rooms, SG4; 0 without geometry).
+- **`wet_core_compactness`** — mean graph distance between a unit's wet
+  rooms; the plumbing core's clustering.
+- **`interior_type_mix`** — distinct room kinds per unit.
+- Units group by the SG3/SG4 ``unit`` tags, with a connected-component
+  fallback so imported references (no tags) measure identically.
+
+**`two_level_design_space(pairs, reference=…)`** embeds the block signatures
+(``FEATURES``) and the interior-quality signatures
+(``INTERIOR2_FEATURES``) independently (standardised + deterministic
+classical MDS each) — macro is the map's *position*, micro its *colour*
+(``topoview.draw_two_level``): **a point is a building with an interior
+architecture**. Measured: default interiors vs doors+windows+extras
+separate on every axis (privacy 0.71→2.00, daylight 0→100%, type mix
+4.4→6.4); the reference K unit lands with its derivation on both.
+Tests: `tests/test_sg7_metrics.py` (5) — determinism + discrimination,
+isomorphism invariance (the reference == derived restated as a measurement),
+map shape/determinism, the draw, the reference's landing. Notebook: the
+quality table + the two-level map. **The sub-grammar phase is complete**
+(SG0–SG7; SG8 steering optional).
 
 ## ⚑ SG6 — cross-level constraints: Q3 answered with numbers (2026-08-15)
 
@@ -351,11 +383,11 @@ double-height voids); G3 U/L sub-grammars.
 | **SG4** | **Level-2 geometry — interiors tile the envelope, edges are faces** | ✅ **done** | `interior_geom`, `grammar_units` | `test_sg4_geometry.py` (12) |
 | **SG5** | **Grounding — G_U/G_L derive the reference interiors (reconstructed)** | ✅ **done** | `reference`, `exchange`, `models/KF_unit_interiors_reference.obj` | `test_sg5_reference.py` (6) |
 | **SG6** | **Cross-level constraints — Q3 measured (modelled/guaranteed/steered)** | ✅ **done** | `crosslevel` | `test_sg6_crosslevel.py` (7) |
+| **SG7** | **Level-2 quality metrics + the two-level design space (Fig. 8)** | ✅ **done** | `metrics`, `topoview` | `test_sg7_metrics.py` (5) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
-and the **sub-grammar phase's one-paper minimum is met, incl. the §11.2 gate
-via SG5's reconstruction** (SG0–SG6 ✅ — Q1/Q2/Q3 all answered; next SG7 the
-two-level map, SG8 steering optional).
+and the **sub-grammar phase is complete** (SG0–SG7 ✅ — Q1/Q2/Q3 answered,
+Figures 7+8, the reproduction result, the §11.2 gate; SG8 steering optional).
 
 ## What works today
 
@@ -470,9 +502,15 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   stacking 0.25/interior (steer), bay alignment 0.40 (soft), void coherence
   modelled (control 10–35%), level monotonicity guaranteed (0). See the
   2026-08-15 note above.
-- **SG7 — level-2 metrics + the two-level map** *(next)* — privacy gradient,
-  real daylight via windows, wet-core compactness; block × interior
-  coordinates (paper Figure 8).
+- ✅ **SG7 — level-2 metrics + the two-level map** (done 2026-08-15) — the
+  interior-quality family (privacy, daylight, circ-area, wet-core, type mix)
+  + `two_level_design_space` / `draw_two_level` (Figure 8). See the
+  2026-08-15 note above. **The sub-grammar phase is complete.**
+- **SG8 — steering over two levels** *(optional, = G5)* — search or a
+  designer in the loop over both levels' derivations against the SG7
+  objectives (e.g. minimise privacy gradient at fixed GFA, wet-core
+  compactness, or SG6's violation rates). The rule-generated two-level
+  corpus is also the training substrate for the graph-ML line (§12.2).
 - **G5 / SG8 — steering** *(optional)* — search or designer-in-the-loop over
   both levels against metric objectives, now that they exist.
 

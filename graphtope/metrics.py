@@ -302,6 +302,178 @@ def interior_design_space(refined_graphs: list, *,
             "features": vecs}
 
 
+# === SG7 — interior quality metrics + the two-level design space ==========
+def _unit_entry(refined: StateGraph, unit_nodes: set) -> str | None:
+    """The unit's entry: the interior node holding the routed corridor edge;
+    fallback by kind (entry hall → living → the banked room itself)."""
+    from . import alphabet as A
+    for n in unit_nodes:
+        for e in refined.edges():
+            if n not in (e["src"], e["tgt"]):
+                continue
+            other = e["tgt"] if e["src"] == n else e["src"]
+            if other not in unit_nodes and refined.node_label(other) == A.CORRIDOR:
+                return n
+    for sub in ("entry", "living", "room"):
+        for n in unit_nodes:
+            if refined.node_attrs(n).get("subtype") == sub:
+                return n
+    return None
+
+
+def _unit_graphs(refined: StateGraph):
+    """``[(unit_id, {node ids}]`` — the SG3/SG4 ``unit`` tags group interiors;
+    graphs without tags (an imported reference) fall back to connected
+    components, which is the same grouping for a per-unit interior."""
+    from .validity import _components
+    units: dict = {}
+    for n in refined.nodes():
+        uid = refined.node_attrs(n).get("unit")
+        if uid is not None:
+            units.setdefault(uid, set()).add(n)
+    if units:
+        return sorted(units.items())
+    adj = _undirected_adj(refined)
+    return [(i, comp) for i, comp in enumerate(_components(refined, adj))]
+
+
+
+def privacy_gradient(refined: StateGraph) -> float:
+    """Mean depth (adjacencies, traversing doors — §5.2) of habitable rooms
+    from their unit's entry: the plan's privacy gradient. 1.0 = every
+    habitable room opens directly off the entry; deeper = more withdrawn
+    (a K's sleeping gallery reaches past the living volume)."""
+    from . import interior as I
+    adj = _undirected_adj(refined)
+    total = count = 0
+    for _, nodes in _unit_graphs(refined):
+        entry = _unit_entry(refined, nodes)
+        if entry is None:
+            continue
+        dist = {entry: 0}
+        q = deque([entry])
+        while q:
+            n = q.popleft()
+            for m in adj[n]:
+                if m not in dist:
+                    dist[m] = dist[n] + 1
+                    q.append(m)
+        for n in nodes:
+            if refined.node_attrs(n).get("subtype") in I.HABITABLE_SUBTYPES \
+                    and n in dist:
+                total += dist[n]
+                count += 1
+    return round(total / count, 3) if count else 0.0
+
+
+def daylight_ratio(refined: StateGraph) -> float:
+    """Habitable rooms with a window ÷ habitable rooms — *real* daylight
+    (window nodes, §5.2), not a façade proxy."""
+    from . import interior as I
+    adj = _undirected_adj(refined)
+    lit = hab = 0
+    for n in refined.nodes():
+        sub = refined.node_attrs(n).get("subtype")
+        if sub not in I.HABITABLE_SUBTYPES:
+            continue
+        hab += 1
+        if any(refined.node_attrs(m).get("subtype") == I.WINDOW for m in adj[n]):
+            lit += 1
+    return round(lit / hab, 3) if hab else 0.0
+
+
+def circ_area_ratio(refined: StateGraph) -> float:
+    """Internal-circulation footprint ÷ habitable footprint (placed rooms,
+    SG4). ``0.0`` when the interior carries no geometry."""
+    from . import interior as I
+    from .interior_geom import boxes
+    bx = boxes(refined)
+    if not bx:
+        return 0.0
+    circ = hab = 0.0
+    for n, (_, _, _, w, d, _) in bx.items():
+        sub = refined.node_attrs(n).get("subtype")
+        if sub == I.INTERNAL:
+            circ += w * d
+        elif sub in I.HABITABLE_SUBTYPES:
+            hab += w * d
+    return round(circ / hab, 3) if hab else 0.0
+
+
+def wet_core_compactness(refined: StateGraph) -> float:
+    """Mean graph distance between a unit's wet rooms (kitchen/bath/wc —
+    Σ_int's ``wet`` flag), averaged over units: the wet core's clustering.
+    0.0 = one wet room (or none) per unit — trivially compact; larger = the
+    plumbing spreads through the plan."""
+    from . import interior as I
+    adj = _undirected_adj(refined)
+
+    def bfs(s):
+        dist = {s: 0}
+        q = deque([s])
+        while q:
+            n = q.popleft()
+            for m in adj[n]:
+                if m not in dist:
+                    dist[m] = dist[n] + 1
+                    q.append(m)
+        return dist
+
+    total = count = 0
+    for _, nodes in _unit_graphs(refined):
+        wet = [n for n in nodes
+               if refined.node_attrs(n).get("subtype") in I.WET_SUBTYPES]
+        for i, a in enumerate(wet):
+            d = bfs(a)
+            for b in wet[i + 1:]:
+                total += d.get(b, 0)
+                count += 1
+    return round(total / count, 3) if count else 0.0
+
+
+def interior_type_mix(refined: StateGraph) -> float:
+    """Mean distinct room kinds per unit — the interior's own programme mix."""
+    from . import interior as I
+    mixes = []
+    for _, nodes in _unit_graphs(refined):
+        kinds = {refined.node_attrs(n).get("subtype") for n in nodes
+                 if refined.node_attrs(n).get("subtype") in I.ROOM_SUBTYPES}
+        mixes.append(len(kinds))
+    return round(sum(mixes) / len(mixes), 3) if mixes else 0.0
+
+
+#: ordered interior-quality features (SG7, paper Figure 8's micro axes)
+INTERIOR2_FEATURES = ("privacy_gradient", "daylight_ratio", "circ_area_ratio",
+                      "wet_core_compactness", "interior_type_mix")
+
+
+def interior_quality_vector(refined: StateGraph) -> dict:
+    """The ordered interior-quality signature of a refined graph."""
+    return {f: float(globals()[f](refined)) for f in INTERIOR2_FEATURES}
+
+
+def two_level_design_space(pairs: list, *,
+                           reference: tuple | None = None) -> dict:
+    """SG7 — the joint map: ``pairs = [(slab, refined), …]`` (a *building with
+    an interior architecture* per point). Macro coordinates embed the block
+    signatures (``FEATURES``), micro coordinates the interior-quality
+    signatures (``INTERIOR2_FEATURES``) — each by the deterministic classical
+    MDS, standardised independently, so the two levels contribute independent
+    axes. ``reference = (slab, refined)`` is appended and marked last."""
+    import numpy as np
+    items = list(pairs) + ([reference] if reference is not None else [])
+    macro = _standardise(_matrix([feature_vector(s) for s, _ in items]))
+    micro = _standardise(np.array(
+        [[v[f] for f in INTERIOR2_FEATURES]
+         for v in (interior_quality_vector(r) for _, r in items)], dtype=float))
+    emb = lambda z: _classical_mds(np.sqrt(((z[:, None, :] - z[None, :, :]) ** 2)
+                                           .sum(axis=-1)))
+    return {"macro": emb(macro), "micro": emb(micro),
+            "reference_index": (len(items) - 1) if reference is not None else None,
+            "macro_features": [feature_vector(s) for s, _ in items],
+            "micro_features": [interior_quality_vector(r) for _, r in items]}
+
+
 def cluster(coords, k: int, *, seed: int = 0):
     """Deterministic k-means over the 2-D map — a coarse grouping of the design
     space. Returns an integer label per point (0…k-1). ``k`` is clamped to the

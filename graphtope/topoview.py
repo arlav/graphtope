@@ -286,6 +286,46 @@ def draw_design_space(space, *, labels=None, values=None, value_name=None,
     return fig
 
 
+# --- the two-level design space (SG7) ------------------------------------
+def draw_two_level(space, *, labels=None, ax=None,
+                   title="Two-level design space",
+                   micro_name="interior axis (micro MDS 1)"):
+    """Draw a ``metrics.two_level_design_space`` result: **position** = the
+    block-level macro map, **colour** = the interior's position on its own
+    micro axis — a point is a building *with an interior architecture*
+    (paper Figure 8). The reference is the star."""
+    import matplotlib.pyplot as plt
+    macro, micro = space["macro"], space["micro"]
+    ref = space.get("reference_index")
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(7, 5.5))
+    else:
+        fig = ax.figure
+    pts = [i for i in range(len(macro)) if i != ref]
+    sc = ax.scatter([macro[i, 0] for i in pts], [macro[i, 1] for i in pts],
+                    c=[micro[i, 0] for i in pts], cmap="viridis",
+                    s=110, edgecolor="black", linewidths=0.5, zorder=3)
+    if ref is not None:
+        ax.scatter([macro[ref, 0]], [macro[ref, 1]], marker="*", s=420,
+                   c="#E4572E", edgecolor="black", linewidths=0.7, zorder=4)
+        ax.annotate("reference", (macro[ref, 0], macro[ref, 1]), fontsize=9,
+                    fontweight="bold", color="#E4572E", xytext=(7, 3),
+                    textcoords="offset points", zorder=5)
+    if labels is not None:
+        for i, lab in enumerate(labels):
+            if i == ref:
+                continue
+            ax.annotate(str(lab), (macro[i, 0], macro[i, 1]), fontsize=8,
+                        xytext=(4, 4), textcoords="offset points")
+    cb = fig.colorbar(sc, ax=ax, shrink=0.8)
+    cb.set_label(micro_name)
+    ax.set_title(title)
+    ax.set_xlabel("macro MDS 1 (block)"); ax.set_ylabel("macro MDS 2 (block)")
+    ax.set_aspect("equal", adjustable="datalim")
+    fig.tight_layout()
+    return fig
+
+
 # --- 3-D Topologic carrier render (unchanged) ----------------------------
 def show(sg, *, vertex_label_key: str = "label", **kwargs):
     """Render the underlying Topologic graph with the Plotly viewer."""
