@@ -217,7 +217,7 @@ two-level mode.
 **Paper slot:** G (**Figure 8**, the closing figure of the expanded paper).
 **Effort:** small–medium. **Depends on:** SG3, SG4.
 
-### SG8 · Steering over two levels *(optional, ties into G5 — the only item left; the phase's Definition of Done, §6 below, is otherwise met)*
+### SG8 · Steering over two levels *(ties into G5)* — ✅ done 2026-08-15 (`graphtope/steer.py`: realisability-gated pool search over the SG3 space with the G4/SG7/SG6 objective registry; `validate_io` + `blender/validate_variants.py`: the shared pytest/Jupyter/Blender validation core over exported artefacts)
 With SG7's objectives, search over *sub*-derivations as well as derivations: target a
 programme (N units of a given interior type), an interior objective (maximise rooms with
 external wall at fixed GFA), or proximity to the reference in the two-level map. The

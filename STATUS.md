@@ -4,7 +4,44 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 245 tests passing · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-15 · **Suite:** 254 tests passing (1 Blender-gated skip) · **Carrier:** topologicpy 0.9.43
+
+## ⚑ SG8 — steering over two levels + cross-tool validation (2026-08-15)
+
+`graphtope/steer.py` (new) closes the loop the metrics opened: **steer, don't
+just filter**. `steer(slab, objectives)` samples the SG3 interior space,
+places each candidate (SG4) and **hard-rejects any that does not realise**
+(tile_report: tiling, edge→face, openings — steering never trades the
+grammar's guarantees for score; rejections are kept in `steer.last_rejected`
+for honest reporting), evaluates the objective vocabulary — G4 macro × SG7
+micro × the SG6 cross-level penalties (`VALUE_REGISTRY`, 18 values) — and
+ranks by within-pool z-scored weighted sums (deterministic). `replay`
+re-derives a winner from its plan (placed geometry included). Measured on a
+cross-family two-band slab: pool mean wet-stacking 0.17 (independent
+sampling violates) — **the steered picks never do**; daylight 100%, ranked
+wet-cores 3.40–3.67.
+
+**Cross-tool variant validation** (`graphtope/validate_io.py` +
+`blender/validate_variants.py`): one validation core over the *exported
+artefacts* (OBJ + authoritative sidecar) — integrity (every node a named
+OBJ group and vice versa), per-unit tiling (volume sums, no overlaps,
+openings excluded), and adjacency coverage (every graph edge a real shared
+face of the OBJ bboxes) — run in three places: **pytest** (every commit),
+**Jupyter** (the closing loop) and **Blender headless**
+(`blender --background --python blender/validate_variants.py -- <dir>
+[--render out]`, writing `validation.json`, non-zero exit on failure,
+optional thumbnails). What the designer opens in Blender is what the suite
+verified. Damaged exports are caught (a renamed room, a shifted wall).
+
+Fixes the pools exposed: `place()`'s 1 mm coordinate rounding can create
+sub-millimetre sliver overlaps between adjacent strips — the overlap
+tolerance is now 0.05 m³ (a real overlap is room-scale). Tests:
+`tests/test_sg8_steering.py` (10: steering determinism/discrimination/the
+zeroed violation/winners' guarantees; validation pass/catch-damage/
+directory hand-off; Blender headless, skipped without a binary). Notebook:
+the steering table, the export→validate loop, the Blender hand-off, the
+winner's massing. **SG0–SG8 all done — the phase's Definition of Done is
+met.**
 
 ## ⚑ SG7 — interior quality metrics & the two-level design space (2026-08-15)
 
@@ -384,10 +421,12 @@ double-height voids); G3 U/L sub-grammars.
 | **SG5** | **Grounding — G_U/G_L derive the reference interiors (reconstructed)** | ✅ **done** | `reference`, `exchange`, `models/KF_unit_interiors_reference.obj` | `test_sg5_reference.py` (6) |
 | **SG6** | **Cross-level constraints — Q3 measured (modelled/guaranteed/steered)** | ✅ **done** | `crosslevel` | `test_sg6_crosslevel.py` (7) |
 | **SG7** | **Level-2 quality metrics + the two-level design space (Fig. 8)** | ✅ **done** | `metrics`, `topoview` | `test_sg7_metrics.py` (5) |
+| **SG8** | **Steering over two levels + cross-tool validation (pytest/Jupyter/Blender)** | ✅ **done** | `steer`, `validate_io`, `blender/validate_variants.py` | `test_sg8_steering.py` (10) |
 
 Scope: Stage 1 (M1–M7) ✅, Stage 2 geometry ✅, the generative track (G0–G4) ✅,
-and the **sub-grammar phase is complete** (SG0–SG7 ✅ — Q1/Q2/Q3 answered,
-Figures 7+8, the reproduction result, the §11.2 gate; SG8 steering optional).
+and the **sub-grammar phase is complete, SG0–SG8 incl. steering** (Q1/Q2/Q3
+answered, Figures 7+8, the reproduction result, the §11.2 gate, and the
+cross-tool validation harness).
 
 ## What works today
 
@@ -506,11 +545,14 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
   interior-quality family (privacy, daylight, circ-area, wet-core, type mix)
   + `two_level_design_space` / `draw_two_level` (Figure 8). See the
   2026-08-15 note above. **The sub-grammar phase is complete.**
-- **SG8 — steering over two levels** *(optional, = G5)* — search or a
-  designer in the loop over both levels' derivations against the SG7
-  objectives (e.g. minimise privacy gradient at fixed GFA, wet-core
-  compactness, or SG6's violation rates). The rule-generated two-level
-  corpus is also the training substrate for the graph-ML line (§12.2).
+- ✅ **SG8 — steering over two levels** (done 2026-08-15, = G5) —
+  `steer.steer` with the realisability gate, the 18-value objective
+  registry, the steered-picks-never-violate result, and the shared
+  pytest/Jupyter/Blender validation core over exported artefacts. See the
+  2026-08-15 note above. **SG0–SG8 complete — the phase is done.**
+- **Beyond the phase** — the graph-ML line (§12.2) trains on the
+  rule-generated, validated two-level corpus; a designer-in-the-loop UI
+  over `steer`'s top-k + the two-level map is the natural next surface.
 - **G5 / SG8 — steering** *(optional)* — search or designer-in-the-loop over
   both levels against metric objectives, now that they exist.
 

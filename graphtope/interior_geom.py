@@ -530,7 +530,10 @@ def tile_report(refined: StateGraph, slab: StateGraph) -> dict:
                   not in (DOOR, WINDOW) and n in bx]
         vol_err = sum(_vol(bx[n]) for n in spaces) - _vol(env)
         overlaps = [(a, b) for i, a in enumerate(spaces) for b in spaces[i + 1:]
-                    if _overlap(bx[a], bx[b]) > 1e-6]
+                    # 0.05 m³ slop: place() rounds coords to 1 mm, which can
+                    # create sub-millimetre sliver overlaps between adjacent
+                    # strips — a real overlap is room-scale
+                    if _overlap(bx[a], bx[b]) > 0.05]
         space_set = set(spaces)
         misses = []
         for e in refined.edges():
