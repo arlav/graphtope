@@ -1,0 +1,797 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "nodes": [
+    {
+      "id": "corridor_0",
+      "label": "corridor",
+      "attrs": {
+        "level": 2,
+        "x": 0.0,
+        "y": -1.4,
+        "z": 6.0,
+        "w": 10.98,
+        "d": 2.8,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "entrance",
+      "label": "entrance",
+      "attrs": {
+        "level": 0,
+        "x": -3.66,
+        "y": 1.4,
+        "z": 0.0,
+        "w": 3.66,
+        "d": 2.5,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n0",
+      "label": "generic",
+      "attrs": {
+        "subtype": "room",
+        "unit": "room_0_0",
+        "x": 0.0,
+        "y": 9.82,
+        "z": 6.0,
+        "w": 3.66,
+        "d": 2.807,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n1",
+      "label": "generic",
+      "attrs": {
+        "subtype": "storage",
+        "unit": "room_0_0",
+        "x": 0.0,
+        "y": 12.627,
+        "z": 6.0,
+        "w": 3.66,
+        "d": 1.403,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n10",
+      "label": "generic",
+      "attrs": {
+        "subtype": "window",
+        "unit": "box_0_0",
+        "placement": "roof",
+        "x": 1.23,
+        "y": 5.413,
+        "z": 8.94,
+        "w": 1.2,
+        "d": 1.2,
+        "h": 0.12
+      }
+    },
+    {
+      "id": "n11",
+      "label": "generic",
+      "attrs": {
+        "subtype": "entry",
+        "unit": "F_0_2",
+        "x": 7.32,
+        "y": -2.6,
+        "z": 6.0,
+        "w": 2.66,
+        "d": 1.2,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n12",
+      "label": "generic",
+      "attrs": {
+        "subtype": "living",
+        "unit": "F_0_2",
+        "x": 7.32,
+        "y": -8.32,
+        "z": 3.0,
+        "w": 2.66,
+        "d": 6.92,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n13",
+      "label": "staircase",
+      "attrs": {
+        "subtype": "internal",
+        "unit": "F_0_2",
+        "x": 9.98,
+        "y": -9.82,
+        "z": 3.0,
+        "w": 1.0,
+        "d": 8.42,
+        "h": 6.0
+      }
+    },
+    {
+      "id": "n14",
+      "label": "generic",
+      "attrs": {
+        "subtype": "kitchen",
+        "form": "niche",
+        "unit": "F_0_2",
+        "x": 7.32,
+        "y": -9.82,
+        "z": 6.0,
+        "w": 1.33,
+        "d": 7.22,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n15",
+      "label": "generic",
+      "attrs": {
+        "subtype": "bath",
+        "unit": "F_0_2",
+        "x": 8.65,
+        "y": -9.82,
+        "z": 6.0,
+        "w": 1.33,
+        "d": 7.22,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n16",
+      "label": "generic",
+      "attrs": {
+        "subtype": "loggia",
+        "face": "outer",
+        "unit": "F_0_2",
+        "x": 7.32,
+        "y": -9.82,
+        "z": 3.0,
+        "w": 2.66,
+        "d": 1.5,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n17",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "F_0_2",
+        "placement": "wall",
+        "x": 8.865,
+        "y": -2.68,
+        "z": 6.0,
+        "w": 0.9,
+        "d": 0.16,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n18",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "F_0_2",
+        "placement": "wall",
+        "x": 8.2,
+        "y": -1.48,
+        "z": 6.0,
+        "w": 0.9,
+        "d": 0.16,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n19",
+      "label": "generic",
+      "attrs": {
+        "subtype": "window",
+        "unit": "F_0_2",
+        "placement": "outer",
+        "x": 8.05,
+        "y": -1.46,
+        "z": 3.9,
+        "w": 1.2,
+        "d": 0.12,
+        "h": 1.4
+      }
+    },
+    {
+      "id": "n2",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "room_0_0",
+        "placement": "wall",
+        "x": 1.38,
+        "y": 9.74,
+        "z": 6.0,
+        "w": 0.9,
+        "d": 0.16,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n20",
+      "label": "generic",
+      "attrs": {
+        "subtype": "living",
+        "unit": "K_0_1",
+        "x": 3.66,
+        "y": 1.4,
+        "z": 6.0,
+        "w": 1.83,
+        "d": 7.42,
+        "h": 5.0
+      }
+    },
+    {
+      "id": "n21",
+      "label": "generic",
+      "attrs": {
+        "subtype": "sleeping",
+        "unit": "K_0_1",
+        "x": 3.66,
+        "y": 1.4,
+        "z": 11.0,
+        "w": 3.66,
+        "d": 7.42,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n22",
+      "label": "staircase",
+      "attrs": {
+        "subtype": "internal",
+        "unit": "K_0_1",
+        "x": 3.66,
+        "y": 8.82,
+        "z": 6.0,
+        "w": 3.66,
+        "d": 1.0,
+        "h": 8.0
+      }
+    },
+    {
+      "id": "n23",
+      "label": "generic",
+      "attrs": {
+        "subtype": "kitchen",
+        "form": "niche",
+        "unit": "K_0_1",
+        "x": 5.49,
+        "y": 5.11,
+        "z": 6.0,
+        "w": 1.83,
+        "d": 3.71,
+        "h": 5.0
+      }
+    },
+    {
+      "id": "n24",
+      "label": "generic",
+      "attrs": {
+        "subtype": "bath",
+        "unit": "K_0_1",
+        "x": 5.49,
+        "y": 1.4,
+        "z": 6.0,
+        "w": 1.83,
+        "d": 3.71,
+        "h": 5.0
+      }
+    },
+    {
+      "id": "n25",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "K_0_1",
+        "placement": "wall",
+        "x": 5.41,
+        "y": 2.805,
+        "z": 6.0,
+        "w": 0.16,
+        "d": 0.9,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n26",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "K_0_1",
+        "placement": "wall",
+        "x": 4.125,
+        "y": 1.32,
+        "z": 6.0,
+        "w": 0.9,
+        "d": 0.16,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n27",
+      "label": "generic",
+      "attrs": {
+        "subtype": "window",
+        "unit": "K_0_1",
+        "placement": "party",
+        "x": 3.6,
+        "y": 4.51,
+        "z": 6.9,
+        "w": 0.12,
+        "d": 1.2,
+        "h": 1.4
+      }
+    },
+    {
+      "id": "n28",
+      "label": "generic",
+      "attrs": {
+        "subtype": "window",
+        "unit": "K_0_1",
+        "placement": "roof",
+        "x": 4.89,
+        "y": 4.51,
+        "z": 13.94,
+        "w": 1.2,
+        "d": 1.2,
+        "h": 0.12
+      }
+    },
+    {
+      "id": "n3",
+      "label": "generic",
+      "attrs": {
+        "subtype": "window",
+        "unit": "room_0_0",
+        "placement": "roof",
+        "x": 1.23,
+        "y": 10.623,
+        "z": 8.94,
+        "w": 1.2,
+        "d": 1.2,
+        "h": 0.12
+      }
+    },
+    {
+      "id": "n4",
+      "label": "generic",
+      "attrs": {
+        "subtype": "entry",
+        "unit": "box_0_0",
+        "x": 0.0,
+        "y": 1.4,
+        "z": 6.0,
+        "w": 1.83,
+        "d": 2.807,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n5",
+      "label": "generic",
+      "attrs": {
+        "subtype": "living",
+        "unit": "box_0_0",
+        "x": 0.0,
+        "y": 4.207,
+        "z": 6.0,
+        "w": 3.66,
+        "d": 3.613,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n6",
+      "label": "generic",
+      "attrs": {
+        "subtype": "kitchen",
+        "form": "niche",
+        "unit": "box_0_0",
+        "x": 0.0,
+        "y": 7.82,
+        "z": 6.0,
+        "w": 3.66,
+        "d": 2.0,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n7",
+      "label": "generic",
+      "attrs": {
+        "subtype": "bath",
+        "unit": "box_0_0",
+        "x": 1.83,
+        "y": 1.4,
+        "z": 6.0,
+        "w": 1.83,
+        "d": 2.807,
+        "h": 3.0
+      }
+    },
+    {
+      "id": "n8",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "box_0_0",
+        "placement": "wall",
+        "x": 1.75,
+        "y": 2.353,
+        "z": 6.0,
+        "w": 0.16,
+        "d": 0.9,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "n9",
+      "label": "generic",
+      "attrs": {
+        "subtype": "door",
+        "unit": "box_0_0",
+        "placement": "wall",
+        "x": 0.465,
+        "y": 1.32,
+        "z": 6.0,
+        "w": 0.9,
+        "d": 0.16,
+        "h": 2.1
+      }
+    },
+    {
+      "id": "stair_E",
+      "label": "staircase",
+      "attrs": {
+        "level": 0,
+        "x": 10.98,
+        "y": -1.4,
+        "z": 0.0,
+        "w": 3.66,
+        "d": 2.8,
+        "h": 9.0
+      }
+    },
+    {
+      "id": "stair_W",
+      "label": "staircase",
+      "attrs": {
+        "level": 0,
+        "x": -3.66,
+        "y": -1.4,
+        "z": 0.0,
+        "w": 3.66,
+        "d": 2.8,
+        "h": 9.0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "src": "corridor_0",
+      "tgt": "n18",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "n26",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "n9",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "stair_E",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "corridor_0",
+      "tgt": "stair_W",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n0",
+      "tgt": "n1",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n0",
+      "tgt": "n3",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n11",
+      "tgt": "n12",
+      "type": "adjacency",
+      "orientation": "V",
+      "bidirectional": false,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n11",
+      "tgt": "n13",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n11",
+      "tgt": "n14",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n11",
+      "tgt": "n17",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n12",
+      "tgt": "n13",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n12",
+      "tgt": "n16",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n12",
+      "tgt": "n19",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n17",
+      "tgt": "n15",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n18",
+      "tgt": "n11",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n2",
+      "tgt": "n0",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n20",
+      "tgt": "n22",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n20",
+      "tgt": "n23",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n20",
+      "tgt": "n25",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n20",
+      "tgt": "n27",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n21",
+      "tgt": "n20",
+      "type": "adjacency",
+      "orientation": "V",
+      "bidirectional": false,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n21",
+      "tgt": "n22",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n21",
+      "tgt": "n28",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n25",
+      "tgt": "n24",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n26",
+      "tgt": "n20",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n4",
+      "tgt": "n5",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n4",
+      "tgt": "n8",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n5",
+      "tgt": "n10",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n5",
+      "tgt": "n2",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n5",
+      "tgt": "n20",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n5",
+      "tgt": "n6",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n8",
+      "tgt": "n7",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "n9",
+      "tgt": "n4",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    },
+    {
+      "src": "stair_W",
+      "tgt": "entrance",
+      "type": "adjacency",
+      "orientation": "H",
+      "bidirectional": true,
+      "weight": 1.0,
+      "attrs": {}
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+ "source": "BBD",
+ "rank": 2,
+ "values": {
+  "daylight_ratio": 1.0,
+  "wet_stacking": 0.0,
+  "interior_type_mix": 5.0,
+  "compactness": 0.183
+ }
+}

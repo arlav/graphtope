@@ -1,0 +1,166 @@
+{
+  "ok": true,
+  "variants": 10,
+  "reports": {
+    "variant_00.obj": {
+      "obj": "variant_00.obj",
+      "ok": true,
+      "objects": 50,
+      "nodes": 50,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 28,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_01.obj": {
+      "obj": "variant_01.obj",
+      "ok": true,
+      "objects": 48,
+      "nodes": 48,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 28,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_02.obj": {
+      "obj": "variant_02.obj",
+      "ok": true,
+      "objects": 38,
+      "nodes": 38,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 21,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_03.obj": {
+      "obj": "variant_03.obj",
+      "ok": true,
+      "objects": 41,
+      "nodes": 41,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 21,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_04.obj": {
+      "obj": "variant_04.obj",
+      "ok": true,
+      "objects": 66,
+      "nodes": 66,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 36,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_05.obj": {
+      "obj": "variant_05.obj",
+      "ok": true,
+      "objects": 68,
+      "nodes": 68,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 35,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_06.obj": {
+      "obj": "variant_06.obj",
+      "ok": true,
+      "objects": 35,
+      "nodes": 35,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 19,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_07.obj": {
+      "obj": "variant_07.obj",
+      "ok": true,
+      "objects": 33,
+      "nodes": 33,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 16,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_08.obj": {
+      "obj": "variant_08.obj",
+      "ok": true,
+      "objects": 104,
+      "nodes": 104,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 57,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    },
+    "variant_09.obj": {
+      "obj": "variant_09.obj",
+      "ok": true,
+      "objects": 106,
+      "nodes": 106,
+      "integrity": {
+        "missing": [],
+        "stray": [],
+        "ok": true
+      },
+      "units": {},
+      "tiling_ok": true,
+      "edges_checked": 57,
+      "edge_face_misses": [],
+      "adjacency_ok": true
+    }
+  }
+}

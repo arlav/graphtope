@@ -1,0 +1,10 @@
+{
+ "source": "KFKF",
+ "rank": 1,
+ "values": {
+  "daylight_ratio": 1.0,
+  "wet_stacking": 0.0,
+  "interior_type_mix": 6.25,
+  "compactness": 0.198
+ }
+}

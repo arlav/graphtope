@@ -4,7 +4,24 @@ Build progress for `graphtope` (Stage 1). Authoritative design lives in
 `Topologic_Graph_Grammar_Spec.md`; carrier gotchas in `CLAUDE.md`; the
 TopologicPy contribution agenda in `docs/Topologic_Carrier_Contribution_Briefing.md`.
 
-**Last updated:** 2026-08-15 · **Suite:** 254 tests passing (1 Blender-gated skip) · **Carrier:** topologicpy 0.9.43
+**Last updated:** 2026-08-17 · **Suite:** 254 tests passing (1 Blender-gated skip) · **Carrier:** topologicpy 0.9.43
+
+## ⚑ The whole grammar, rendered — variants as .blend + colour-coded PNGs (2026-08-17)
+
+`notebooks/exports/variants_3d/` — the full pipeline output as browsable
+artefacts: **10 validated variants** (4 pattern slabs × top-2 steered
+interiors each + 2 from the complete `A₀ → proposal → slab` grammar
+pipeline, seed 6 — chained-K proposals refused honestly by the
+realisability gate), each as OBJ + authoritative sidecar + steering meta +
+**a standalone `.blend`** and a **colour-coded Cycles render** (1280×960,
+sun + area fill, fitted aerial camera, per-kind materials, per-type
+collections). Built by `blender/make_variant_blends.py` (Blender 4.0.2
+headless; geometry built **directly from the sidecar boxes** — one named
+object per room, no OBJ-importer merging), gated by `validate_io` before
+rendering and by a readability check after (4–7 distinct room-colour
+populations per render). `contact_sheet.png` browses the set with each
+variant's steering numbers. Lesson folded into the script doc: importers
+merge `g`-grouped OBJs; the sidecar is the geometry's source of truth.
 
 ## ⚑ SG8 — steering over two levels + cross-tool validation (2026-08-15)
 
@@ -553,8 +570,6 @@ grammar's U/L pairing abstracts one built maisonette family. Bundled models:
 - **Beyond the phase** — the graph-ML line (§12.2) trains on the
   rule-generated, validated two-level corpus; a designer-in-the-loop UI
   over `steer`'s top-k + the two-level map is the natural next surface.
-- **G5 / SG8 — steering** *(optional)* — search or designer-in-the-loop over
-  both levels against metric objectives, now that they exist.
 
 `exchange` (B1) notes: `to_obj(sg, path)` writes OBJ (object per space, named by
 id, coloured by τ) + `.mtl` + `<path>.graph.json` sidecar (the typed graph).

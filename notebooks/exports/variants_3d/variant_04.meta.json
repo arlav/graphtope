@@ -1,0 +1,10 @@
+{
+ "source": "KFDBR",
+ "rank": 1,
+ "values": {
+  "daylight_ratio": 1.0,
+  "wet_stacking": 0.0,
+  "interior_type_mix": 4.857,
+  "compactness": 0.171
+ }
+}
